@@ -14,13 +14,6 @@
         android:layout_gravity="center"
         android:textSize="20dp"
         android:text="Products Gallery" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="דף ראשי"
-        android:layout_gravity="center"
-        android:id="@+id/btnMainActivity" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -94,8 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:id="@+id/etFrom"
-                    android:digits="0,1,2,3,4,5,6,7,8,9" />
+                    android:id="@+id/etFrom"/>
             </LinearLayout>
 
             <LinearLayout
@@ -115,8 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:id="@+id/etTo"
-                    android:digits="0,1,2,3,4,5,6,7,8,9" />
+                    android:id="@+id/etTo"/>
             </LinearLayout>
 
 
@@ -166,7 +157,6 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvProducts"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

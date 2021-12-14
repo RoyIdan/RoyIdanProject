@@ -18,7 +18,4 @@ public interface SmartphonesDao {
     @Query("SELECT * FROM tblsmartphones WHERE :query")
     List<Smartphone> getByQuery(String query);
 
-    @Query("SELECT * FROM tblsmartphones")
-    List<Smartphone> getAll();
-
 }

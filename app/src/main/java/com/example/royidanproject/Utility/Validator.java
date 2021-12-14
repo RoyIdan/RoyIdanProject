@@ -87,7 +87,7 @@ public class Validator {
 
     public static String validateCity(String city) {
         // city
-        if (city.equals("בחר עיר")) {
+        if (city.equals("select city")) {
             return "תבחר עיר בבקשה.";
         }
         return "";
