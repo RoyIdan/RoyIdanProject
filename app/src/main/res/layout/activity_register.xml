@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Registration form"
+        android:textSize="20dp"
+        android:id="@+id/tvTitle"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/camera"
+            android:id="@+id/ibCamera"
+            android:scaleType="centerInside"/>
+
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_sample"
+            android:id="@+id/ivImage"
+            />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/gallery"
+            android:scaleType="centerInside"
+            android:id="@+id/ibGallery" />
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="שם פרטי"
+        android:id="@+id/etName"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="שם משפחה"
+        android:id="@+id/etSurname"
+        />
+    <RadioGroup
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:id="@+id/rgGender">
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="-40dp"
+            android:layout_gravity="left"
+            android:text=""
+            android:id="@+id/tvGenderError"
+            />
+        <RadioButton
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="male"
+            android:id="@+id/rdMale"/>
+        <RadioButton
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp"
+            android:text="female"
+            android:id="@+id/rdFemale"/>
+    </RadioGroup>
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="date"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="תאריך לידה"
+        android:id="@+id/etBirthdate"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="אימייל"
+        android:id="@+id/etEmail"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPostalAddress"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="כתובת"
+        android:id="@+id/etAddress"
+        />
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:entries="@array/spinner_city"
+        android:id="@+id/spiCity"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="סיסמה"
+        android:id="@+id/etPassword"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:hint="אימות סיסמה"
+        android:id="@+id/etPasswordValidation"
+        />
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:entries="@array/spinner_phone"
+            android:id="@+id/spi_Phone"
+            />
+        <EditText
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="999"
+            android:inputType="phone"
+            android:maxLength="7"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="טלפון"
+            android:id="@+id/etPhone"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_height="40dp"
+            android:textSize="13dp"
+            android:layout_width="140dp"
+            android:text="Return to Main"
+            android:textAllCaps="false"
+            android:id="@+id/btnReturn"
+            />
+        <Button
+            android:layout_height="40dp"
+            android:layout_width="135dp"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:id="@+id/btnRegister"
+            />
+        <Button
+            android:layout_height="40dp"
+            android:layout_width="140dp"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:id="@+id/btnLogin"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

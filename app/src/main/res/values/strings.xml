@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">RoyIdanProject</string>
+
+    <string-array name="spinner_phone" id="@+id/spinnerItems_phone">
+        <item>050</item>
+        <item>051</item>
+        <item>052</item>
+        <item>053</item>
+        <item>054</item>
+        <item>055</item>
+        <item>056</item>
+        <item>057</item>
+        <item>058</item>
+        <item>059</item>
+    </string-array>
+
+    <string-array name="spinner_city" id="@+id/spinnerItems_city">
+        <item>select city</item>
+        <item>Tel Aviv</item>
+        <item>Jerusalem</item>
+        <item>Ashdod</item>
+    </string-array>
+
+</resources>

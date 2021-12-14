@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_register"
+        android:title="הרשמה"
+        android:orderInCategory="10"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_login"
+        android:title="התחבר"
+        android:orderInCategory="10"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="התנתק"
+        android:orderInCategory="10"
+        app:showAsAction="never" />
+
+
+</menu>

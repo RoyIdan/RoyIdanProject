@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="X"
+        android:layout_gravity="right"
+        android:id="@+id/btnClose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About Page"
+        android:layout_marginTop="-40dp"
+        android:layout_gravity="center"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+
+        android:text="ברוכים הבאים לאפליקציה שלנו!
+        \n\n\כאן תוכלו למצוא את הטלפונים הכי חדשים במחירים הכי זולים!
+        \n\nבאפליקציה תוכלו להירשם, להתחבר להזמין טלפונים ולשלם במקום עם כרטיס אשראי והמוצר יגיע אליכם בדואר.
+        \n\nהכל מאובטח ואין מה לדאוג לגבי גניבת פרטי אשראי וכו'.
+        \n\n\לפרטים נוספים ניתן ליצור עמנו קשר:
+        \nבדוא''ל: s32334@nhs.co.il
+        \nאו בטלפון: 0509254011" />
+
+</LinearLayout>
