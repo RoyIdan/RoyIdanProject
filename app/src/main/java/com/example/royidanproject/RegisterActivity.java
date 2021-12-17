@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,7 +31,8 @@ import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Users;
-import com.example.royidanproject.Utility.CommonMethods;
+import com.example.royidanproject.Utility.CitiesIsrael;
+import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.Validator;
 
@@ -89,6 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         setViewPointers();
+        setSpinnerData();
+
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(RegisterActivity.this);
@@ -147,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
                         return;
                     }
 
-                    String photo = CommonMethods.savePhoto(bmUser);
+                    String photo = UserImages.savePhoto(bmUser);
                     if (photo == null) {
                         toast("Failed to save the photo");
                         return;
@@ -216,6 +220,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void setSpinnerData() {
+        Spinner spinner = spiCity;
+        List<String> list = CitiesIsrael.GetListCitiesInIsrael();
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+    }
+
     private void updateMode() {
         ((TextView)findViewById(R.id.tvTitle)).setText("Update form");
         btnRegister.setText("Update");
@@ -238,7 +251,7 @@ public class RegisterActivity extends AppCompatActivity {
         spiCity.setSelection(Arrays.asList(getResources().getStringArray(R.array.spinner_city)).indexOf(city));
         spiPhone.setSelection(Integer.parseInt(String.valueOf(phone.charAt(2))));
         etPhone.setText(phone.substring(3));
-        bmUser = CommonMethods.getImage(photo);
+        bmUser = UserImages.getImage(photo);
         ivImage.setImageBitmap(bmUser);
 
         Bitmap originPhoto = bmUser;
@@ -275,12 +288,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!(bmUser == originPhoto)) {
-                    String photo = CommonMethods.savePhoto(bmUser);
+                    String photo = UserImages.savePhoto(bmUser);
                     if (photo == null) {
                         toast("Failed to save the photo");
                         return;
                     }
-                    CommonMethods.deletePhoto(user.getUserPhoto());
+                    UserImages.deletePhoto(user.getUserPhoto());
                     user.setUserPhoto(photo);
                 }
 

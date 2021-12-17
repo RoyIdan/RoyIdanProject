@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,15 @@ import android.widget.TextView;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
-import com.example.royidanproject.Utility.CommonMethods;
+import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String FOLDER_NAME = "photosEmulatorDirectory";
+    public static final String USERS_FOLDER_NAME = "royIdanProject_Users";
+    public static final String PRODUCTS_FOLDER_NAME = "royIdanProject_Products";
     public static final String SP_NAME = "USER_INFO";
     public static final String ADMIN_PHONE = "0509254011";
     private SharedPreferences sp;
@@ -33,26 +37,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //addSampleProducts();
+
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
 
         startActivity(new Intent(MainActivity.this, GalleryActivity.class));
 
-        Smartphone smartphone = new Smartphone();
-        smartphone.setProductName("galaxy s21");
-        smartphone.setProductPrice(2);
-        smartphone.setProductStock(2);
-        smartphone.setProductManufacturer("Samsung");
-        smartphone.setPhoneStorageSize(128);
 
-        db.smartphonesDao().insert(smartphone);
-
-        Smartphone sp1 = db.smartphonesDao().getSmartphoneById(1);
 
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.ivUser)).setImageBitmap(CommonMethods.getImage(sp.getString("image", "")));
+            ((ImageView)findViewById(R.id.ivUser)).setImageBitmap(UserImages.getImage(sp.getString("image", "")));
 
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
@@ -80,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnGalleryActivity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, GalleryActivity.class));
+            }
+        });
+
         findViewById(R.id.btnUsersActivity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addSampleProducts() {
+        Smartphone iphone11 = new Smartphone();
+        iphone11.setProductPhoto("iphone 11.png");
+        iphone11.setProductStock();
     }
 
     @Override

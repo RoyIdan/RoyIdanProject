@@ -11,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.royidanproject.BuildConfig;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
-import com.example.royidanproject.Utility.CommonMethods;
+import com.example.royidanproject.Utility.ProductImages;
+import com.example.royidanproject.Utility.UserImages;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class ProductsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.custom_users, null);
+        view = inflater.inflate(R.layout.custom_product, null);
 
         Product product = productsList.get(i);
         TextView tvProductName = view.findViewById(R.id.tvProductName);
@@ -83,11 +83,11 @@ public class ProductsAdapter extends BaseAdapter {
         Button btnAddToCart = view.findViewById(R.id.btnAddToCart);
 
         tvProductName.setText(product.getProductName());
-        tvProductPrice.setText(String.valueOf(product.getProductPrice()));
-        tvProductManufacturer.setText(product.getProductManufacturer());
-        tvProductRating.setText(String.valueOf(product.getProductRating()));
-        tvProductStock.setText(product.getProductStock());
-        ivProductPhoto.setImageBitmap(CommonMethods.getImage(product.getProductPhoto()));
+        tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
+        tvProductManufacturer.setText("יצרן: " + product.getProductManufacturer());
+        tvProductRating.setText("דירוג: " + String.valueOf(product.getProductRating()));
+        tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
+        ivProductPhoto.setImageBitmap(ProductImages.getImage(product.getProductPhoto()));
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override

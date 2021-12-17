@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.royidanproject.MainActivity.FOLDER_NAME;
+import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
-public class CommonMethods {
+public class UserImages {
     public static Bitmap getImage(String _filename) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + FOLDER_NAME);
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -33,7 +33,7 @@ public class CommonMethods {
     }
 
     public static void deletePhoto(String _filename) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + FOLDER_NAME);
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -52,7 +52,7 @@ public class CommonMethods {
     public static String savePhoto(Bitmap bitmap) {
             String _file = new SimpleDateFormat("yyMMdd-HH:mm:ss").format(new Date());
             _file += ".jpg";
-            File folder = new File(Environment.getExternalStorageDirectory() + "/" + FOLDER_NAME);
+            File folder = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
             if (!folder.exists()) {
                 folder.mkdirs();
             }

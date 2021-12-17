@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.Inflater;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
-import static com.example.royidanproject.MainActivity.FOLDER_NAME;
+import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
 public class UsersAdapter extends BaseAdapter {
 
@@ -167,7 +167,7 @@ public class UsersAdapter extends BaseAdapter {
         tvUserPhone.setText(user.getUserPhone());
         tvUserEmail.setText(user.getUserEmail());
 
-        File folder = new File(Environment.getExternalStorageDirectory() + "/" + FOLDER_NAME);
+        File folder = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
         Uri uri = Uri.parse("file://" + folder + "/" + photoName);
         ivPhoto.setImageURI(uri);
         return view;

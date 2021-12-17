@@ -30,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
-import static com.example.royidanproject.MainActivity.FOLDER_NAME;
+import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 import static com.example.royidanproject.Utility.Dialogs.createLoginDialog;
 
 public class UsersActivity extends AppCompatActivity {
@@ -69,7 +69,7 @@ public class UsersActivity extends AppCompatActivity {
         }
         adapter = new UsersAdapter(UsersActivity.this, usersList);
         lvUsers = findViewById(R.id.lvUsers);
-        lvUsers.setAdapter(adapter);;
+        lvUsers.setAdapter(adapter);
 
         if (sp.getBoolean("admin", false)) {
             findViewById(R.id.llSearchBar).setVisibility(View.VISIBLE);
@@ -113,7 +113,7 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void deletePhoto(String photoName) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + FOLDER_NAME);
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
         if (!file.exists()) {
             file.mkdirs();
         }
