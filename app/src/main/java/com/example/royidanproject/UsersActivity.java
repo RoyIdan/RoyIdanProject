@@ -61,7 +61,7 @@ public class UsersActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(UsersActivity.this);
         if (sp.getBoolean("admin", false)) {
-            usersList = db.usersDao().getAll();
+            usersList = db.usersDao().getAll_sorted();
         }
         else {
             usersList = new LinkedList<Users>();

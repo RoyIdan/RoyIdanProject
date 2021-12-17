@@ -6,11 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.royidanproject.BuildConfig;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
+import com.example.royidanproject.Utility.CommonMethods;
 
 import java.util.List;
 
@@ -67,7 +73,28 @@ public class ProductsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.custom_users, null);
 
+        Product product = productsList.get(i);
+        TextView tvProductName = view.findViewById(R.id.tvProductName);
+        TextView tvProductPrice = view.findViewById(R.id.tvProductPrice);
+        TextView tvProductManufacturer = view.findViewById(R.id.tvProductManufacturer);
+        TextView tvProductRating = view.findViewById(R.id.tvProductRating);
+        TextView tvProductStock = view.findViewById(R.id.tvProductStock);
+        ImageView ivProductPhoto = view.findViewById(R.id.ivProductPhoto);
+        Button btnAddToCart = view.findViewById(R.id.btnAddToCart);
 
+        tvProductName.setText(product.getProductName());
+        tvProductPrice.setText(String.valueOf(product.getProductPrice()));
+        tvProductManufacturer.setText(product.getProductManufacturer());
+        tvProductRating.setText(String.valueOf(product.getProductRating()));
+        tvProductStock.setText(product.getProductStock());
+        ivProductPhoto.setImageBitmap(CommonMethods.getImage(product.getProductPhoto()));
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Added " + product.getProductName(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         return view;
     }

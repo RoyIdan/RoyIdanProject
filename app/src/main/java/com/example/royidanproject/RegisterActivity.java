@@ -16,9 +16,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,15 +34,10 @@ import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.Validator;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -220,6 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
                 buildDateDialog();
             }
         });
+
     }
 
     private void updateMode() {
@@ -313,7 +307,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             private boolean checkEmailAndPhone(String email, String phone) {
-                List<Users> users = db.usersDao().getAll();
+                List<Users> users = db.usersDao().getAll_sorted();
 
                 for (Users u : users) {
                     if (u.getUserId() != user.getUserId() && email.equals(u.getUserEmail())) {
@@ -335,7 +329,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean checkEmailAndPhone(String email, String phone) {
-        List<Users> users = db.usersDao().getAll();
+        List<Users> users = db.usersDao().getAll_sorted();
 
         for (Users u : users) {
             if (email.equals(u.getUserEmail())) {

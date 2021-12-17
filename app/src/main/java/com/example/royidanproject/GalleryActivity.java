@@ -3,6 +3,7 @@ package com.example.royidanproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -51,9 +52,9 @@ public class GalleryActivity extends AppCompatActivity {
                 int index = 0;
                 LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
                 int count = llCategories.getChildCount();
-                for (int i = 0; i < count; i++) {
+                for (int i = 1; i < count; i++) {
                     View view = llCategories.getChildAt(i);
-                    if (v instanceof CheckBox) {
+                    if (view instanceof CheckBox) {
                         boxes[index++] = (((CheckBox) v).isChecked());
                     }
                 }
@@ -65,12 +66,12 @@ public class GalleryActivity extends AppCompatActivity {
                     productList.addAll(smartphonesList);
                 }
 
-                double from = Double.parseDouble(etFrom.getText().toString().trim());
-                double to = Double.parseDouble(etTo.getText().toString().trim());
+//                double from = Double.parseDouble(etFrom.getText().toString().trim());
+//                double to = Double.parseDouble(etTo.getText().toString().trim());
 
                 // TODO make the final query(ies)
 
-                adapter.updateProductsList(new LinkedList<>()); // TODO make actual list
+                adapter.updateProductsList(productList); // TODO make actual list
 
                 adapter.notifyDataSetInvalidated();
             }

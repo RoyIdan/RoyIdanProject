@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
-import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneManufacturer;
 import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.Dialogs;
 
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         smartphone.setProductName("galaxy s21");
         smartphone.setProductPrice(2);
         smartphone.setProductStock(2);
-        smartphone.setPhoneManufacturer(PhoneManufacturer.Samsung);
+        smartphone.setProductManufacturer("Samsung");
         smartphone.setPhoneStorageSize(128);
 
         db.smartphonesDao().insert(smartphone);
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateSample() {
         Intent i = new Intent(MainActivity.this, RegisterActivity.class);
-        i.putExtra("id",2l);
+        i.putExtra("id", 2L);
         i.putExtra("email","s3234@nhs.co.il");
         i.putExtra("phone","0569254011");
         i.putExtra("name","Roy");

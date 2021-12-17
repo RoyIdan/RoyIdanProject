@@ -15,10 +15,10 @@
     </string-array>
 
     <string-array name="spinner_city" id="@+id/spinnerItems_city">
-        <item>select city</item>
-        <item>Tel Aviv</item>
-        <item>Jerusalem</item>
-        <item>Ashdod</item>
+        <item>בחר עיר</item>
+        <item>תל אביב</item>
+        <item>ירושלים</item>
+        <item>אשדוד</item>
     </string-array>
 
 </resources>

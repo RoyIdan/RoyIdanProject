@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="5dp"
-        android:text="Welcome Guest"
+        android:text="שלום אורח"
         android:id="@+id/tvTitle"
         />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="User Screen"
+            android:text="מסך משתמשים"
             android:id="@+id/btnUsersActivity"/>
 
         <Button
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Log out"
+            android:text="התנתק"
             android:id="@+id/btnLogOut"/>
 
         <Button
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="something..." />
+            android:text="***" />
 
     </LinearLayout>
 
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Register"
+            android:text="הרשמה"
             android:id="@+id/btnRegisterActivity"/>
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Login"
+            android:text="התחברות"
             android:id="@+id/btnLogin"/>
 
         <Button
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="something..." />
+            android:text="***" />
 
     </LinearLayout>
 
@@ -100,6 +100,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="About us"
+        android:text="אודות"
         android:id="@+id/btnAboutUs"/>
 </LinearLayout>
