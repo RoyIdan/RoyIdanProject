@@ -27,6 +27,8 @@ public class ProductsAdapter extends BaseAdapter {
     private Context context;
     private List<Product> productsList;
     private LayoutInflater inflater;
+    private static final char star_filled = '⭐';
+    private static final char star_unfilled = '★';
     private AppDatabase db;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -85,7 +87,15 @@ public class ProductsAdapter extends BaseAdapter {
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
         tvProductManufacturer.setText("יצרן: " + product.getProductManufacturer());
-        tvProductRating.setText("דירוג: " + String.valueOf(product.getProductRating()));
+        String rating = "";
+        int j = 0, max = (int)(product.getProductRating());
+        while (j++ < max) {
+            rating += star_filled;
+        }
+        while (max++ < 5) {
+            rating += star_unfilled;
+        }
+        tvProductRating.setText("דירוג: " + rating + "(" + String.valueOf(product.getProductRating()) + ")");
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
         ivProductPhoto.setImageBitmap(ProductImages.getImage(product.getProductPhoto()));
 

@@ -19,6 +19,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
+import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneColor;
 
 import java.io.File;
 
@@ -37,15 +38,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //addSampleProducts();
-
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
 
+//        addSampleProducts();
+//        if (1 > 0) return;
+
         startActivity(new Intent(MainActivity.this, GalleryActivity.class));
-
-
 
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
@@ -109,7 +109,34 @@ public class MainActivity extends AppCompatActivity {
     private void addSampleProducts() {
         Smartphone iphone11 = new Smartphone();
         iphone11.setProductPhoto("iphone 11.png");
-        iphone11.setProductStock();
+        iphone11.setProductStock(5);
+        iphone11.setPhoneColor(PhoneColor.Black);
+        iphone11.setPhoneModel("iPhone_11");
+        iphone11.setPhoneRamSize(8);
+        iphone11.setPhoneScreenSize(8);
+        iphone11.setPhoneStorageSize(128);
+        iphone11.setProductManufacturer("Apple");
+        iphone11.setProductPrice(2000);
+        iphone11.setProductRating(4.2);
+        iphone11.setProductRating_count(12);
+        iphone11.setProductName("iPhone 11");
+
+        Smartphone galaxyS10 = new Smartphone();
+        galaxyS10.setProductPhoto("galaxyS10.jpg");
+        galaxyS10.setProductStock(3);
+        galaxyS10.setPhoneColor(PhoneColor.White);
+        galaxyS10.setPhoneModel("galaxy_s10");
+        galaxyS10.setPhoneRamSize(6);
+        galaxyS10.setPhoneScreenSize(7);
+        galaxyS10.setPhoneStorageSize(64);
+        galaxyS10.setProductManufacturer("Samsung");
+        galaxyS10.setProductPrice(1500);
+        galaxyS10.setProductRating(4.3);
+        galaxyS10.setProductRating_count(11);
+        galaxyS10.setProductName("Galaxy S10");
+
+        db.smartphonesDao().insert(iphone11);
+        db.smartphonesDao().insert(galaxyS10);
     }
 
     @Override
