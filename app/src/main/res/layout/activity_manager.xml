@@ -1,9 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManagerActivity">
+    tools:context=".ManagerActivity"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--Buttons Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center" >
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="מוצרים"
+            android:textSize="15dp"
+            android:layout_marginHorizontal= "10dp"
+            android:id="@+id/btnProducts" />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="יצרנים"
+            android:textSize="15dp"
+            android:layout_marginHorizontal= "10dp"
+            android:id="@+id/btnManufacturers" />
+        <!--TODO - Replace this with something else-->
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="משהו"
+            android:textSize="15dp"
+            android:layout_marginHorizontal= "10dp"
+            android:id="@+id/btnSomething"/>
+
+
+    </LinearLayout>
+
+    <!--Products Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="דף ניהול מוצרים"
+            android:background="#FFFF00"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <!--Add / Edit selection layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="הוספת מוצר חדש"
+                android:id="@+id/btnAddNewProduct" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="עריכת מוצרים קיימים"
+                android:id="@+id/btnEditExistingProducts" />
+
+        </LinearLayout>
+
+        <!--Add new product layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/llAddNewProduct"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="דף הוספת מוצר"
+                android:background="#FFFF00"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ll_spiCategory">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20dp"
+                    android:text="קטגוריה:" />
+
+
+                <Spinner
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/spinner_city"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ll_spiManufacturer">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20dp"
+                    android:text="יצרן:" />
+
+
+                <Spinner
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/spinner_city"/>
+
+            </LinearLayout>
+
+            <!--Add new product layout (common properties)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/llAddNewProductCommon"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--שם מוצר-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+
+                    android:id="@+id/ll_etName">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="שם מוצר:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="10dp"
+                        android:text="ככג"
+                        android:textSize="18dp"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnoqrstuvwxyz1234567890_-"
+                        android:id="@+id/etName"/>
+
+                </LinearLayout>
+
+                <!--מחיר-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp"
+                    android:id="@+id/ll_etPrice">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="מחיר:" />
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="5000"
+                        android:textSize="18dp"
+                        android:digits="1234567890"
+                        android:id="@+id/etPrice"/>
+
+                </LinearLayout>
+
+                <!--מלאי-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp"
+                    android:id="@+id/ll_etStock">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="מלאי:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="ככג"
+                        android:textSize="18dp"
+                        android:digits="1234567890"
+                        android:id="@+id/etStock"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--Add new product layout (smartphone)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/llAddNewProductSmartphone"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--
+                private PhoneColor phoneColor;
+                private int phoneScreenSize;
+                private int phoneStorageSize;
+                private int phoneRamSize;
+                -->
+
+                <!--צבע-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+
+                    android:id="@+id/ll_rdColor">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="צבע:"
+                        android:layout_marginRight="20dp"/>
+
+                    <RadioGroup
+                        android:layout_width="175dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle" />
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle" />
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!--מחיר-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp"
+                    android:id="@+id/ll_etPrice">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="מחיר:" />
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="5000"
+                        android:textSize="18dp"
+                        android:digits="1234567890"
+                        android:id="@+id/etPrice"/>
+
+                </LinearLayout>
+
+                <!--מלאי-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp"
+                    android:id="@+id/ll_etStock">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="מלאי:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="ככג"
+                        android:textSize="18dp"
+                        android:digits="1234567890"
+                        android:id="@+id/etStock"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

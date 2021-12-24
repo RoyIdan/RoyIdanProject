@@ -102,6 +102,7 @@ public class ProductsAdapter extends BaseAdapter {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO - Add the item to the cart
                 Toast.makeText(context, "Added " + product.getProductName(), Toast.LENGTH_LONG).show();
             }
         });
