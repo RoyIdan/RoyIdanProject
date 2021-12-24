@@ -15,8 +15,10 @@ import com.example.royidanproject.Adapters.ProductsAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,22 +82,32 @@ public class GalleryActivity extends AppCompatActivity {
 
                 String from  = etFrom.getText().toString().trim();
                 String to = etTo.getText().toString().trim();
+                boolean from_valid = false;
+                boolean to_valid = false;
+                try {
+                    Double.parseDouble(from);
+                    from_valid = true;
+                } catch (NumberFormatException e) { }
+                try {
+                    Double.parseDouble(to);
+                    to_valid = true;
+                } catch (NumberFormatException e) { }
 
-                if (!from.isEmpty() && !to.isEmpty()) {
+                if (!from.isEmpty() && from_valid && !to.isEmpty() && to_valid) {
 
                     if (!query.isEmpty())
                     query += " and ";
 
                     query += "productPrice between " + from + " and " + to;
                 }
-                else if (!from.isEmpty()) {
+                else if (!from.isEmpty() && from_valid) {
 
                     if (!query.isEmpty())
                         query += " and ";
 
                     query += "productPrice > " + from;
                 }
-                else if (!to.isEmpty()) {
+                else if (!to.isEmpty() && to_valid) {
 
                     if (!query.isEmpty())
                         query += " and ";
@@ -103,6 +115,7 @@ public class GalleryActivity extends AppCompatActivity {
                     query += "productPrice < " + to;
                 }
 
+                // Smartphones
                 if (boxes[0]) {
                     List<Smartphone> smartphonesList;
                     if (query.isEmpty()) {
@@ -115,7 +128,18 @@ public class GalleryActivity extends AppCompatActivity {
                     productList.addAll(smartphonesList);
                 }
 
-                // TODO make the final query(ies)
+                //Watches
+                if (boxes[0]) {
+                    List<Watch> watchesList;
+                    if (query.isEmpty()) {
+                        watchesList = db.watchesDao().getAll();
+                    }
+                    else {
+                        watchesList = db.watchesDao().getByQuery(query);
+                    }
+
+                    productList.addAll(watchesList);
+                }
 
                 adapter.updateProductsList(productList); // TODO make actual list
 

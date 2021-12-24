@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 //        addSampleProducts();
 //        if (1 > 0) return;
 
-        startActivity(new Intent(MainActivity.this, GalleryActivity.class));
+        startActivity(new Intent(MainActivity.this, ThreadActivity.class));
 
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
