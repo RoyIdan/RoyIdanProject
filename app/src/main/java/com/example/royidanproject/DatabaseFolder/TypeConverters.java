@@ -15,6 +15,4 @@ public class TypeConverters {
         return date == null ? null : date.getTime();
     }
 
-
-
 }

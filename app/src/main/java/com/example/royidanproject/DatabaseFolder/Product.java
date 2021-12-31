@@ -12,6 +12,9 @@ public class Product {
     private String productName;
     private double productPrice;
     private int productStock;
+    private long manufacturerId;
+    private int productRating_sum;
+    private int productRating_count;
     private String productPhoto;
 
     public long getProductId() {
@@ -46,11 +49,44 @@ public class Product {
         this.productStock = productStock;
     }
 
+    public long getProductManufacturer() {
+        return manufacturerId;
+    }
+
+    public void setProductManufacturer(long productManufacturer) {
+        this.manufacturerId = productManufacturer;
+    }
+
+    public int getProductRating_sum() {
+        return productRating_sum;
+    }
+
+    public void setProductRating_sum(int productRating_sum) {
+        this.productRating_sum = productRating_sum;
+    }
+
+    public int getProductRating_count() {
+        return productRating_count;
+    }
+
+    public void setProductRating_count(int productRating_count) {
+        this.productRating_count = productRating_count;
+    }
+
     public String getProductPhoto() {
         return productPhoto;
     }
 
     public void setProductPhoto(String productPhoto) {
         this.productPhoto = productPhoto;
+    }
+
+    public double getProductRating() {
+        return (double) productRating_count / productRating_sum;
+    }
+
+    public void addProductRating(int rating) {
+        productRating_sum += rating;
+        productRating_count++;
     }
 }

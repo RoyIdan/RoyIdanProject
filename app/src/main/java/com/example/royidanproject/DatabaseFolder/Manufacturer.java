@@ -1,5 +1,6 @@
 package com.example.royidanproject.DatabaseFolder;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
