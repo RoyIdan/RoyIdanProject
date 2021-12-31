@@ -95,14 +95,22 @@ public class ProductsAdapter extends BaseAdapter {
         while (max++ < 5) {
             rating += star_unfilled;
         }
-        tvProductRating.setText("דירוג: " + rating + "(" + String.valueOf(product.getProductRating()) + ")");
+        tvProductRating.setText("דירוג: " + rating + "(" + ((int)(product.getProductRating() * 100.0)) / 100.0 + ")");
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
-        ivProductPhoto.setImageBitmap(ProductImages.getImage(product.getProductPhoto()));
+        ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto()));
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Added " + product.getProductName(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // open details when clicking on the product
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

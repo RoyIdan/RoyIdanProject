@@ -2,6 +2,7 @@ package com.example.royidanproject.Utility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import java.util.Date;
 import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
 public class UserImages {
-    public static Bitmap getImage(String _filename) {
+    public static Bitmap getImageBitmap(String _filename) {
         File file = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
         if (!file.exists()) {
             file.mkdirs();
@@ -30,6 +31,12 @@ public class UserImages {
             }
         }
         return null;
+    }
+
+    public static Uri getImage(String _filename) {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
+        Uri uri = Uri.parse("file://" + folder + "/" + _filename);
+        return uri == null ? null : uri;
     }
 
     public static void deletePhoto(String _filename) {

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +16,17 @@ import android.widget.TextView;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneColor;
+import com.example.royidanproject.DatabaseFolder.Watch.WatchSize;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.Black;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,14 +47,19 @@ public class MainActivity extends AppCompatActivity {
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
 
+        Date date = new Date();
+        date.setMinutes(3);
+        date.setSeconds(2);
+        String a = new SimpleDateFormat("dd/MM/yy mm:ss").format(date);
+
 //        addSampleProducts();
 //        if (1 > 0) return;
 
-        startActivity(new Intent(MainActivity.this, ThreadActivity.class));
+        //startActivity(new Intent(MainActivity.this, GalleryActivity.class));
 
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.ivUser)).setImageBitmap(UserImages.getImage(sp.getString("image", "")));
+            ((ImageView)findViewById(R.id.ivUser)).setImageURI(UserImages.getImage(sp.getString("image", "")));
 
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
@@ -135,8 +145,21 @@ public class MainActivity extends AppCompatActivity {
         galaxyS10.setProductRating_count(11);
         galaxyS10.setProductName("Galaxy S10");
 
+        Watch appleWatch = new Watch();
+        appleWatch.setProductPhoto("AppleWatch.png");
+        appleWatch.setProductStock(4);
+        appleWatch.setProductManufacturer("Samsung");
+        appleWatch.setProductPrice(900);
+        appleWatch.setProductRating(4.4);
+        appleWatch.setProductRating_count(3);
+        appleWatch.setProductName("44mm Apple Watch SE GPS");
+        appleWatch.setWatchSize(WatchSize.M);
+        appleWatch.setWatchColor(Black);
+
+
         db.smartphonesDao().insert(iphone11);
         db.smartphonesDao().insert(galaxyS10);
+        db.watchesDao().insert(appleWatch);
     }
 
     @Override

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="X"
+        android:layout_gravity="right"
+        android:id="@+id/btnClose" />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="-30dp"
+        android:text="iPhone 11"
+        android:maxLines="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="15sp"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeStepGranularity="2sp"
+        />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:src="@drawable/iphone11"
+        android:id="@+id/ivProductPhoto" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="סוג: סמארטפון"
+            android:id="@+id/tvType" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="יצרן: Apple"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvManufacturer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="מחיר: 1000"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvPrice" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="דירוג: ★⭐⭐⭐⭐ (4.2)"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvRating" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="במלאי: כן"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvStock" />
+
+
+
+        // Smartphone layout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

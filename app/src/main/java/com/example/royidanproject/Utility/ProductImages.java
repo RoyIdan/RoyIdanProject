@@ -2,6 +2,7 @@ package com.example.royidanproject.Utility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
@@ -12,24 +13,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.example.royidanproject.MainActivity.PRODUCTS_FOLDER_NAME;
+import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
 public class ProductImages {
-    public static Bitmap getImage(String _filename) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        if (file != null && file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    if (f.getName().equals(_filename)) {
-                        return BitmapFactory.decodeFile(f.getPath());
-                    }
-                }
-            }
-        }
-        return null;
+    public static Uri getImage(String _filename) {
+//        File file = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        if (file != null && file.isDirectory()) {
+//            File[] files = file.listFiles();
+//            if (files != null) {
+//                for (File f : files) {
+//                    if (f.getName().equals(_filename)) {
+//                        return BitmapFactory.decodeFile(f.getPath());
+//                    }
+//                }
+//            }
+//        }
+
+        File folder = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+        Uri uri = Uri.parse("file://" + folder + "/" + _filename);
+        return uri == null ? null : uri;
     }
 
     public static void deletePhoto(String _filename) {

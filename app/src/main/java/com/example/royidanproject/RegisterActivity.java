@@ -119,9 +119,12 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (rgGender.getCheckedRadioButtonId() == -1) {
-                        ((TextView) findViewById(R.id.tvGenderError)).setError("Please select gender.");
+                        ((TextView) findViewById(R.id.tvGenderError)).setError("בחר מגדר.");
                         return;
                     }
+
+                    ArrayAdapter adapter = (ArrayAdapter)spiCity.getAdapter();
+
 
                     String email = etEmail.getText().toString().trim();
                     String phone = spiPhone.getSelectedItem().toString() + etPhone.getText().toString().trim();
@@ -251,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
         spiCity.setSelection(Arrays.asList(getResources().getStringArray(R.array.spinner_city)).indexOf(city));
         spiPhone.setSelection(Integer.parseInt(String.valueOf(phone.charAt(2))));
         etPhone.setText(phone.substring(3));
-        bmUser = UserImages.getImage(photo);
+        bmUser = UserImages.getImageBitmap(photo);
         ivImage.setImageBitmap(bmUser);
 
         Bitmap originPhoto = bmUser;

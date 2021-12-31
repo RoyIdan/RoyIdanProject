@@ -9,7 +9,7 @@ import androidx.room.Query;
 @Dao
 public interface WatchesDao {
     @Query("SELECT * FROM tblWatches WHERE productId = :watchId")
-    Smartphone getSmartphoneById(long watchId);
+    Watch getWatchById(long watchId);
 
     @Insert
     long insert(Watch watch);

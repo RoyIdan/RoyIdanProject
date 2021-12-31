@@ -24,7 +24,7 @@ import java.util.List;
 
 public class GalleryActivity extends AppCompatActivity {
 
-    TextInputEditText etFrom, etTo;
+    TextInputEditText etFrom, etTo, etFilter;
     Button btnFilter, btnMainActivity;
     ListView lvProducts;
     ProductsAdapter adapter;
@@ -33,6 +33,7 @@ public class GalleryActivity extends AppCompatActivity {
     private void setViewPointers() {
         etFrom = findViewById(R.id.etFrom);
         etTo = findViewById(R.id.etTo);
+        etFilter = findViewById(R.id.etFilter);
         btnFilter = findViewById(R.id.btnFilter);
         lvProducts = findViewById(R.id.lvProducts);
     }
@@ -55,6 +56,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         List<Product> productList = new LinkedList<>();
         productList.addAll(db.smartphonesDao().getAll());
+        productList.addAll(db.watchesDao().getAll());
         // TODO - add the rest
 
         adapter = new ProductsAdapter(GalleryActivity.this, productList);
@@ -115,6 +117,14 @@ public class GalleryActivity extends AppCompatActivity {
                     query += "productPrice < " + to;
                 }
 
+                String filter = etFilter.getText().toString().trim();
+                if (!filter.isEmpty()) {
+                    if (!query.isEmpty()) {
+                        query += " and ";
+                    }
+                    query += "productName LIKE %" + filter + "%";
+                }
+
                 // Smartphones
                 if (boxes[0]) {
                     List<Smartphone> smartphonesList;
@@ -129,7 +139,7 @@ public class GalleryActivity extends AppCompatActivity {
                 }
 
                 //Watches
-                if (boxes[0]) {
+                if (boxes[1]) {
                     List<Watch> watchesList;
                     if (query.isEmpty()) {
                         watchesList = db.watchesDao().getAll();

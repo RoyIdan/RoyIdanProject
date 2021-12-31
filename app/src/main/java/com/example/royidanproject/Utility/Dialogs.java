@@ -15,6 +15,7 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.example.royidanproject.MainActivity.ADMIN_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
@@ -111,6 +112,23 @@ public class Dialogs {
         dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public static void createProductDialog(Context context) {
+        View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_about, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(promptDialog);
+        final AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 dialog.dismiss();
             }
         });
