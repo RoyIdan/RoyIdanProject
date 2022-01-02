@@ -1,6 +1,7 @@
 package com.example.royidanproject.Utility;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -133,4 +134,5 @@ public class Dialogs {
             }
         });
     }
+
 }

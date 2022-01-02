@@ -43,6 +43,8 @@ public class GalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
+        Log.i("aad", "gal");
+
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override

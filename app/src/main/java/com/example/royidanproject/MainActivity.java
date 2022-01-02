@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PRODUCTS_FOLDER_NAME = "royIdanProject_Products";
     public static final String SP_NAME = "USER_INFO";
     public static final String ADMIN_PHONE = "0509254011";
+    public static boolean FIRST_LAUNCH = true;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private AppDatabase db;
@@ -47,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
 
-        Date date = new Date();
-        date.setMinutes(3);
-        date.setSeconds(2);
-        String a = new SimpleDateFormat("dd/MM/yy mm:ss").format(date);
 
 //        addSampleProducts();
 //        if (1 > 0) return;
