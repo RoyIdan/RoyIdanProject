@@ -86,7 +86,7 @@ public class ProductsAdapter extends BaseAdapter {
 
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
-        tvProductManufacturer.setText("יצרן: " + product.getProductManufacturer());
+        tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
         String rating = "";
         int j = 0, max = (int)(product.getProductRating());
         while (j++ < max) {

@@ -15,6 +15,9 @@ public interface UsersDao {
     @Query("SELECT * FROM tblUsers")
     List<Users> getAll();
 
+    @Query("SELECT * FROM tblUsers ORDER BY userName, userSurname")
+    List<Users> getAll_sorted();
+
     @Query("SELECT * FROM tblUsers WHERE userId = :userId")
     Users getUserById(long userId);
 

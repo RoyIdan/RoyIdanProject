@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "tblSmartphones")
 public class Smartphone extends Product {
     private PhoneColor phoneColor;
-    private String phoneModel;
     private int phoneScreenSize;
     private int phoneStorageSize;
     private int phoneRamSize;
@@ -18,14 +17,6 @@ public class Smartphone extends Product {
 
     public void setPhoneColor(PhoneColor phoneColor) {
         this.phoneColor = phoneColor;
-    }
-
-    public String getPhoneModel() {
-        return phoneModel;
-    }
-
-    public void setPhoneModel(String phoneModel) {
-        this.phoneModel = phoneModel;
     }
 
     public int getPhoneScreenSize() {

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Query;
 
 @Entity(tableName = "tblProducts")
 public class Product {
@@ -49,12 +50,12 @@ public class Product {
         this.productStock = productStock;
     }
 
-    public long getProductManufacturer() {
+    public long getManufacturerId() {
         return manufacturerId;
     }
 
-    public void setProductManufacturer(long productManufacturer) {
-        this.manufacturerId = productManufacturer;
+    public void setManufacturerId(long manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
     public int getProductRating_sum() {

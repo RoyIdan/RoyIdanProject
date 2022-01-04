@@ -14,6 +14,6 @@ public class RoyIdanProject extends Application {
     public void onCreate() {
         super.onCreate();
 
-        startActivity(new Intent(getApplicationContext(), StartupActivity.class));
+        startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
     }
 }

@@ -9,6 +9,9 @@ import androidx.room.Query;
 @Dao
 public interface SmartphonesDao {
 
+    @Query("SELECT * FROM tblSmartphones")
+    List<Smartphone> getAll();
+
     @Query("SELECT * FROM tblSmartphones WHERE productId = :smartphoneId")
     Smartphone getSmartphoneById(long smartphoneId);
 

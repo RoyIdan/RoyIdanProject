@@ -19,9 +19,12 @@ public interface ManufacturersDao {
     public Manufacturer getManufacturerByName(long manufacturerName);
 
     @Insert
-    public void insert();
+    public void insert(Manufacturer manufacturer);
+
+    @Insert
+    public void insertAll(List<Manufacturer> manufacturers);
 
     @Delete
-    public void deleteById(long id);
+    public void delete(Manufacturer manufacturer);
 
 }

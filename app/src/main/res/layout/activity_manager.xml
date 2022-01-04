@@ -48,7 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:id="@+id/llProducts"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="150dp"
@@ -93,7 +95,8 @@
             android:id="@+id/llAddNewProduct"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="150dp"
@@ -126,7 +129,8 @@
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:entries="@array/spinner_city"/>
+                    android:entries="@array/spinner_city"
+                    android:id="@+id/spiCategory" />
 
             </LinearLayout>
 
@@ -151,7 +155,8 @@
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:entries="@array/spinner_city"/>
+                    android:entries="@array/spinner_city"
+                    android:id="@+id/spiManufacturer" />
 
             </LinearLayout>
 
@@ -170,9 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_gravity="center"
-
-                    android:id="@+id/ll_etName">
+                    android:layout_gravity="center">
 
                     <TextView
                         android:layout_width="80dp"
@@ -200,8 +203,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-10dp"
-                    android:id="@+id/ll_etPrice">
+                    android:layout_marginTop="-10dp">
 
                     <TextView
                         android:layout_width="80dp"
@@ -228,8 +230,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-10dp"
-                    android:id="@+id/ll_etStock">
+                    android:layout_marginTop="-10dp">
 
                     <TextView
                         android:layout_width="80dp"
@@ -262,7 +263,8 @@
                 android:id="@+id/llAddNewProductSmartphone"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <!--
                 private PhoneColor phoneColor;
@@ -276,9 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_gravity="center"
-
-                    android:id="@+id/ll_rdColor">
+                    android:layout_gravity="center">
 
                     <TextView
                         android:layout_width="80dp"
@@ -294,7 +294,8 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:id="@+id/rgSmartphoneColor">
 
                         <RadioButton
                             android:layout_width="25dp"
@@ -327,14 +328,13 @@
 
                 </LinearLayout>
 
-                <!--מחיר-->
+                <!--גודל מסך-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-10dp"
-                    android:id="@+id/ll_etPrice">
+                    android:layout_marginTop="-10dp">
 
                     <TextView
                         android:layout_width="80dp"
@@ -342,7 +342,7 @@
                         android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textSize="18dp"
-                        android:text="מחיר:" />
+                        android:text="גודל מסך:" />
 
                     <EditText
                         android:layout_width="150dp"
@@ -351,26 +351,25 @@
                         android:text="5000"
                         android:textSize="18dp"
                         android:digits="1234567890"
-                        android:id="@+id/etPrice"/>
+                        android:id="@+id/etScreenSize"/>
 
                 </LinearLayout>
 
-                <!--מלאי-->
+                <!--נפח אחסון-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-10dp"
-                    android:id="@+id/ll_etStock">
+                    android:layout_marginTop="-10dp">
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="90dp"
                         android:layout_height="50dp"
                         android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textSize="18dp"
-                        android:text="מלאי:" />
+                        android:text="נפח אחסון:" />
 
 
                     <EditText
@@ -380,7 +379,35 @@
                         android:text="ככג"
                         android:textSize="18dp"
                         android:digits="1234567890"
-                        android:id="@+id/etStock"/>
+                        android:id="@+id/etStorageSize"/>
+
+                </LinearLayout>
+
+                <!--גודל זיכרון-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="זיכרון:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="ככג"
+                        android:textSize="18dp"
+                        android:digits="1234567890"
+                        android:id="@+id/etRamSize"/>
 
                 </LinearLayout>
 

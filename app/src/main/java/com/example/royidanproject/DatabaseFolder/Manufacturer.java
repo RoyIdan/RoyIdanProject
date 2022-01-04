@@ -25,4 +25,9 @@ public class Manufacturer {
     public void setManufacturerName(String manufacturerName) {
         this.manufacturerName = manufacturerName;
     }
+
+    @Override
+    public String toString() {
+        return manufacturerName;
+    }
 }
