@@ -122,6 +122,7 @@
         android:textSize="20dp"
         android:hint="תאריך לידה"
         android:id="@+id/etBirthdate"
+        android:focusable="false"
         />
     <EditText
         android:layout_width="300dp"

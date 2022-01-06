@@ -1,19 +1,90 @@
 package com.example.royidanproject;
 
+import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.Black;
+
 import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.Manufacturer;
+import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.StartupThread;
 
 public class RoyIdanProject extends Application {
+    private AppDatabase db;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        db = AppDatabase.getInstance(getApplicationContext());
+        if (true) {
+            if (db.manufacturersDao().getAll().isEmpty()) {
+                addSampleProducts();
+            }
+        }
+
         startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
+    }
+
+    private void addSampleProducts() {
+
+        Manufacturer apple = new Manufacturer();
+        apple.setManufacturerName("Apple");
+
+        Manufacturer samsung = new Manufacturer();
+        samsung.setManufacturerName("Samsung");
+
+        db.manufacturersDao().insert(apple);
+        db.manufacturersDao().insert(samsung);
+
+
+        Smartphone iphone11 = new Smartphone();
+        iphone11.setProductPhoto("iphone 11.png");
+        iphone11.setProductStock(5);
+        iphone11.setPhoneColor(Smartphone.PhoneColor.Black);
+        iphone11.setPhoneRamSize(8);
+        iphone11.setPhoneScreenSize(8);
+        iphone11.setPhoneStorageSize(128);
+        iphone11.setManufacturerId(0); // Apple
+        iphone11.setProductPrice(2000);
+        iphone11.setProductRating_count(5);
+        iphone11.setProductRating_sum(21);
+        iphone11.setProductName("iPhone 11");
+
+        Smartphone galaxyS10 = new Smartphone();
+        galaxyS10.setProductPhoto("galaxyS10.jpg");
+        galaxyS10.setProductStock(3);
+        galaxyS10.setPhoneColor(Smartphone.PhoneColor.White);
+        galaxyS10.setPhoneRamSize(6);
+        galaxyS10.setPhoneScreenSize(7);
+        galaxyS10.setPhoneStorageSize(64);
+        galaxyS10.setManufacturerId(1); // Samsung
+        galaxyS10.setProductPrice(1500);
+        galaxyS10.setProductRating_sum(22);
+        galaxyS10.setProductRating_count(5);
+        galaxyS10.setProductName("Galaxy S10");
+
+        Watch appleWatch = new Watch();
+        appleWatch.setProductPhoto("AppleWatch.png");
+        appleWatch.setProductStock(4);
+        appleWatch.setManufacturerId(1);
+        appleWatch.setProductPrice(900);
+        appleWatch.setProductRating_sum(19);
+        appleWatch.setProductRating_count(12);
+        appleWatch.setProductRating_count(3);
+        appleWatch.setProductName("44mm Apple Watch SE GPS");
+        appleWatch.setWatchSize(Watch.WatchSize.M);
+        appleWatch.setWatchColor(Black);
+
+
+        db.smartphonesDao().insert(iphone11);
+        db.smartphonesDao().insert(galaxyS10);
+        db.watchesDao().insert(appleWatch);
     }
 }

@@ -117,62 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addSampleProducts() {
-
-        Manufacturer apple = new Manufacturer();
-        apple.setManufacturerName("Apple");
-
-        Manufacturer samsung = new Manufacturer();
-        apple.setManufacturerName("Samsung");
-
-        db.manufacturersDao().insert(apple);
-        db.manufacturersDao().insert(samsung);
-
-
-        Smartphone iphone11 = new Smartphone();
-        iphone11.setProductPhoto("iphone 11.png");
-        iphone11.setProductStock(5);
-        iphone11.setPhoneColor(PhoneColor.Black);
-        iphone11.setPhoneRamSize(8);
-        iphone11.setPhoneScreenSize(8);
-        iphone11.setPhoneStorageSize(128);
-        iphone11.setManufacturerId(0); // Apple
-        iphone11.setProductPrice(2000);
-        iphone11.setProductRating_count(5);
-        iphone11.setProductRating_sum(21);
-        iphone11.setProductName("iPhone 11");
-
-        Smartphone galaxyS10 = new Smartphone();
-        galaxyS10.setProductPhoto("galaxyS10.jpg");
-        galaxyS10.setProductStock(3);
-        galaxyS10.setPhoneColor(PhoneColor.White);
-        galaxyS10.setPhoneRamSize(6);
-        galaxyS10.setPhoneScreenSize(7);
-        galaxyS10.setPhoneStorageSize(64);
-        galaxyS10.setManufacturerId(1); // Samsung
-        galaxyS10.setProductPrice(1500);
-        iphone11.setProductRating_sum(22);
-        galaxyS10.setProductRating_count(5);
-        galaxyS10.setProductName("Galaxy S10");
-
-        Watch appleWatch = new Watch();
-        appleWatch.setProductPhoto("AppleWatch.png");
-        appleWatch.setProductStock(4);
-        appleWatch.setManufacturerId(1);
-        appleWatch.setProductPrice(900);
-        iphone11.setProductRating_sum(19);
-        iphone11.setProductRating_count(12);
-        appleWatch.setProductRating_count(3);
-        appleWatch.setProductName("44mm Apple Watch SE GPS");
-        appleWatch.setWatchSize(WatchSize.M);
-        appleWatch.setWatchColor(Black);
-
-
-        db.smartphonesDao().insert(iphone11);
-        db.smartphonesDao().insert(galaxyS10);
-        db.watchesDao().insert(appleWatch);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

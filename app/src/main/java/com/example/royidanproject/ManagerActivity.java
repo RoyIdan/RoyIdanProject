@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +25,7 @@ public class ManagerActivity extends AppCompatActivity {
     private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon, llAddNewProductSmartphone;
     private EditText etName, etPrice, etStock, etScreenSize, etStorageSize, etRamSize;
     private RadioGroup rgSmartphoneColor;
-    private Spinner spiCategory, spiManufacturer;
+    private Spinner spiGoTo, spiCategory, spiManufacturer;
     private AppDatabase db;
 
     private void assignPointers() {
@@ -44,6 +45,7 @@ public class ManagerActivity extends AppCompatActivity {
         etStorageSize = findViewById(R.id.etStorageSize);
         etRamSize = findViewById(R.id.etRamSize);
         rgSmartphoneColor = findViewById(R.id.rgSmartphoneColor);
+        spiGoTo = findViewById(R.id.spiGoTo);
         spiCategory = findViewById(R.id.spiCategory);
         spiManufacturer = findViewById(R.id.spiManufacturer);
         llAddNewProductSmartphone = findViewById(R.id.llAddNewProductSmartphone);
@@ -80,6 +82,31 @@ public class ManagerActivity extends AppCompatActivity {
 
             }
         });
+
+        String[] goToList = { "עבור אל" , "דף ראשי" , "דף משתמשים" , "***" };
+        ArrayAdapter<String> goToAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, goToList);
+        spiGoTo.setAdapter(goToAdapter);
+        spiGoTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Class<? extends AppCompatActivity> destination = null;
+                if (i == 1) {
+                    destination = MainActivity.class;
+                } else if (i == 2) {
+                    destination = UsersActivity.class;
+                }
+
+                if (destination != null) {
+                    startActivity(new Intent(ManagerActivity.this, destination));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -92,6 +119,10 @@ public class ManagerActivity extends AppCompatActivity {
         assignPointers();
 
         createSpinnerData();
+
+        llProducts.setVisibility(View.GONE);
+        llAddNewProduct.setVisibility(View.GONE);
+        llAddNewProductSmartphone.setVisibility(View.GONE);
 
         btnProducts.setOnClickListener(new View.OnClickListener() {
             @Override
