@@ -12,20 +12,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
+import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Smartphone;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class ManagerActivity extends AppCompatActivity {
 
-    private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts;
-    private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon, llAddNewProductSmartphone;
+    private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd;
+    private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
+            llAddNewProductSmartphone, llFinalButtons;
     private EditText etName, etPrice, etStock, etScreenSize, etStorageSize, etRamSize;
     private RadioGroup rgSmartphoneColor;
     private Spinner spiGoTo, spiCategory, spiManufacturer;
+    private int previousId = 0;
     private AppDatabase db;
 
     private void assignPointers() {
@@ -33,11 +38,14 @@ public class ManagerActivity extends AppCompatActivity {
         btnManufacturers = findViewById(R.id.btnManufacturers);
         btnAddNewProduct = findViewById(R.id.btnAddNewProduct);
         btnEditExistingProducts = findViewById(R.id.btnEditExistingProducts);
+        btnReset = findViewById(R.id.btnReset);
+        btnAdd = findViewById(R.id.btnAdd);
         llAddNewProduct = findViewById(R.id.llAddNewProduct);
         llProducts = findViewById(R.id.llProducts);
         ll_spiCategory = findViewById(R.id.ll_spiCategory);
         ll_spiManufacturer = findViewById(R.id.ll_spiManufacturer);
         llAddNewProductCommon = findViewById(R.id.llAddNewProductCommon);
+        llFinalButtons = findViewById(R.id.llFinalButtons);
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
         etStock = findViewById(R.id.etStock);
@@ -64,7 +72,7 @@ public class ManagerActivity extends AppCompatActivity {
         spiCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                resetCategoriesFields();
+                resetCategoriesFields(previousId);
                 switch (i) {
                     case 1:
                         llAddNewProductSmartphone.setVisibility(View.VISIBLE);
@@ -75,6 +83,15 @@ public class ManagerActivity extends AppCompatActivity {
                     case 3:
                         // Accessories
                 }
+
+                if (i > 0) {
+                    llFinalButtons.setVisibility(View.VISIBLE);
+                }
+                else {
+                    llFinalButtons.setVisibility(View.GONE);
+                }
+
+                previousId = i;
             }
 
             @Override
@@ -161,17 +178,147 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetFields();
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //boolean valid = validate();
+                boolean valid = true;
+                if (valid) {
+                    submit();
+                }
+
+
+            }
+        });
 
 
     }
 
+    private void submit() {
+        int type = spiCategory.getSelectedItemPosition();
 
+        switch (type) {
+            case 1:
+                submit_smartphone();
+                break;
+            case 2:
+                submit_watch();
+                break;
+            case 3:
+                submit_accessory();
+                break;
+        }
+
+        toast("Saved!");
+
+
+    }
+
+    private void submit_smartphone() {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        String screenSize = etScreenSize.getText().toString().trim();
+        String storageSize = etStorageSize.getText().toString().trim();
+        String ramSize = etRamSize.getText().toString().trim();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition();
+
+//        Smartphone.PhoneColor phoneColor = getPhoneColor();
+        Smartphone.PhoneColor phoneColor = Smartphone.PhoneColor.Black;
+
+        Smartphone s = new Smartphone();
+        s.setProductName(name);
+        s.setManufacturerId(manufacturerId);
+        s.setProductPrice(Double.parseDouble(price));
+        s.setProductStock(Integer.parseInt(stock));
+        s.setPhoneColor(phoneColor);
+        s.setPhoneScreenSize(Integer.parseInt(screenSize));
+        s.setPhoneStorageSize(Integer.parseInt(storageSize));
+        s.setPhoneRamSize(Integer.parseInt(ramSize));
+
+        db.smartphonesDao().insert(s);
+
+        resetFields(1);
+    }
+
+    private void submit_watch() {
+
+    }
+
+    private void submit_accessory() {
+
+    }
+
+    private Smartphone.PhoneColor getPhoneColor() {
+        int color = rgSmartphoneColor.getCheckedRadioButtonId();
+        switch (color) {
+            case R.id.radBlack:
+                return Smartphone.PhoneColor.Black;
+        }
+        return null;
+    }
+
+    private void resetFields() {
+        resetFields(spiCategory.getSelectedItemPosition());
+    }
+
+    private void resetFields(int i) {
+        etName.setText("");
+        etPrice.setText("");
+        etStock.setText("");
+
+        if (i == 1) {
+            // Smartphone
+            etScreenSize.setText("");
+            etStorageSize.setText("");
+            etRamSize.setText("");
+        } else if (i == 2) {
+
+        } else if (i == 3) {
+
+        }
+    }
 
     private void resetCreateNewProductFields() {
-        resetCategoriesFields();
+        resetCategoriesFields(4);
+
+        spiCategory.setSelection(0);
+        spiManufacturer.setSelection(0);
+
+        etName.setText("");
+        etPrice.setText("");
+        etStock.setText("");
+
+        llAddNewProduct.setVisibility(View.GONE);
     }
 
-    private void resetCategoriesFields() {
+    private void resetCategoriesFields(int i) {
         //TODO - reset both fields and set the categories as GONE
+        // i values: 1 - smartphone, 2 - watch, 3 - accessory, 4 - findSelected
+
+        resetFields(i);
+
+        // Smartphone
+        if (i == 1) {
+            llAddNewProductSmartphone.setVisibility(View.GONE);
+        } else if (i == 2) {
+
+        } else if (i == 3) {
+
+        } else if (i == 4) {
+            resetCategoriesFields(spiCategory.getSelectedItemPosition());
+        }
+
+    }
+
+    private void toast(String msg) {
+        Toast.makeText(ManagerActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 }

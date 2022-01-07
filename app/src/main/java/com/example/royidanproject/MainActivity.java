@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         //startActivity(new Intent(MainActivity.this, GalleryActivity.class));
 
+        ((Button)findViewById(R.id.btnManagerActivity)).setVisibility(View.GONE);
+
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
             ((ImageView)findViewById(R.id.ivUser)).setImageURI(UserImages.getImage(sp.getString("image", "")));
@@ -65,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
                 ((Button)findViewById(R.id.btnUsersActivity)).setText("Users screen");
+                ((Button)findViewById(R.id.btnManagerActivity)).setVisibility(View.VISIBLE);
+                ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, ManagerActivity.class));
+                    }
+                });
             }
             else {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום " + sp.getString("name", "_nameNotFound"));

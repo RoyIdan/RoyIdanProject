@@ -46,7 +46,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:id="@+id/llProducts"
         android:orientation="vertical">
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:id="@+id/ll_spiCategory">
 
                 <TextView
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="-10dp"
                 android:id="@+id/ll_spiManufacturer">
 
                 <TextView
@@ -162,7 +162,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="-5dp"
                 android:id="@+id/llAddNewProductCommon"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -190,7 +190,7 @@
                         android:layout_marginRight="10dp"
                         android:text="ככג"
                         android:textSize="18dp"
-                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnoqrstuvwxyz1234567890_-"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
                         android:id="@+id/etName"/>
 
                 </LinearLayout>
@@ -296,7 +296,18 @@
 
                         <RadioButton
                             android:layout_width="25dp"
-                            android:layout_height="25dp" />
+                            android:layout_height="25dp"
+                            android:id="@+id/radBlack" />
+
+                        <View
+                            android:layout_width="26dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle" />
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/radGray" />
 
                         <View
                             android:layout_width="30dp"
@@ -305,16 +316,8 @@
 
                         <RadioButton
                             android:layout_width="25dp"
-                            android:layout_height="25dp" />
-
-                        <View
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/circle" />
-
-                        <RadioButton
-                            android:layout_width="25dp"
-                            android:layout_height="25dp" />
+                            android:layout_height="25dp"
+                            android:id="@+id/radWhite" />
 
                         <View
                             android:layout_width="30dp"
@@ -408,6 +411,31 @@
                         android:id="@+id/etRamSize"/>
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/llFinalButtons">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="הוסף לחנות"
+                    android:id="@+id/btnAdd" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="נקה שדות"
+                    android:id="@+id/btnReset" />
+
 
             </LinearLayout>
 

@@ -5,6 +5,7 @@ import android.os.Message;
 
 public class StartupThread extends Thread {
     private Handler handler;
+    public boolean isActive = true;
 
     public StartupThread(Handler handler) {
         this.handler = handler;
@@ -14,7 +15,7 @@ public class StartupThread extends Thread {
     public void run() {
         super.run();
 
-        while (true) {
+        while (isActive) {
             handler.sendMessage(new Message());
 
             try {
