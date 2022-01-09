@@ -1,8 +1,10 @@
 package com.example.royidanproject.Utility;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 
 import java.io.File;
@@ -16,7 +18,7 @@ import static com.example.royidanproject.MainActivity.PRODUCTS_FOLDER_NAME;
 import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
 public class ProductImages {
-    public static Uri getImage(String _filename) {
+    public static Uri getImage(String _filename, Context context) {
 //        File file = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
 //        if (!file.exists()) {
 //            file.mkdirs();
@@ -32,13 +34,26 @@ public class ProductImages {
 //            }
 //        }
 
-        File folder = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+
+        File folder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            folder = new File(context.getExternalFilesDir(null) + "/" + PRODUCTS_FOLDER_NAME);
+        }
+        else {
+            folder = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+        }
         Uri uri = Uri.parse("file://" + folder + "/" + _filename);
         return uri == null ? null : uri;
     }
 
-    public static void deletePhoto(String _filename) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+    public static void deletePhoto(String _filename, Context context) {
+        File file;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            file = new File(context.getExternalFilesDir(null) + "/" + PRODUCTS_FOLDER_NAME);
+        }
+        else {
+            file = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+        }
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -54,10 +69,16 @@ public class ProductImages {
         }
     }
 
-    public static String savePhoto(Bitmap bitmap) {
+    public static String savePhoto(Bitmap bitmap, Context context) {
         String _file = new SimpleDateFormat("yyMMdd-HH:mm:ss").format(new Date());
         _file += ".jpg";
-        File folder = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+        File folder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            folder = new File(context.getExternalFilesDir(null) + "/" + PRODUCTS_FOLDER_NAME);
+        }
+        else {
+            folder = new File(Environment.getExternalStorageDirectory() + "/" + PRODUCTS_FOLDER_NAME);
+        }
         if (!folder.exists()) {
             folder.mkdirs();
         }

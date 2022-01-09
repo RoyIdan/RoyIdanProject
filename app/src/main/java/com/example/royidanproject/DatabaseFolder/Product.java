@@ -3,10 +3,11 @@ package com.example.royidanproject.DatabaseFolder;
 import android.content.Context;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.Query;
 
-@Entity(tableName = "tblProducts")
+@Entity(tableName = "tblProducts", foreignKeys = @ForeignKey(entity=Manufacturer.class, parentColumns = "manufacturerId", childColumns = "manufacturerId"))
 public class Product {
     @PrimaryKey(autoGenerate = true)
     private long productId;
@@ -83,7 +84,7 @@ public class Product {
     }
 
     public double getProductRating() {
-        return (double) productRating_count / productRating_sum;
+        return (double) productRating_sum / productRating_count;
     }
 
     public void addProductRating(int rating) {

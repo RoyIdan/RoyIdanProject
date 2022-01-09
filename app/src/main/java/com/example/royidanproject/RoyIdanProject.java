@@ -29,7 +29,7 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        startActivity(new Intent(getApplicationContext(), StartupActivity.class));
+        startActivity(new Intent(getApplicationContext(), GalleryActivity.class));
     }
 
     private void addSampleProducts() {
@@ -51,7 +51,7 @@ public class RoyIdanProject extends Application {
         iphone11.setPhoneRamSize(8);
         iphone11.setPhoneScreenSize(8);
         iphone11.setPhoneStorageSize(128);
-        iphone11.setManufacturerId(0); // Apple
+        iphone11.setManufacturerId(1); // Apple
         iphone11.setProductPrice(2000);
         iphone11.setProductRating_count(5);
         iphone11.setProductRating_sum(21);
@@ -64,7 +64,7 @@ public class RoyIdanProject extends Application {
         galaxyS10.setPhoneRamSize(6);
         galaxyS10.setPhoneScreenSize(7);
         galaxyS10.setPhoneStorageSize(64);
-        galaxyS10.setManufacturerId(1); // Samsung
+        galaxyS10.setManufacturerId(2); // Samsung
         galaxyS10.setProductPrice(1500);
         galaxyS10.setProductRating_sum(22);
         galaxyS10.setProductRating_count(5);
@@ -73,7 +73,7 @@ public class RoyIdanProject extends Application {
         Watch appleWatch = new Watch();
         appleWatch.setProductPhoto("AppleWatch.png");
         appleWatch.setProductStock(4);
-        appleWatch.setManufacturerId(1);
+        appleWatch.setManufacturerId(1); // Apple
         appleWatch.setProductPrice(900);
         appleWatch.setProductRating_sum(19);
         appleWatch.setProductRating_count(12);

@@ -11,7 +11,7 @@
     <!--Buttons Layout-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal"
         android:gravity="center" >
@@ -49,11 +49,12 @@
         android:layout_marginTop="0dp"
         android:gravity="center"
         android:id="@+id/llProducts"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="דף ניהול מוצרים"
@@ -64,7 +65,7 @@
         <!--Add / Edit selection layout-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
             android:layout_gravity="center"
@@ -72,14 +73,14 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:text="הוספת מוצר חדש"
                 android:id="@+id/btnAddNewProduct" />
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:text="עריכת מוצרים קיימים"
                 android:id="@+id/btnEditExistingProducts" />
@@ -98,13 +99,44 @@
 
             <TextView
                 android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="דף הוספת מוצר"
                 android:background="#FFFF00"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/camera"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/ibCamera"/>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/iphone11"
+                    android:id="@+id/ivPhoto"
+                    android:scaleType="centerCrop"/>
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/gallery"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/ibGallery"/>
+
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -116,7 +148,7 @@
 
                 <TextView
                     android:layout_width="80dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
                     android:textSize="20dp"
@@ -125,7 +157,7 @@
 
                 <Spinner
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginRight="10dp"
                     android:entries="@array/spinner_city"
                     android:id="@+id/spiCategory" />
@@ -142,7 +174,7 @@
 
                 <TextView
                     android:layout_width="80dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
                     android:textSize="20dp"
@@ -151,7 +183,7 @@
 
                 <Spinner
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginRight="10dp"
                     android:entries="@array/spinner_city"
                     android:id="@+id/spiManufacturer" />
@@ -190,7 +222,7 @@
                         android:layout_marginRight="10dp"
                         android:text="ככג"
                         android:textSize="18dp"
-                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
                         android:id="@+id/etName"/>
 
                 </LinearLayout>
@@ -279,7 +311,7 @@
 
                     <TextView
                         android:layout_width="80dp"
-                        android:layout_height="35dp"
+                        android:layout_height="30dp"
                         android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textSize="18dp"
@@ -288,7 +320,7 @@
 
                     <RadioGroup
                         android:layout_width="175dp"
-                        android:layout_height="40dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -300,7 +332,7 @@
                             android:id="@+id/radBlack" />
 
                         <View
-                            android:layout_width="26dp"
+                            android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/circle" />
 
@@ -438,6 +470,53 @@
 
 
             </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--Manufacturers Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:id="@+id/llManufacturers"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="דף ניהול יצרנים"
+            android:background="#FFFF00"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <!--Add / Edit selection layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:text="הוספת יצרן חדש"
+                android:id="@+id/btnAddNewManufacturer" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="עריכת יצרנים קיימים"
+                android:id="@+id/btnEditExistingManufacturers" />
 
         </LinearLayout>
 

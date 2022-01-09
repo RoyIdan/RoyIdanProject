@@ -97,7 +97,7 @@ public class ProductsAdapter extends BaseAdapter {
         }
         tvProductRating.setText("דירוג: " + rating + "(" + ((int)(product.getProductRating() * 100.0)) / 100.0 + ")");
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
-        ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto()));
+        ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override

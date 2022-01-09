@@ -154,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                         return;
                     }
 
-                    String photo = UserImages.savePhoto(bmUser);
+                    String photo = UserImages.savePhoto(bmUser, RegisterActivity.this);
                     if (photo == null) {
                         toast("Failed to save the photo");
                         return;
@@ -254,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
         spiCity.setSelection(Arrays.asList(getResources().getStringArray(R.array.spinner_city)).indexOf(city));
         spiPhone.setSelection(Integer.parseInt(String.valueOf(phone.charAt(2))));
         etPhone.setText(phone.substring(3));
-        bmUser = UserImages.getImageBitmap(photo);
+        bmUser = UserImages.getImageBitmap(photo, RegisterActivity.this);
         ivImage.setImageBitmap(bmUser);
 
         Bitmap originPhoto = bmUser;
@@ -291,12 +291,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!(bmUser == originPhoto)) {
-                    String photo = UserImages.savePhoto(bmUser);
+                    String photo = UserImages.savePhoto(bmUser, RegisterActivity.this);
                     if (photo == null) {
                         toast("Failed to save the photo");
                         return;
                     }
-                    UserImages.deletePhoto(user.getUserPhoto());
+                    UserImages.deletePhoto(user.getUserPhoto(), RegisterActivity.this);
                     user.setUserPhoto(photo);
                 }
 

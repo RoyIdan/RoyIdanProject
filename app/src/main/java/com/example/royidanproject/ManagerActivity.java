@@ -1,14 +1,25 @@
 package com.example.royidanproject;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -18,18 +29,30 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.Utility.ProductImages;
+import com.example.royidanproject.Utility.UserImages;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class ManagerActivity extends AppCompatActivity {
 
     private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd;
+    private ImageButton ibCamera, ibGallery;
+    private ImageView ivPhoto;
     private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
             llAddNewProductSmartphone, llFinalButtons;
     private EditText etName, etPrice, etStock, etScreenSize, etStorageSize, etRamSize;
     private RadioGroup rgSmartphoneColor;
     private Spinner spiGoTo, spiCategory, spiManufacturer;
+    private Bitmap bmProduct;
     private int previousId = 0;
     private AppDatabase db;
 
@@ -40,6 +63,9 @@ public class ManagerActivity extends AppCompatActivity {
         btnEditExistingProducts = findViewById(R.id.btnEditExistingProducts);
         btnReset = findViewById(R.id.btnReset);
         btnAdd = findViewById(R.id.btnAdd);
+        ibCamera = findViewById(R.id.ibCamera);
+        ibGallery = findViewById(R.id.ibGallery);
+        ivPhoto = findViewById(R.id.ivPhoto);
         llAddNewProduct = findViewById(R.id.llAddNewProduct);
         llProducts = findViewById(R.id.llProducts);
         ll_spiCategory = findViewById(R.id.ll_spiCategory);
@@ -148,6 +174,9 @@ public class ManagerActivity extends AppCompatActivity {
                     llProducts.setVisibility(View.VISIBLE);
                 }
                 else {
+                    if (llAddNewProduct.getVisibility() == View.VISIBLE) {
+                        resetCreateNewProductFields();
+                    }
                     llProducts.setVisibility(View.GONE);
                 }
             }
@@ -199,6 +228,76 @@ public class ManagerActivity extends AppCompatActivity {
         });
 
 
+        ibCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkPermission(ManagerActivity.this)) {
+                    getPermission(ManagerActivity.this);
+                }
+                else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
+            }
+        });
+
+        ibGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!checkPermission(ManagerActivity.this)) {
+                    getPermission(ManagerActivity.this);
+                }
+                else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 0);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                bmProduct = (Bitmap) data.getExtras().get("data");
+                ivPhoto.setImageBitmap(bmProduct);
+            }
+        }
+
+        else if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    Uri imageUri = data.getData();
+                    InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    bmProduct = selectedImage;
+                    ivPhoto.setImageBitmap(bmProduct);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void getPermission(Activity activity) {
+        ActivityCompat.requestPermissions(activity, new String[]{
+                CAMERA,
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE
+        }, 1);
+    }
+
+    private boolean checkPermission(Context context) {
+        int cam = ContextCompat.checkSelfPermission(context, CAMERA);
+        int write = ContextCompat.checkSelfPermission(context, WRITE_EXTERNAL_STORAGE);
+        int read = ContextCompat.checkSelfPermission(context, READ_EXTERNAL_STORAGE);
+
+        return cam == PERMISSION_GRANTED &&
+                write == PERMISSION_GRANTED &&
+                read == PERMISSION_GRANTED;
     }
 
     private void submit() {
@@ -228,7 +327,13 @@ public class ManagerActivity extends AppCompatActivity {
         String screenSize = etScreenSize.getText().toString().trim();
         String storageSize = etStorageSize.getText().toString().trim();
         String ramSize = etRamSize.getText().toString().trim();
-        long manufacturerId = spiManufacturer.getSelectedItemPosition();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+
+        String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+        if (photo == null) {
+            toast("Failed to save the photo");
+            return;
+        }
 
 //        Smartphone.PhoneColor phoneColor = getPhoneColor();
         Smartphone.PhoneColor phoneColor = Smartphone.PhoneColor.Black;
@@ -242,6 +347,7 @@ public class ManagerActivity extends AppCompatActivity {
         s.setPhoneScreenSize(Integer.parseInt(screenSize));
         s.setPhoneStorageSize(Integer.parseInt(storageSize));
         s.setPhoneRamSize(Integer.parseInt(ramSize));
+        s.setProductPhoto(photo);
 
         db.smartphonesDao().insert(s);
 
@@ -300,7 +406,8 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     private void resetCategoriesFields(int i) {
-        //TODO - reset both fields and set the categories as GONE
+        //TODO - reset both fields and set the categories as GONE\
+
         // i values: 1 - smartphone, 2 - watch, 3 - accessory, 4 - findSelected
 
         resetFields(i);
