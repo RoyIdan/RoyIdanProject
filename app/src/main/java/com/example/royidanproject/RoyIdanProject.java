@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
@@ -17,19 +19,24 @@ import com.example.royidanproject.Utility.StartupThread;
 
 public class RoyIdanProject extends Application {
     private AppDatabase db;
+    public boolean isFirstRun;
+    public Class<? extends AppCompatActivity> firstActivity;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        isFirstRun = true;
+        firstActivity = StartupActivity.class;
+
         db = AppDatabase.getInstance(getApplicationContext());
-        if (true) { // use fake products
+        if (false) { // use fake products
             if (db.manufacturersDao().getAll().isEmpty()) {
                 addSampleProducts();
             }
         }
 
-        startActivity(new Intent(getApplicationContext(), GalleryActivity.class));
+
     }
 
     private void addSampleProducts() {

@@ -50,7 +50,7 @@
         android:gravity="center"
         android:id="@+id/llProducts"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="150dp"
@@ -483,7 +483,7 @@
         android:gravity="center"
         android:id="@+id/llManufacturers"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="150dp"
@@ -517,6 +517,111 @@
                 android:layout_marginRight="10dp"
                 android:text="עריכת יצרנים קיימים"
                 android:id="@+id/btnEditExistingManufacturers" />
+
+        </LinearLayout>
+
+        <!--Add new manufacturer layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/llAddNewManufacturer"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="דף הוספת יצרן"
+                android:background="#FFFF00"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center">-->
+
+<!--                <ImageButton-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/camera"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:id="@+id/ibManufacturerCamera"/>-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="150dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:layout_marginRight="20dp"-->
+<!--                    android:src="@drawable/iphone11"-->
+<!--                    android:id="@+id/ivManufacturerPhoto"-->
+<!--                    android:scaleType="centerCrop"/>-->
+
+<!--                <ImageButton-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/gallery"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:id="@+id/ibManufacturerGallery"/>-->
+
+
+
+<!--            </LinearLayout>-->
+
+
+
+            <!--Add new manufacturer layout (properties)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/llAddNewManufacturerProperties"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--שם מוצר-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="שם יצרן:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Apple"
+                        android:textSize="18dp"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
+                        android:id="@+id/etManufacturerName"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:text="הוסף"
+                android:id="@+id/btnAddManufacturerSubmit" />
 
         </LinearLayout>
 

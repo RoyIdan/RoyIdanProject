@@ -44,11 +44,12 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class ManagerActivity extends AppCompatActivity {
 
-    private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd;
+    private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd,
+            btnAddNewManufacturer, btnEditExistingManufacturers;
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
     private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
-            llAddNewProductSmartphone, llFinalButtons;
+            llAddNewProductSmartphone, llFinalButtons, llAddNewManufacturer;
     private EditText etName, etPrice, etStock, etScreenSize, etStorageSize, etRamSize;
     private RadioGroup rgSmartphoneColor;
     private Spinner spiGoTo, spiCategory, spiManufacturer;
@@ -63,6 +64,8 @@ public class ManagerActivity extends AppCompatActivity {
         btnEditExistingProducts = findViewById(R.id.btnEditExistingProducts);
         btnReset = findViewById(R.id.btnReset);
         btnAdd = findViewById(R.id.btnAdd);
+        btnAddNewManufacturer = findViewById(R.id.btnAddNewManufacturer);
+        btnEditExistingManufacturers = findViewById(R.id.btnEditExistingManufacturers);
         ibCamera = findViewById(R.id.ibCamera);
         ibGallery = findViewById(R.id.ibGallery);
         ivPhoto = findViewById(R.id.ivPhoto);
@@ -72,6 +75,7 @@ public class ManagerActivity extends AppCompatActivity {
         ll_spiManufacturer = findViewById(R.id.ll_spiManufacturer);
         llAddNewProductCommon = findViewById(R.id.llAddNewProductCommon);
         llFinalButtons = findViewById(R.id.llFinalButtons);
+        llAddNewManufacturer = findViewById(R.id.llAddNewManufacturer);
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
         etStock = findViewById(R.id.etStock);

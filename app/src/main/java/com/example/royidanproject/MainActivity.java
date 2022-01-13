@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        if (((RoyIdanProject)getApplication()).isFirstRun) {
+//            Class<? extends AppCompatActivity> firstActivity = ((RoyIdanProject) getApplication()).firstActivity;
+//            if (!firstActivity.equals(MainActivity.class)) {
+//                ((RoyIdanProject) getApplication()).isFirstRun = false;
+//                startActivity(new Intent(MainActivity.this, firstActivity));
+//                finish();
+//            }
+//        }
+
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
