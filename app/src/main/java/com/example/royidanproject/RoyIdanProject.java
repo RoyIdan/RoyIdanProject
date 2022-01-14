@@ -30,12 +30,13 @@ public class RoyIdanProject extends Application {
         firstActivity = StartupActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
-        if (false) { // use fake products
+        if (true) { // use fake products
             if (db.manufacturersDao().getAll().isEmpty()) {
                 addSampleProducts();
             }
         }
 
+        startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
 
     }
 

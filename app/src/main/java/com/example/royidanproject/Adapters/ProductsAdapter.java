@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
+import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
 
@@ -79,10 +81,14 @@ public class ProductsAdapter extends BaseAdapter {
         TextView tvProductName = view.findViewById(R.id.tvProductName);
         TextView tvProductPrice = view.findViewById(R.id.tvProductPrice);
         TextView tvProductManufacturer = view.findViewById(R.id.tvProductManufacturer);
-        TextView tvProductRating = view.findViewById(R.id.tvProductRating);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
         TextView tvProductStock = view.findViewById(R.id.tvProductStock);
         ImageView ivProductPhoto = view.findViewById(R.id.ivProductPhoto);
         Button btnAddToCart = view.findViewById(R.id.btnAddToCart);
+        Button btnDetailedInfo = view.findViewById(R.id.btnDetailedInfo);
+        Button btnPlus = view.findViewById(R.id.btnPlus);
+        Button btnMinus = view.findViewById(R.id.btnMinus);
+        TextView tvCount = view.findViewById(R.id.tvCount);
 
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
@@ -95,7 +101,7 @@ public class ProductsAdapter extends BaseAdapter {
         while (max++ < 5) {
             rating += star_unfilled;
         }
-        tvProductRating.setText("דירוג: " + rating + "(" + ((int)(product.getProductRating() * 100.0)) / 100.0 + ")");
+        ratingBar.setRating((float)product.getProductRating());
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
@@ -107,11 +113,38 @@ public class ProductsAdapter extends BaseAdapter {
             }
         });
 
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentVal = Integer.parseInt(tvCount.getText().toString());
+                if (currentVal < product.getProductStock()) {
+                    tvCount.setText("" + (currentVal + 1));
+                }
+            }
+        });
+
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentVal = Integer.parseInt(tvCount.getText().toString());
+                if (currentVal > 0) {
+                    tvCount.setText("" + (currentVal - 1));
+                }
+            }
+        });
+
         // open details when clicking on the product
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        btnDetailedInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialogs.createProductDialog(context, product);
             }
         });
 

@@ -56,6 +56,8 @@ public class GalleryActivity extends AppCompatActivity {
         setViewPointers();
         db = AppDatabase.getInstance(GalleryActivity.this);
 
+        etFrom.clearFocus();
+
         List<Product> productList = new LinkedList<>();
         productList.addAll(db.smartphonesDao().getAll());
         productList.addAll(db.watchesDao().getAll());

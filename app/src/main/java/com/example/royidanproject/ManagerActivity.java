@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,12 +24,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
 
@@ -45,7 +48,7 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 public class ManagerActivity extends AppCompatActivity {
 
     private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd,
-            btnAddNewManufacturer, btnEditExistingManufacturers;
+            btnAddNewManufacturer, btnEditExistingManufacturers, btnOpenDescriptionDialog;
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
     private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
@@ -54,6 +57,7 @@ public class ManagerActivity extends AppCompatActivity {
     private RadioGroup rgSmartphoneColor;
     private Spinner spiGoTo, spiCategory, spiManufacturer;
     private Bitmap bmProduct;
+    private String description;
     private int previousId = 0;
     private AppDatabase db;
 
@@ -66,6 +70,7 @@ public class ManagerActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAdd);
         btnAddNewManufacturer = findViewById(R.id.btnAddNewManufacturer);
         btnEditExistingManufacturers = findViewById(R.id.btnEditExistingManufacturers);
+        btnOpenDescriptionDialog = findViewById(R.id.btnOpenDescriptionDialog);
         ibCamera = findViewById(R.id.ibCamera);
         ibGallery = findViewById(R.id.ibGallery);
         ivPhoto = findViewById(R.id.ivPhoto);
@@ -258,6 +263,25 @@ public class ManagerActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnOpenDescriptionDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog descriptionDialog = Dialogs.createGetDescriptionDialog(ManagerActivity.this);
+                String productName = etName.getText().toString().trim();
+                ((TextView) descriptionDialog.findViewById(R.id.tvTitle)).setText(productName.isEmpty() ? "לא נבחר מוצר" : productName);
+                if (!description.isEmpty()) {
+                    ((EditText)descriptionDialog.findViewById(R.id.etTextBox)).setText(description);
+                }
+                descriptionDialog.findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        description = ((EditText)descriptionDialog.findViewById(R.id.etTextBox)).getText().toString().trim();
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
@@ -347,6 +371,7 @@ public class ManagerActivity extends AppCompatActivity {
         s.setManufacturerId(manufacturerId);
         s.setProductPrice(Double.parseDouble(price));
         s.setProductStock(Integer.parseInt(stock));
+        s.setProductDescription(description);
         s.setPhoneColor(phoneColor);
         s.setPhoneScreenSize(Integer.parseInt(screenSize));
         s.setPhoneStorageSize(Integer.parseInt(storageSize));
@@ -383,6 +408,7 @@ public class ManagerActivity extends AppCompatActivity {
         etName.setText("");
         etPrice.setText("");
         etStock.setText("");
+        description = "";
 
         if (i == 1) {
             // Smartphone

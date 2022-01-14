@@ -44,7 +44,7 @@ public class Smartphone extends Product {
     }
 
     public enum PhoneColor {
-        Black, White, Green,
+        Black, White, Gray,
     }
 
 }

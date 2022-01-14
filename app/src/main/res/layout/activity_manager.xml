@@ -380,7 +380,7 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
-                        android:text="5000"
+                        android:text=""
                         android:textSize="18dp"
                         android:digits="1234567890"
                         android:id="@+id/etScreenSize"/>
@@ -409,7 +409,7 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
-                        android:text="ככג"
+                        android:text=""
                         android:textSize="18dp"
                         android:digits="1234567890"
                         android:id="@+id/etStorageSize"/>
@@ -437,7 +437,7 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
-                        android:text="ככג"
+                        android:text=""
                         android:textSize="18dp"
                         android:digits="1234567890"
                         android:id="@+id/etRamSize"/>
@@ -451,6 +451,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/llFinalButtons">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="הוסף תיאור"
+                    android:id="@+id/btnOpenDescriptionDialog" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:layout_width="wrap_content"

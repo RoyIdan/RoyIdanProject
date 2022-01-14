@@ -14,6 +14,7 @@ public class Product {
     private String productName;
     private double productPrice;
     private int productStock;
+    private String productDescription;
     private long manufacturerId;
     private int productRating_sum;
     private int productRating_count;
@@ -49,6 +50,14 @@ public class Product {
 
     public void setProductStock(int productStock) {
         this.productStock = productStock;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public long getManufacturerId() {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="X"
+        android:layout_gravity="right"
+        android:id="@+id/btnClose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="הוסף פרטי מוצר עבור :"
+        android:layout_marginTop="-40dp"
+        android:layout_gravity="center"
+        android:textSize="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="הוסף פרטי מוצר עבור :"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:id="@+id/tvTitle"/>
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:inputType="textMultiLine"
+        android:id="@+id/etTextBox"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="שמור"
+            android:layout_gravity="right"
+            android:id="@+id/btnSave" />
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="נקה"
+            android:layout_gravity="right"
+            android:id="@+id/btnClear" />
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

@@ -6,6 +6,7 @@
         <entry key="..\:/AndroidStudio/SDK/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.259963768115942" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/drawable/circle.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/drawable/img.xml" value="0.36153846153846153" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/drawable/rating_bar_stars.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_gallery.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_manager.xml" value="0.25" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_users.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_about.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_delete_prompt.xml" value="0.2971014492753623" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_get_description.xml" value="0.3482789855072464" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_login.xml" value="0.3496376811594203" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product_detailed.xml" value="0.25" />
@@ -22,8 +24,6 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_users.xml" value="0.2971014492753623" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/menu/menu_main.xml" value="0.346875" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_manager.xml" value="0.16271442986881937" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_startup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_about.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product.xml" value="0.33" />
       </map>
