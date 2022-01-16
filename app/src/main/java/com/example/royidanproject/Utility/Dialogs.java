@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -174,6 +177,8 @@ public class Dialogs {
         TextView tvPrice = dialog.findViewById(R.id.tvPrice);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         TextView tvStock = dialog.findViewById(R.id.tvStock);
+        TextView tvDescription = dialog.findViewById(R.id.tvDescription);
+        ImageView ivProductPhoto = dialog.findViewById(R.id.ivProductPhoto);
 
         TextView[] extras = null;
 
@@ -186,12 +191,15 @@ public class Dialogs {
         long manufacturerId = product.getManufacturerId();
         Manufacturer manufacturer = AppDatabase.getInstance(context).manufacturersDao().getManufacturerById(manufacturerId);
         float rating = (float)product.getProductRating();
+        Uri uri = ProductImages.getImage(product.getProductPhoto(), context);
 
         tvTitle.setText(product.getProductName());
         tvManufacturer.setText(manufacturer.getManufacturerName());
         tvPrice.setText(String.valueOf(product.getProductPrice()));
         ratingBar.setRating(rating);
         tvStock.setText(String.valueOf(product.getProductStock()));
+        tvDescription.setText(product.getProductDescription());
+        ivProductPhoto.setImageURI(uri);
 
         if (product instanceof Smartphone) {
             extras[0].setText(((Smartphone) product).getPhoneColor().toString());

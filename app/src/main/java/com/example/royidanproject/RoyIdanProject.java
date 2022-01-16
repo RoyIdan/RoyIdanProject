@@ -13,9 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.StartupThread;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class RoyIdanProject extends Application {
     private AppDatabase db;
@@ -36,11 +40,29 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
 
     private void addSampleProducts() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2004, 8, 10);
+        Date date = cal.getTime();
+
+        Users manager = new Users();
+        manager.setUserName("רועי");
+        manager.setUserSurname("עידן");
+        manager.setUserGender("זכר");
+        manager.setUserBirthdate(date);
+        manager.setUserEmail("s32334@nhs.co.il");
+        manager.setUserAddress("רחוב סומסום 123");
+        manager.setUserCity("בן שמן");
+        manager.setUserPassword("123");
+        manager.setUserPhone("0509254011");
+        manager.setUserPhoto("220116-14:44:07.jpg");
+
+        db.usersDao().insert(manager);
 
         Manufacturer apple = new Manufacturer();
         apple.setManufacturerName("Apple");
@@ -79,7 +101,7 @@ public class RoyIdanProject extends Application {
         galaxyS10.setProductName("Galaxy S10");
 
         Watch appleWatch = new Watch();
-        appleWatch.setProductPhoto("AppleWatch.png");
+        appleWatch.setProductPhoto("AppleWatch44mm.jpg");
         appleWatch.setProductStock(4);
         appleWatch.setManufacturerId(1); // Apple
         appleWatch.setProductPrice(900);

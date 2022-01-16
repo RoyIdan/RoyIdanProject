@@ -5,6 +5,7 @@ import java.util.List;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 
 @Dao
 public interface WatchesDao {
@@ -14,9 +15,12 @@ public interface WatchesDao {
     @Insert
     long insert(Watch watch);
 
-    @Query("SELECT * FROM tblWatches WHERE :query")
-    List<Watch> getByQuery(String query);
+    @RawQuery
+    List<Watch> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);
 
     @Query("SELECT * FROM tblWatches")
     List<Watch> getAll();
+
+    @Query("SELECT * FROM tblWatches ORDER BY productName")
+    List<Watch> getAll_orderByName();
 }

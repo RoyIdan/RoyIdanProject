@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,15 +22,18 @@ import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
-public class ProductsAdapter extends BaseAdapter {
+public class ProductsAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
     private List<Product> productsList;
+    private List<Product> filteredList;
     private LayoutInflater inflater;
+    private ItemFilter mFilter = new ItemFilter();
     private static final char star_filled = '⭐';
     private static final char star_unfilled = '★';
     private AppDatabase db;
@@ -38,6 +43,7 @@ public class ProductsAdapter extends BaseAdapter {
     public ProductsAdapter(Context context, List<Product> productsList) {
         this.context = context;
         this.productsList = productsList;
+        this.filteredList = productsList;
         this.inflater = LayoutInflater.from(context);
         db = AppDatabase.getInstance(context);
         sp = context.getSharedPreferences(SP_NAME, 0);
@@ -60,24 +66,24 @@ public class ProductsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return productsList.size();
+        return filteredList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return productsList.get(i);
+        return filteredList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return productsList.get(i).getProductId();
+        return filteredList.get(i).getProductId();
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.custom_product, null);
 
-        Product product = productsList.get(i);
+        Product product = filteredList.get(i);
         TextView tvProductName = view.findViewById(R.id.tvProductName);
         TextView tvProductPrice = view.findViewById(R.id.tvProductPrice);
         TextView tvProductManufacturer = view.findViewById(R.id.tvProductManufacturer);
@@ -93,14 +99,14 @@ public class ProductsAdapter extends BaseAdapter {
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
         tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
-        String rating = "";
-        int j = 0, max = (int)(product.getProductRating());
-        while (j++ < max) {
-            rating += star_filled;
-        }
-        while (max++ < 5) {
-            rating += star_unfilled;
-        }
+//        String rating = "";
+//        int j = 0, max = (int)(product.getProductRating());
+//        while (j++ < max) {
+//            rating += star_filled;
+//        }
+//        while (max++ < 5) {
+//            rating += star_unfilled;
+//        }
         ratingBar.setRating((float)product.getProductRating());
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
@@ -117,9 +123,15 @@ public class ProductsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 int currentVal = Integer.parseInt(tvCount.getText().toString());
-                if (currentVal < product.getProductStock()) {
-                    tvCount.setText("" + (currentVal + 1));
+                if (currentVal == 0) {
+                    btnMinus.setClickable(true);
+                    btnAddToCart.setClickable(true);
                 }
+                if (currentVal == product.getProductStock() - 1) {
+                    btnPlus.setClickable(false);
+                }
+                tvCount.setText("" + (currentVal + 1));
+
             }
         });
 
@@ -127,9 +139,15 @@ public class ProductsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 int currentVal = Integer.parseInt(tvCount.getText().toString());
-                if (currentVal > 0) {
-                    tvCount.setText("" + (currentVal - 1));
+                if (currentVal == product.getProductStock()) {
+                    btnPlus.setClickable(true);
                 }
+                if (currentVal == 1) {
+                    btnMinus.setClickable(false);
+                    btnAddToCart.setClickable(false);
+                }
+                tvCount.setText("" + (currentVal - 1));
+
             }
         });
 
@@ -148,7 +166,53 @@ public class ProductsAdapter extends BaseAdapter {
             }
         });
 
+        if (product.getProductStock() == 1) {
+            btnPlus.setClickable(false);
+        }
+
         return view;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final List<Product> list = productsList;
+
+            int count = list.size();
+            final List<Product> nlist = new LinkedList<Product>();
+
+            String filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i).getProductName();
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(list.get(i));
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredList = (LinkedList<Product>) results.values;
+            notifyDataSetChanged();
+        }
+
     }
 
 }
