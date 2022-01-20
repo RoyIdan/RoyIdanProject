@@ -7,6 +7,7 @@
     tools:context=".GalleryActivity"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
+    android:layoutDirection="ltr"
     android:focusableInTouchMode="true" >
 
     <TextView
@@ -171,27 +172,6 @@
                     android:text="מחיר יורד" />
 
             </RadioGroup>
-
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="-10dp"
-                android:layoutDirection="rtl"
-                android:visibility="gone">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"
-                    android:text="עד:" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:id="@+id/חמאט"/>
-            </LinearLayout>
 
 
         </LinearLayout>

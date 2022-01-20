@@ -14,23 +14,39 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="אודות"
+        android:text="רועי סלולר"
         android:layout_marginTop="-40dp"
         android:layout_gravity="center"
         android:textSize="30dp"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:text="בטוח שבחרת טוב!"
+        android:layout_gravity="center" />
+
+
+    <TextView
         android:layout_width="350dp"
         android:layout_height="600dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-
-        android:text="ברוכים הבאים לאפליקציה שלנו!
-        \n\n\כאן תוכלו למצוא את הטלפונים הכי חדשים במחירים הכי זולים!
-        \n\nבאפליקציה תוכלו להירשם, להתחבר להזמין טלפונים ולשלם במקום עם כרטיס אשראי והמוצר יגיע אליכם בדואר.
-        \n\nהכל מאובטח ואין מה לדאוג לגבי גניבת פרטי אשראי וכו'.
-        \n\n\לפרטים נוספים ניתן ליצור עמנו קשר:
-        \nבדוא''ל: s32334@nhs.co.il
-        \nאו בטלפון: 0509254011" />
+        android:layout_marginTop="-120dp"
+        android:gravity="center"
+        android:text="ברוכים הבאים לאפליקציה ששיגעה את המדינה!\n
+רוצים להתחדש במכשיר סלולרי	 חדש מבלי לצאת מהבית?\n
+באפליקציה שלנו זה הולך להיות הכי קל ונגיש.\n
+מגיע גם לכם להתחדש במכשירים הכי חדשים ובמחיר הכי טוב בשוק הסלולר. \n
+\n
+אז מי אנחנו? \n
+רועי סלולר הינה רשת חנויות סלולר בפריסה ארצית. \n
+אנו דוגלים באיכות גבוה של מוצרים, מקצועיות, אמינות ורמת שירות גבוה ללקוחותינו. \n
+רועי סלולר מציגה מגוון רחב במיוחד של מכשירים מתקדמים אשר פתוחים לשימוש בכלל רשתות הסלולר בארץ ובעולם. \n
+רשת רועי סלולר שמה דגש מיוחד על חדשנות ודואגת לספק ללקוחותיה את הפתרונות המתקדמים ביותר הקיימים בענף הסלולר. \n
+\n
+אז מה נשאר לכם? \n
+להיכנס ללשונית גלריית המוצרים, לבחור את המוצר החדש שלכם, ותוך 7 ימי עסקים זה אצלכם!
+" />
 
 </LinearLayout>

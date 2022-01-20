@@ -7,7 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.Query;
 
-@Entity(tableName = "tblProducts", foreignKeys = @ForeignKey(entity=Manufacturer.class, parentColumns = "manufacturerId", childColumns = "manufacturerId"))
+@Entity(tableName = "tblProducts", foreignKeys =
+    @ForeignKey(entity=Manufacturer.class, parentColumns = "manufacturerId", childColumns = "manufacturerId"))
 public class Product {
     @PrimaryKey(autoGenerate = true)
     private long productId;

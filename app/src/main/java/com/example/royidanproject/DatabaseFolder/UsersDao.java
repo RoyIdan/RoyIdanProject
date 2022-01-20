@@ -10,6 +10,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.royidanproject.CartActivity;
+
 @Dao
 public interface UsersDao {
     @Query("SELECT * FROM tblUsers")
@@ -33,6 +35,21 @@ public interface UsersDao {
 
     @Query("SELECT * FROM tblUsers WHERE userName LIKE '%' || :input || '%' or userSurname like '%' || :input || '%'")
     List<Users> searchByNameOrSurname(String input);
+
+    @Query("SELECT * FROM tblCartDetails WHERE userId = :userId")
+    List<CartDetails> getCartDetailsByUserId(long userId);
+
+    @Query("SELECT * FROM tblCartDetails WHERE userId = :userId and productId = :productId and tableId = :tableId")
+    CartDetails getCartDetailsByKeys(long userId, long productId, long tableId);
+
+    @Insert
+    long addCartItem(CartDetails cartDetails);
+
+    @Update
+    void updateCartDetails(CartDetails cartDetails);
+
+    @Delete
+    void deleteCartDetailsByReference(CartDetails cartDetails);
 
     @Update
     void update(Users user);

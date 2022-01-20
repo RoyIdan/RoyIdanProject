@@ -7,15 +7,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.CartDetails;
+import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
+import com.example.royidanproject.DatabaseFolder.Order;
+import com.example.royidanproject.DatabaseFolder.OrderDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
@@ -23,7 +31,10 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.example.royidanproject.MainActivity.ADMIN_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
@@ -207,6 +218,131 @@ public class Dialogs {
             extras[2].setText(String.valueOf(((Smartphone) product).getPhoneStorageSize()));
             extras[3].setText(String.valueOf(((Smartphone) product).getPhoneRamSize()));
         }
+    }
+
+    public static void createSubmitPurchaseDialog(Context context, List<CartDetails> detailsList) {
+        View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_submit_purchase, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(promptDialog);
+        final AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        final long userId = detailsList.get(0).getUserId();
+
+        AppDatabase db = AppDatabase.getInstance(context);
+        TextView tvError = dialog.findViewById(R.id.tvError);
+        Button btnBuy = dialog.findViewById(R.id.btnBuy);
+        Spinner spiCreditCard = dialog.findViewById(R.id.spiCreditCard);
+
+        dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        double totalPrice = 0;
+
+        Product[] products = new Product[detailsList.size()];
+        for (int i = 0; i < detailsList.size(); i++) {
+            CartDetails cd = detailsList.get(i);
+            products[i] = createSubmitPurchaseDialog_getProduct(db, cd.getProductId(), cd.getTableId());
+        }
+
+        for (int i = 0; i < detailsList.size(); i++) {
+            totalPrice += products[i].getProductPrice() * detailsList.get(i).getProductQuantity();
+        }
+
+        createSubmitPurchaseDialog_setData(context, dialog, totalPrice);
+
+
+        double finalTotalPrice = totalPrice;
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvError.setVisibility(View.GONE);
+                ArrayAdapter<CreditCard> adapter = (ArrayAdapter<CreditCard>) spiCreditCard.getAdapter();
+                CreditCard card = (CreditCard) spiCreditCard.getSelectedItem();
+                if (adapter.isEmpty()) {
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText("אין לך כרטיסי אשראי");
+                    return;
+                }
+                if (card.getCardExpireDate().before(new Date())) {
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText("הכרטיס פג תוקף");
+                    return;
+                }
+                if (card.getCardBalance() < finalTotalPrice) {
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText("אין מספיק כסף בכרטיס");
+                    return;
+                }
+
+                double newBalance = card.getCardBalance() - finalTotalPrice;
+                db.creditCardDao().updateBalanceById(card.getCardId(), newBalance);
+
+                Order order = new Order();
+                order.setCustomerId(userId);
+                order.setOrderDatePurchased(new Date());
+                order.setCreditCardId(card.getCardId());
+
+                long orderId = db.ordersDao().insert(order);
+
+                List<OrderDetails> orderList = new LinkedList<>();
+                for (int i = 0; i < detailsList.size(); i++) {
+                    CartDetails details = detailsList.get(i);
+                    OrderDetails od = new OrderDetails();
+                    od.setOrderId(orderId);
+                    od.setProductId(details.getProductId());
+                    od.setTableId(details.getTableId());
+                    od.setProductOriginalPrice(products[i].getProductPrice());
+                    od.setProductQuantity(details.getProductQuantity());
+                    orderList.add(od);
+                }
+
+                db.orderDetailsDao().insertAll(orderList);
+
+            }
+        });
+
+
+    }
+    private static void createSubmitPurchaseDialog_setData(Context context, Dialog dialog, double totalPrice) {
+        EditText etName, etPrice;
+        Spinner spiCreditCard;
+
+        etName = dialog.findViewById(R.id.etName);
+        etPrice = dialog.findViewById(R.id.etPrice);
+        spiCreditCard = dialog.findViewById(R.id.spiCreditCard);
+
+        long userId = context.getSharedPreferences(SP_NAME, 0).getLong("id", 0);
+        List<CreditCard> cards = AppDatabase.getInstance(context).creditCardDao().getByUserId(userId);
+
+
+        ArrayAdapter<CreditCard> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, cards);
+        spiCreditCard.setAdapter(adapter);
+
+        spiCreditCard.setSelection(0);
+
+        etName.setText(context.getSharedPreferences(SP_NAME, 0).getString("name", "ERROR"));
+        etPrice.setText("₪" + totalPrice);
+
+    }
+    private static Product createSubmitPurchaseDialog_getProduct(AppDatabase db, long productId, long tableId) {
+        Product product;
+
+        if (tableId == 1) {
+            product = db.smartphonesDao().getSmartphoneById(productId);
+        } else if (tableId == 2) {
+            product = db.watchesDao().getWatchById(productId);
+        } else {
+            product = db.accessoriesDao().getAccessoryById(productId);
+        }
+
+        return product;
     }
 
 }

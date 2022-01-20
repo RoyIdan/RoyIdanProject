@@ -1,6 +1,8 @@
 package com.example.royidanproject.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +16,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.CartActivity;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.R;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
@@ -29,7 +35,7 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class ProductsAdapter extends BaseAdapter implements Filterable {
 
-    private Context context;
+    private Activity context;
     private List<Product> productsList;
     private List<Product> filteredList;
     private LayoutInflater inflater;
@@ -40,7 +46,7 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
-    public ProductsAdapter(Context context, List<Product> productsList) {
+    public ProductsAdapter(Activity context, List<Product> productsList) {
         this.context = context;
         this.productsList = productsList;
         this.filteredList = productsList;
@@ -115,7 +121,12 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 //TODO - Add the item to the cart
+                long userId = sp.getLong("id", 0);
+                int quantity = Integer.parseInt(tvCount.getText().toString());
+                addToCart(userId, product, quantity);
+                context.startActivity(new Intent(context, CartActivity.class));
                 Toast.makeText(context, "Added " + product.getProductName(), Toast.LENGTH_LONG).show();
+                context.finish();
             }
         });
 
@@ -171,6 +182,34 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         }
 
         return view;
+    }
+
+    private void addToCart(long userId, Product product, int quantity) {
+        long productId = product.getProductId();
+        CartDetails cd = new CartDetails();
+        cd.setUserId(userId);
+        cd.setProductId(productId);
+        cd.setProductQuantity(quantity);
+
+        if (product instanceof Smartphone) {
+            cd.setTableId(1);
+            db.smartphonesDao().updateStockById(productId, product.getProductStock() - quantity);
+        } else if (product instanceof Watch) {
+            cd.setTableId(2);
+            db.watchesDao().updateStockById(productId, product.getProductStock() - quantity);
+        } else {
+            cd.setTableId(3);
+            db.accessoriesDao().updateStockById(productId, product.getProductStock() - quantity);
+        }
+
+        long tableId = cd.getTableId();
+        CartDetails existingDetails = db.usersDao().getCartDetailsByKeys(userId, productId, tableId);
+        if (existingDetails != null) {
+            existingDetails.setProductQuantity(existingDetails.getProductQuantity() + quantity);
+            db.usersDao().updateCartDetails(existingDetails);
+        } else {
+            db.usersDao().addCartItem(cd);
+        }
     }
 
     @Override

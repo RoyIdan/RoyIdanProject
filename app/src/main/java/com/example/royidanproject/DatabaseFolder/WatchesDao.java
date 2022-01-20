@@ -8,9 +8,12 @@ import androidx.room.Query;
 import androidx.room.RawQuery;
 
 @Dao
-public interface WatchesDao {
+public interface WatchesDao extends IProductDao {
     @Query("SELECT * FROM tblWatches WHERE productId = :watchId")
     Watch getWatchById(long watchId);
+
+    @Query("UPDATE tblWatches SET productStock = :stock WHERE productId = :id")
+    void updateStockById(long id, int stock);
 
     @Insert
     long insert(Watch watch);

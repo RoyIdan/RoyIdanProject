@@ -6,6 +6,8 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +42,8 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class).
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
     }
 
@@ -75,7 +78,7 @@ public class RoyIdanProject extends Application {
 
 
         Smartphone iphone11 = new Smartphone();
-        iphone11.setProductPhoto("iphone 11.png");
+        iphone11.setProductPhoto("iphone 11.jpg");
         iphone11.setProductStock(5);
         iphone11.setPhoneColor(Smartphone.PhoneColor.Black);
         iphone11.setPhoneRamSize(8);
