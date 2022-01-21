@@ -364,7 +364,7 @@ public class ManagerActivity extends AppCompatActivity {
         }
 
 //        Smartphone.PhoneColor phoneColor = getPhoneColor();
-        Smartphone.PhoneColor phoneColor = Smartphone.PhoneColor.Black;
+        Smartphone.PhoneColor phoneColor = Smartphone.PhoneColor.שחור;
 
         Smartphone s = new Smartphone();
         s.setProductName(name);
@@ -395,7 +395,7 @@ public class ManagerActivity extends AppCompatActivity {
         int color = rgSmartphoneColor.getCheckedRadioButtonId();
         switch (color) {
             case R.id.radBlack:
-                return Smartphone.PhoneColor.Black;
+                return Smartphone.PhoneColor.שחור;
         }
         return null;
     }

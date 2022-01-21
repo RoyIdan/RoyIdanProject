@@ -21,7 +21,7 @@
         <item>Ashdod</item>
     </string-array>
 
-    <string-array name="screen_size" id="@+id/screen_size" >
+    <string-array name="screen_size" id="@+id/screen_size">
         <item>5.0</item>
         <item>5.1</item>
         <item>5.2</item>
@@ -45,7 +45,7 @@
         <item>7.0</item>
     </string-array>
 
-    <string-array name="storage_size" id="@+id/storage_size" >
+    <string-array name="storage_size" id="@+id/storage_size">
         <item>16</item>
         <item>32</item>
         <item>64</item>
@@ -54,7 +54,7 @@
         <item>512</item>
     </string-array>
 
-    <string-array name="ram_size" id="@+id/ram_size" >
+    <string-array name="ram_size" id="@+id/ram_size">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -65,7 +65,6 @@
         <item>16</item>
         <item>18</item>
     </string-array>
-
 
 
 </resources>

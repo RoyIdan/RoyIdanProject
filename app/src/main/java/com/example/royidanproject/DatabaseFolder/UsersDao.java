@@ -51,6 +51,9 @@ public interface UsersDao {
     @Delete
     void deleteCartDetailsByReference(CartDetails cartDetails);
 
+    @Query("DELETE FROM tblCartDetails WHERE userId = :userId")
+    void deleteCartDetailsByUserId(long userId);
+
     @Update
     void update(Users user);
 

@@ -69,7 +69,7 @@ public class UsersActivity extends AppCompatActivity {
         }
         adapter = new UsersAdapter(UsersActivity.this, usersList);
         lvUsers = findViewById(R.id.lvUsers);
-        lvUsers.setAdapter(adapter);;
+        lvUsers.setAdapter(adapter);
 
         if (sp.getBoolean("admin", false)) {
             findViewById(R.id.llSearchBar).setVisibility(View.VISIBLE);

@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
@@ -65,7 +66,20 @@ public class RoyIdanProject extends Application {
         manager.setUserPhone("0509254011");
         manager.setUserPhoto("220116-14:44:07.jpg");
 
-        db.usersDao().insert(manager);
+        long managerId = db.usersDao().insert(manager);
+
+        Calendar cardCal = Calendar.getInstance();
+        cardCal.set(2022, 7, 0);
+        Date cardDate = cardCal.getTime();
+
+        CreditCard cc = new CreditCard();
+        cc.setCardBalance(10000D);
+        cc.setCardNumber("1234567890123456");
+        cc.setCardExpireDate(cardDate);
+        cc.setCvv("123");
+        cc.setUserId(managerId);
+
+        db.creditCardDao().insert(cc);
 
         Manufacturer apple = new Manufacturer();
         apple.setManufacturerName("Apple");
@@ -80,7 +94,7 @@ public class RoyIdanProject extends Application {
         Smartphone iphone11 = new Smartphone();
         iphone11.setProductPhoto("iphone 11.jpg");
         iphone11.setProductStock(5);
-        iphone11.setPhoneColor(Smartphone.PhoneColor.Black);
+        iphone11.setPhoneColor(Smartphone.PhoneColor.שחור);
         iphone11.setPhoneRamSize(8);
         iphone11.setPhoneScreenSize(8);
         iphone11.setPhoneStorageSize(128);
@@ -93,7 +107,7 @@ public class RoyIdanProject extends Application {
         Smartphone galaxyS10 = new Smartphone();
         galaxyS10.setProductPhoto("galaxyS10.jpg");
         galaxyS10.setProductStock(3);
-        galaxyS10.setPhoneColor(Smartphone.PhoneColor.White);
+        galaxyS10.setPhoneColor(Smartphone.PhoneColor.לבן);
         galaxyS10.setPhoneRamSize(6);
         galaxyS10.setPhoneScreenSize(7);
         galaxyS10.setPhoneStorageSize(64);
@@ -114,7 +128,6 @@ public class RoyIdanProject extends Application {
         appleWatch.setProductName("44mm Apple Watch SE GPS");
         appleWatch.setWatchSize(Watch.WatchSize.M);
         appleWatch.setWatchColor(Black);
-
 
         db.smartphonesDao().insert(iphone11);
         db.smartphonesDao().insert(galaxyS10);

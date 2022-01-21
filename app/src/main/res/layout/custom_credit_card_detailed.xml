@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/card"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="120dp"
+
+                android:textSize="33.5sp"
+                android:text="1234  5678  9012  3456"
+                android:gravity="center_vertical"
+                android:background="#212121"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:digits="1234567890"
+                android:id="@+id/tvCardNumber"/>
+
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="23dp"
+                android:gravity="center"
+                android:text="01/01"
+                android:textSize="20sp"
+                android:layout_marginStart="158dp"
+                android:background="#212121"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:digits="1234567890"
+                android:id="@+id/tvCardExpireDate" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="30dp"
+                android:gravity="center"
+                android:text="רועי עידן"
+                android:autoSizeTextType="uniform"
+                android:textSize="20sp"
+                android:background="#212121"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:digits="אבגדהוזחטיכלמנסעפצקרשת -"
+                android:id="@+id/tvCardHolder"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="יתרה:"
+                android:textSize="30sp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3000$"
+                android:textSize="30sp"
+                android:id="@+id/tvCardBalance"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="הסר מהחשבון"
+                android:textSize="22sp"
+                android:id="@+id/btnRemove" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="עדכן"
+                android:textSize="22sp"
+                android:id="@+id/btnUpdate" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="סגור"
+            android:textSize="22sp"
+            android:layout_gravity="center"
+            android:id="@+id/btnClose" />
+
+    </LinearLayout>
+
+</LinearLayout>

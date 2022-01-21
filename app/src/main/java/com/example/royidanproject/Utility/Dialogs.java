@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.net.Uri;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,9 +27,8 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
+import com.example.royidanproject.ReceiptActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -305,6 +302,10 @@ public class Dialogs {
 
                 db.orderDetailsDao().insertAll(orderList);
 
+                db.usersDao().deleteCartDetailsByUserId(userId);
+
+                Intent intent = new Intent(context, ReceiptActivity.class);
+                intent.putExtra("")
             }
         });
 

@@ -59,6 +59,14 @@
             android:text="סל זמני"
             android:id="@+id/btnCart"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="כרטיסי אשראי"
+            android:id="@+id/btnCreditCards"/>
+
     </LinearLayout>
 
     <LinearLayout
