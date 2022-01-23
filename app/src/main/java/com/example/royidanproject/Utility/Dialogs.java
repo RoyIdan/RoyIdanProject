@@ -33,6 +33,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.royidanproject.MainActivity.ADMIN_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
@@ -287,6 +289,7 @@ public class Dialogs {
                 order.setCreditCardId(card.getCardId());
 
                 long orderId = db.ordersDao().insert(order);
+                order.setOrderId(orderId);
 
                 List<OrderDetails> orderList = new LinkedList<>();
                 for (int i = 0; i < detailsList.size(); i++) {
@@ -305,7 +308,9 @@ public class Dialogs {
                 db.usersDao().deleteCartDetailsByUserId(userId);
 
                 Intent intent = new Intent(context, ReceiptActivity.class);
-                intent.putExtra("")
+                intent.putExtra("order", order);
+                context.startActivity(intent);
+                ((AppCompatActivity)context).finish();
             }
         });
 

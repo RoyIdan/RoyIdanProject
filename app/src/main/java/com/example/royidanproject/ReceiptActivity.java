@@ -8,17 +8,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Order;
+
+import java.text.SimpleDateFormat;
 
 public class ReceiptActivity extends AppCompatActivity {
 
     TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptTotalPrice;
     ListView lvDetails;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
+
+        db = AppDatabase.getInstance(ReceiptActivity.this);
 
         tvReceiptNumber = findViewById(R.id.tvReceiptNumber);
         tvReceiptDate = findViewById(R.id.tvReceiptDate);
@@ -33,6 +40,17 @@ public class ReceiptActivity extends AppCompatActivity {
         }
 
         Order order = (Order) intent.getSerializableExtra("order");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        long creditCardId = order.getCreditCardId();
+        CreditCard creditCard = db.creditCardDao().getById(creditCardId);
+        String lastFourDigits = creditCard.getCardNumber().substring(12);
+
+        tvReceiptNumber.setText(String.valueOf(order.getOrderId()));
+        tvReceiptDate.setText(sdf.format(order.getOrderDatePurchased()));
+        tvReceiptCreditCard.setText("xxxx-xxxx-xxxx-" + lastFourDigits);
+
 
     }
 }

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tblCreditCards", foreignKeys = @ForeignKey(entity = Users.class, parentColumns = "userId", childColumns = "userId"))
 public class CreditCard {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long cardId;
     private long userId; //FK
     private String cardNumber;

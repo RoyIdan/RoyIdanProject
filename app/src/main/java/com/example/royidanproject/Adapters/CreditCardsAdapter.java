@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class CreditCardsAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View promptDialog = inflater.inflate(R.layout.custom_product_detailed, null);
+                View promptDialog = inflater.inflate(R.layout.custom_credit_card_detailed, null);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                 alert.setView(promptDialog);
                 final AlertDialog dialog = alert.create();
@@ -100,7 +101,14 @@ public class CreditCardsAdapter extends BaseAdapter {
 
                 TextView tvCardNumber = dialog.findViewById(R.id.tvCardNumber),
                         tvCardExpireDate = dialog.findViewById(R.id.tvCardExpireDate),
-                        tvCardHolder = dialog.findViewById(R.id.tvCardHolder);
+                        tvCardHolder = dialog.findViewById(R.id.tvCardHolder),
+                        tvCardBalance = dialog.findViewById(R.id.tvCardBalance);
+
+                float currentX = tvCardExpireDate.getX();
+                tvCardExpireDate.setX(currentX - 60f);
+
+                float currentSize = tvCardNumber.getTextSize();
+                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25f);
 
                 String number = card.getCardNumber();
 
