@@ -8,16 +8,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.Adapters.ReceiptAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Order;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 public class ReceiptActivity extends AppCompatActivity {
 
     TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptTotalPrice;
     ListView lvDetails;
+    ReceiptAdapter adapter;
     AppDatabase db;
 
     @Override
@@ -51,6 +54,21 @@ public class ReceiptActivity extends AppCompatActivity {
         tvReceiptDate.setText(sdf.format(order.getOrderDatePurchased()));
         tvReceiptCreditCard.setText("xxxx-xxxx-xxxx-" + lastFourDigits);
 
+        adapter = new ReceiptAdapter(ReceiptActivity.this, order);
+        lvDetails.setAdapter(adapter);
 
     }
+
+    public void onAdapterFinish(double totalPrice) {
+        tvReceiptTotalPrice.setText(fmt(totalPrice));
+    }
+
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return new DecimalFormat("#.##").format(1.199);
+    }
+
 }
