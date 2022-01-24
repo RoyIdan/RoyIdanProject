@@ -73,7 +73,7 @@ public class RoyIdanProject extends Application {
         Date cardDate = cardCal.getTime();
 
         CreditCard cc = new CreditCard();
-        cc.setCardBalance(10000D);
+        cc.setCardBalance(100000D);
         cc.setCardNumber("1234567890123456");
         cc.setCardExpireDate(cardDate);
         cc.setCvv("123");

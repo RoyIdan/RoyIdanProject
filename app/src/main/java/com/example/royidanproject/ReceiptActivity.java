@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ public class ReceiptActivity extends AppCompatActivity {
 
     TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptTotalPrice;
     ListView lvDetails;
+    Button btnReturn;
     ReceiptAdapter adapter;
     AppDatabase db;
 
@@ -35,6 +38,7 @@ public class ReceiptActivity extends AppCompatActivity {
         tvReceiptCreditCard = findViewById(R.id.tvReceiptCreditCard);
         tvReceiptTotalPrice = findViewById(R.id.tvReceiptTotalPrice);
         lvDetails = findViewById(R.id.lvDetails);
+        btnReturn = findViewById(R.id.btnReturn);
 
         Intent intent = getIntent();
         if (intent == null || !intent.getExtras().containsKey("order")) {
@@ -54,6 +58,23 @@ public class ReceiptActivity extends AppCompatActivity {
         tvReceiptDate.setText(sdf.format(order.getOrderDatePurchased()));
         tvReceiptCreditCard.setText("xxxx-xxxx-xxxx-" + lastFourDigits);
 
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ReceiptActivity.this, MainActivity.class));
+            }
+        });
+
+        if (intent.getBooleanExtra("fromOrderActivity", false)) {
+            btnReturn.setText("חזרה לדף הזמנה");
+            btnReturn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(ReceiptActivity.this, OrderActivity.class).putExtra("order", order));
+                }
+            });
+        }
+
         adapter = new ReceiptAdapter(ReceiptActivity.this, order);
         lvDetails.setAdapter(adapter);
 
@@ -68,7 +89,7 @@ public class ReceiptActivity extends AppCompatActivity {
         if(d == (long) d)
             return String.format("%d",(long)d);
         else
-            return new DecimalFormat("#.##").format(1.199);
+            return new DecimalFormat("#.##").format(d);
     }
 
 }

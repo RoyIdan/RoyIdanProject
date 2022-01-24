@@ -11,6 +11,7 @@ import androidx.room.RoomDatabase;
         Watch.class,
         Accessory.class,
         Manufacturer.class,
+        Rating.class,
         Order.class,
         OrderDetails.class,
         CartDetails.class,
@@ -24,6 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WatchesDao watchesDao();
     public abstract AccessoriesDao accessoriesDao();
     public abstract ManufacturersDao manufacturersDao();
+    public abstract RatingsDao ratingsDao();
     public abstract OrdersDao ordersDao();
     public abstract OrderDetailsDao orderDetailsDao();
     public abstract CreditCardDao creditCardDao();

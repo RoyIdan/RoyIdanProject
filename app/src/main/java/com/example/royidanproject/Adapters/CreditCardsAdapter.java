@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -107,8 +109,9 @@ public class CreditCardsAdapter extends BaseAdapter {
                 float currentX = tvCardExpireDate.getX();
                 tvCardExpireDate.setX(currentX - 60f);
 
-                float currentSize = tvCardNumber.getTextSize();
-                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25f);
+                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30f);
+
+                tvCardNumber.setGravity(Gravity.CENTER);
 
                 String number = card.getCardNumber();
 
@@ -126,6 +129,193 @@ public class CreditCardsAdapter extends BaseAdapter {
                 tvCardNumber.setText(spacedNumber);
                 tvCardExpireDate.setText(cardSdf.format(card.getCardExpireDate()));
                 tvCardHolder.setText(userName);
+                tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.creditCardDao().delete(card);
+                    }
+                });
+
+            }
+        });
+
+        tvCardNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View promptDialog = inflater.inflate(R.layout.custom_credit_card_detailed, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                Button btnRemove = dialog.findViewById(R.id.btnRemove),
+                        btnUpdate = dialog.findViewById(R.id.btnUpdate),
+                        btnClose = dialog.findViewById(R.id.btnClose);
+
+
+                TextView tvCardNumber = dialog.findViewById(R.id.tvCardNumber),
+                        tvCardExpireDate = dialog.findViewById(R.id.tvCardExpireDate),
+                        tvCardHolder = dialog.findViewById(R.id.tvCardHolder),
+                        tvCardBalance = dialog.findViewById(R.id.tvCardBalance);
+
+                float currentX = tvCardExpireDate.getX();
+                tvCardExpireDate.setX(currentX - 60f);
+
+                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30f);
+
+                tvCardNumber.setGravity(Gravity.CENTER);
+
+                String number = card.getCardNumber();
+
+                String spacedNumber = "";
+                spacedNumber += number.substring(0,4);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(4,8);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(8,12);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(12,16);
+
+                String userName = user.getUserName() + " " + user.getUserSurname();
+
+                tvCardNumber.setText(spacedNumber);
+                tvCardExpireDate.setText(cardSdf.format(card.getCardExpireDate()));
+                tvCardHolder.setText(userName);
+                tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.creditCardDao().delete(card);
+                    }
+                });
+
+            }
+        });
+
+        tvCardExpireDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View promptDialog = inflater.inflate(R.layout.custom_credit_card_detailed, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                Button btnRemove = dialog.findViewById(R.id.btnRemove),
+                        btnUpdate = dialog.findViewById(R.id.btnUpdate),
+                        btnClose = dialog.findViewById(R.id.btnClose);
+
+
+                TextView tvCardNumber = dialog.findViewById(R.id.tvCardNumber),
+                        tvCardExpireDate = dialog.findViewById(R.id.tvCardExpireDate),
+                        tvCardHolder = dialog.findViewById(R.id.tvCardHolder),
+                        tvCardBalance = dialog.findViewById(R.id.tvCardBalance);
+
+                float currentX = tvCardExpireDate.getX();
+                tvCardExpireDate.setX(currentX - 60f);
+
+                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30f);
+
+                tvCardNumber.setGravity(Gravity.CENTER);
+
+                String number = card.getCardNumber();
+
+                String spacedNumber = "";
+                spacedNumber += number.substring(0,4);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(4,8);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(8,12);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(12,16);
+
+                String userName = user.getUserName() + " " + user.getUserSurname();
+
+                tvCardNumber.setText(spacedNumber);
+                tvCardExpireDate.setText(cardSdf.format(card.getCardExpireDate()));
+                tvCardHolder.setText(userName);
+                tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.creditCardDao().delete(card);
+                    }
+                });
+
+            }
+        });
+
+        tvCardHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View promptDialog = inflater.inflate(R.layout.custom_credit_card_detailed, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                Button btnRemove = dialog.findViewById(R.id.btnRemove),
+                        btnUpdate = dialog.findViewById(R.id.btnUpdate),
+                        btnClose = dialog.findViewById(R.id.btnClose);
+
+
+                TextView tvCardNumber = dialog.findViewById(R.id.tvCardNumber),
+                        tvCardExpireDate = dialog.findViewById(R.id.tvCardExpireDate),
+                        tvCardHolder = dialog.findViewById(R.id.tvCardHolder),
+                        tvCardBalance = dialog.findViewById(R.id.tvCardBalance);
+
+                float currentX = tvCardExpireDate.getX();
+                tvCardExpireDate.setX(currentX - 60f);
+
+                tvCardNumber.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30f);
+
+                tvCardNumber.setGravity(Gravity.CENTER);
+
+                String number = card.getCardNumber();
+
+                String spacedNumber = "";
+                spacedNumber += number.substring(0,4);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(4,8);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(8,12);
+                spacedNumber += "  ";
+                spacedNumber += number.substring(12,16);
+
+                String userName = user.getUserName() + " " + user.getUserSurname();
+
+                tvCardNumber.setText(spacedNumber);
+                tvCardExpireDate.setText(cardSdf.format(card.getCardExpireDate()));
+                tvCardHolder.setText(userName);
+                tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -145,5 +335,13 @@ public class CreditCardsAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return new DecimalFormat("#.##").format(d);
     }
 }

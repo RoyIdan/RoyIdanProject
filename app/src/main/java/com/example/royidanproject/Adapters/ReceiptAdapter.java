@@ -37,6 +37,7 @@ import com.example.royidanproject.R;
 import com.example.royidanproject.ReceiptActivity;
 import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.UsersActivity;
+import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 
 import java.io.File;
@@ -66,8 +67,6 @@ public class ReceiptAdapter extends BaseAdapter {
     SharedPreferences.Editor editor;
 
     private double totalPrice;
-
-    public double getTotalPrice() {return totalPrice;}
 
     public ReceiptAdapter(Context context, Order order) {
         this.context = context;
@@ -139,6 +138,13 @@ public class ReceiptAdapter extends BaseAdapter {
                 tvQuantity = view.findViewById(R.id.tvQuantity),
                 tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
 
+        final Product p = product;
+        tvDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialogs.createProductDialog(context, p);
+            }
+        });
 
         tvDescription.setText(product.getProductName());
         tvPrice.setText(fmt(product.getProductPrice()));

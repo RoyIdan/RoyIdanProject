@@ -26,6 +26,7 @@ import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.MainActivity;
+import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.ReceiptActivity;
 
@@ -307,7 +308,7 @@ public class Dialogs {
 
                 db.usersDao().deleteCartDetailsByUserId(userId);
 
-                Intent intent = new Intent(context, ReceiptActivity.class);
+                Intent intent = new Intent(context, OrderActivity.class);
                 intent.putExtra("order", order);
                 context.startActivity(intent);
                 ((AppCompatActivity)context).finish();
