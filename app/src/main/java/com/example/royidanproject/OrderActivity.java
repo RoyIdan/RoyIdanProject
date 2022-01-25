@@ -21,7 +21,7 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     TextView tvOrderNumber, tvOrderDate, tvTotalPrice;
-    Button btnReceipt;
+    Button btnReceipt, btnMainActivity;
     ListView lvDetails;
     AppDatabase db;
 
@@ -36,7 +36,15 @@ public class OrderActivity extends AppCompatActivity {
         tvOrderDate = findViewById(R.id.tvOrderDate);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnReceipt = findViewById(R.id.btnReceipt);
+        btnMainActivity = findViewById(R.id.btnMainActivity);
         lvDetails = findViewById(R.id.lvDetails);
+
+        btnMainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderActivity.this, MainActivity.class));
+            }
+        });
 
         Intent intent = getIntent();
         if (intent == null || !intent.getExtras().containsKey("order")) {

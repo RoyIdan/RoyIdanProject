@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNewCardActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/card"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvCardNumber"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+
+            android:layout_marginTop="120dp"
+            android:background="#212121"
+            android:digits="1234567890"
+            android:fontFamily="@font/ocr_a_regular"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="31sp" />
+
+        <TextView
+            android:layout_width="55dp"
+            android:layout_height="23dp"
+            android:gravity="center"
+            android:text=""
+            android:textSize="20sp"
+            android:layout_marginStart="158dp"
+            android:background="#212121"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:digits="1234567890"
+            android:id="@+id/tvCardExpireDate" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="30dp"
+            android:gravity="center"
+            android:text=""
+            android:autoSizeTextType="uniform"
+            android:textSize="20sp"
+            android:background="#212121"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:digits="אבגדהוזחטיכלמנסעפצקרשת -"
+            android:id="@+id/tvCardHolder"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שם בעל הכרטיס:"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:id="@+id/etCardHolder"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="מספר הכרטיס (בלי רווחים):"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:inputType="number"
+            android:maxLength="16"
+            android:id="@+id/etCardNumber"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":CVV"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:inputType="text"
+                    android:maxLength="3"
+                    android:id="@+id/etCardCvv"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="תוקף הכרטיס:"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:inputType="date"
+                    android:focusable="false"
+                    android:id="@+id/etCardExpireDate"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

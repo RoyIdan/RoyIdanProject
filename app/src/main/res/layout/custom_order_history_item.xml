@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מספר הזמנה:" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123456789"
+                android:id="@+id/tvOrderNumber" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="הוזמנה בתאריך:" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textDirection="ltr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22/12/22 22:22:22"
+                android:id="@+id/tvOrderDate" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="כמות פריטים:" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textDirection="ltr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7"
+                android:id="@+id/tvOrderItemsCount" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מחיר כולל:" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textDirection="ltr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120000$"
+                android:id="@+id/tvOrderTotalCost" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

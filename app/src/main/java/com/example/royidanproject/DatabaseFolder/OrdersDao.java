@@ -15,4 +15,7 @@ public interface OrdersDao {
     @Query("SELECT * FROM tblOrders WHERE customerId = :customerId")
     List<Order> getByCustomerId(long customerId);
 
+    @Query("SELECT * FROM tblorders")
+    List<Order> getAll();
+
 }

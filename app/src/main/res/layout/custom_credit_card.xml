@@ -11,19 +11,20 @@
 
 
         <TextView
+            android:id="@+id/tvCardNumber"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="120dp"
 
-            android:textSize="33.5sp"
-            android:text="1234  5678  9012  3456"
-            android:gravity="center_vertical"
+            android:layout_marginTop="120dp"
             android:background="#212121"
-            android:textColor="@color/white"
-            android:maxLines="1"
             android:digits="1234567890"
-            android:id="@+id/tvCardNumber"/>
+            android:fontFamily="@font/ocr_a_regular"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="1234 5678 9012 3456"
+            android:textColor="@color/white"
+            android:textSize="31sp" />
 
         <TextView
             android:layout_width="55dp"

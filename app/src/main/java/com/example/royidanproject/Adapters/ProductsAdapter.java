@@ -56,16 +56,6 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         editor = sp.edit();
     }
 
-    private void deleteUserFromList(Users user) {
-        for (int i = 0; i < productsList.size(); i++) {
-            if (productsList.get(i).equals(user)) {
-                productsList.remove(i);
-                break;
-            }
-        }
-        notifyDataSetChanged();
-    }
-
     public void updateProductsList(List<Product> newList) {
         productsList = newList;
     }

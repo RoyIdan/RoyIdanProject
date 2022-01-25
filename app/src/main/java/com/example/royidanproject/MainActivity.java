@@ -144,6 +144,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CreditCardsActivity.class));
             }
         });
+        findViewById(R.id.btnOrderHistory).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, OrderHistoryActivity.class));
+            }
+        });
 
         setTitle("רועי סלולר");
     }

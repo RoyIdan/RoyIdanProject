@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderHistoryActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="היסטוריית הזמנות"
+        android:textSize="23sp"
+        android:layout_gravity="center" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חזור לדף הראשי"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:id="@+id/btnMainActivity" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:checkedButton="@id/rbEveryone"
+        android:id="@+id/rgOrderHistory">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שלך בלבד"
+            android:layout_marginRight="30dp"
+            android:id="@+id/rbManagerOnly"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="של כולם"
+            android:id="@+id/rbEveryone"/>
+
+    </RadioGroup>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lvOrderHistory" />
+
+
+</LinearLayout>

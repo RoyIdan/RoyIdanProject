@@ -87,14 +87,34 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="חשבונית מס"
-        android:textSize="20sp"
-        android:layout_marginTop="10dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/btnReceipt" />
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="חשבונית מס"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:id="@+id/btnReceipt" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="חזרה לדף ראשי"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:id="@+id/btnMainActivity" />
+
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
