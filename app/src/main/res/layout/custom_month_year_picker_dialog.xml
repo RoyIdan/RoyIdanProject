@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:layoutDirection="rtl">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שנה"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="80dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חודש"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="105dp"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:entries="@array/spinner_phone"
+                android:textSize="25sp"
+                android:id="@+id/spiYear" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="105dp"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:entries="@array/spinner_phone"
+                android:textSize="25sp"
+                android:id="@+id/spiMonth" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="שמור"
+        android:layout_gravity="center"
+        android:id="@+id/btnSave"/>
+
+</LinearLayout>

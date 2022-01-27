@@ -57,7 +57,7 @@ public class CreditCardsActivity extends AppCompatActivity {
         btnAddNewCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(CreditCardsActivity.this, AddNewCardActivity.class));
             }
         });
     }
