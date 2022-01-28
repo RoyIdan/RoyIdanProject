@@ -23,14 +23,13 @@ import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneColor;
-import com.example.royidanproject.DatabaseFolder.Watch.WatchSize;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.Black;
+import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
 public class MainActivity extends AppCompatActivity {
 

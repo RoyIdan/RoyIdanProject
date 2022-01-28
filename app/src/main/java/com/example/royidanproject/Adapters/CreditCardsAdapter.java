@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
@@ -73,11 +74,11 @@ public class CreditCardsAdapter extends BaseAdapter {
 
         String spacedNumber = "";
         spacedNumber += number.substring(0,4);
-        spacedNumber += "  ";
+        spacedNumber += " ";
         spacedNumber += number.substring(4,8);
-        spacedNumber += "  ";
+        spacedNumber += " ";
         spacedNumber += number.substring(8,12);
-        spacedNumber += "  ";
+        spacedNumber += " ";
         spacedNumber += number.substring(12,16);
 
         String userName = user.getUserName() + " " + user.getUserSurname();
@@ -96,7 +97,8 @@ public class CreditCardsAdapter extends BaseAdapter {
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
 
-                Button btnRemove = dialog.findViewById(R.id.btnRemove),
+                Button btnAddBalance = dialog.findViewById(R.id.btnAddBalance),
+                        btnRemove = dialog.findViewById(R.id.btnRemove),
                         btnUpdate = dialog.findViewById(R.id.btnUpdate),
                         btnClose = dialog.findViewById(R.id.btnClose);
 
@@ -105,6 +107,8 @@ public class CreditCardsAdapter extends BaseAdapter {
                         tvCardExpireDate = dialog.findViewById(R.id.tvCardExpireDate),
                         tvCardHolder = dialog.findViewById(R.id.tvCardHolder),
                         tvCardBalance = dialog.findViewById(R.id.tvCardBalance);
+
+                EditText etAddBalance = dialog.findViewById(R.id.etAddBalance);
 
                 float currentX = tvCardExpireDate.getX();
                 tvCardExpireDate.setX(currentX - 60f);
@@ -117,11 +121,11 @@ public class CreditCardsAdapter extends BaseAdapter {
 
                 String spacedNumber = "";
                 spacedNumber += number.substring(0,4);
-                spacedNumber += "  ";
+                spacedNumber += " ";
                 spacedNumber += number.substring(4,8);
-                spacedNumber += "  ";
+                spacedNumber += " ";
                 spacedNumber += number.substring(8,12);
-                spacedNumber += "  ";
+                spacedNumber += " ";
                 spacedNumber += number.substring(12,16);
 
                 String userName = user.getUserName() + " " + user.getUserSurname();
@@ -131,6 +135,18 @@ public class CreditCardsAdapter extends BaseAdapter {
                 tvCardHolder.setText(userName);
                 tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
 
+                btnAddBalance.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        double bonusBalance = Double.parseDouble(etAddBalance.getText().toString().trim());
+                        double newBalance = card.getCardBalance() + bonusBalance;
+                        card.setCardBalance(newBalance);
+                        db.creditCardDao().updateBalanceById(card.getCardId(), newBalance);
+
+                        tvCardBalance.setText('₪' + fmt(newBalance));
+                    }
+                });
+
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -138,10 +154,22 @@ public class CreditCardsAdapter extends BaseAdapter {
                     }
                 });
 
+                btnUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "לא ניתן לעדכן בגרסה זו של האפליקציה", Toast.LENGTH_LONG).show();
+
+                        //TODO - make card update thingy
+                    }
+                });
+
                 btnRemove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         db.creditCardDao().delete(card);
+                        dialog.dismiss();
+                        cardList.remove(card);
+                        notifyDataSetInvalidated();
                     }
                 });
 

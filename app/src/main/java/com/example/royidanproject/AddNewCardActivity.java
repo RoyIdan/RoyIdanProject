@@ -129,6 +129,14 @@ public class AddNewCardActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                if (number.length() < 16) {
+                    toast("כרטיס באשראי חייב להכיל 16 ספרות");
+                    return;
+                }
+                if (cvv.length() < 3) {
+                    toast("הcvv חייב להכיל 3 ספרות");
+                    return;
+                }
                 CreditCard cc = new CreditCard();
                 cc.setUserId(userId);
                 cc.setCardNumber(number);
@@ -137,6 +145,7 @@ public class AddNewCardActivity extends AppCompatActivity {
                 cc.setCardBalance(0d);
 
                 db.creditCardDao().insert(cc);
+                startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
             }
         });
     }
@@ -211,5 +220,9 @@ public class AddNewCardActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void toast(String msg) {
+        Toast.makeText(AddNewCardActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

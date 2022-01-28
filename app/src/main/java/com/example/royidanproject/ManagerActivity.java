@@ -53,9 +53,9 @@ public class ManagerActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
             llAddNewProductSmartphone, llFinalButtons, llAddNewManufacturer;
-    private EditText etName, etPrice, etStock, etScreenSize, etStorageSize, etRamSize;
+    private EditText etName, etPrice, etStock;
     private RadioGroup rgSmartphoneColor;
-    private Spinner spiGoTo, spiCategory, spiManufacturer;
+    private Spinner spiGoTo, spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
     private Bitmap bmProduct;
     private String description;
     private int previousId = 0;
@@ -84,9 +84,9 @@ public class ManagerActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
         etStock = findViewById(R.id.etStock);
-        etScreenSize = findViewById(R.id.etScreenSize);
-        etStorageSize = findViewById(R.id.etStorageSize);
-        etRamSize = findViewById(R.id.etRamSize);
+        spiScreenSize = findViewById(R.id.spiScreenSize);
+        spiStorageSize = findViewById(R.id.spiStorageSize);
+        spiRamSize = findViewById(R.id.spiRamSize);
         rgSmartphoneColor = findViewById(R.id.rgSmartphoneColor);
         spiGoTo = findViewById(R.id.spiGoTo);
         spiCategory = findViewById(R.id.spiCategory);
@@ -331,6 +331,10 @@ public class ManagerActivity extends AppCompatActivity {
     private void submit() {
         int type = spiCategory.getSelectedItemPosition();
 
+        if (!validate(type)) {
+            return;
+        }
+
         switch (type) {
             case 1:
                 submit_smartphone();
@@ -348,13 +352,62 @@ public class ManagerActivity extends AppCompatActivity {
 
     }
 
+    private boolean validate(int type) {
+        boolean isValid = true;
+
+        String name = etName.getText().toString().trim();
+        String strPrice = etPrice.getText().toString().trim();
+        String strStock = etStock.getText().toString().trim();
+        double price = 0;
+        int stock = 0;
+
+        if (name.isEmpty()) {
+            etName.setError("אנא מלא שדה זה");
+            isValid = false;
+        } else {
+            if (name.length() < 3) {
+                etName.setError("שם המוצר חייב להכיל לפחות 3 תווים");
+                isValid = false;
+            }
+        }
+
+        if (strPrice.isEmpty()) {
+            etPrice.setError("אנא מלא שדה זה");
+            isValid = false;
+        } else {
+            price = Double.parseDouble(strPrice);
+            if (price < 10) {
+                etPrice.setError("המחיר המינימלי של מוצר הוא 10 שקלים");
+                isValid = false;
+            }
+        }
+
+        if (strStock.isEmpty()) {
+            etStock.setError("אנא מלא שדה זה");
+            isValid = false;
+        } else {
+            stock = Integer.parseInt(strStock);
+            if (stock < 1) {
+                etStock.setError("חייב להיות לפחות מוצר אחד במלאי");
+                isValid = false;
+            }
+        }
+
+        if (bmProduct == null) {
+            toast("בחר תמונה");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     private void submit_smartphone() {
         String name = etName.getText().toString().trim();
         String price = etPrice.getText().toString().trim();
         String stock = etStock.getText().toString().trim();
-        String screenSize = etScreenSize.getText().toString().trim();
-        String storageSize = etStorageSize.getText().toString().trim();
-        String ramSize = etRamSize.getText().toString().trim();
+        String screenSize = (String)spiScreenSize.getSelectedItem();
+        String storageSize = (String)spiStorageSize.getSelectedItem();
+        String ramSize = (String)spiRamSize.getSelectedItem();
         long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
 
         String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
@@ -363,8 +416,7 @@ public class ManagerActivity extends AppCompatActivity {
             return;
         }
 
-//        Smartphone.PhoneColor phoneColor = getPhoneColor();
-        Smartphone.PhoneColor phoneColor = Smartphone.PhoneColor.שחור;
+        Smartphone.PhoneColor phoneColor = getPhoneColor();
 
         Smartphone s = new Smartphone();
         s.setProductName(name);
@@ -373,7 +425,7 @@ public class ManagerActivity extends AppCompatActivity {
         s.setProductStock(Integer.parseInt(stock));
         s.setProductDescription(description);
         s.setPhoneColor(phoneColor);
-        s.setPhoneScreenSize(Integer.parseInt(screenSize));
+        s.setPhoneScreenSize(Float.parseFloat(screenSize));
         s.setPhoneStorageSize(Integer.parseInt(storageSize));
         s.setPhoneRamSize(Integer.parseInt(ramSize));
         s.setProductPhoto(photo);
@@ -396,8 +448,11 @@ public class ManagerActivity extends AppCompatActivity {
         switch (color) {
             case R.id.radBlack:
                 return Smartphone.PhoneColor.שחור;
+            case R.id.radGray:
+                return Smartphone.PhoneColor.אפור;
+            default:
+                return Smartphone.PhoneColor.לבן;
         }
-        return null;
     }
 
     private void resetFields() {
@@ -412,9 +467,9 @@ public class ManagerActivity extends AppCompatActivity {
 
         if (i == 1) {
             // Smartphone
-            etScreenSize.setText("");
-            etStorageSize.setText("");
-            etRamSize.setText("");
+            spiScreenSize.setSelection(0);
+            spiStorageSize.setSelection(0);
+            spiRamSize.setSelection(0);
         } else if (i == 2) {
 
         } else if (i == 3) {

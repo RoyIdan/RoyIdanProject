@@ -5,7 +5,7 @@ import androidx.room.Entity;
 @Entity(tableName = "tblWatches")
 public class Watch extends Product {
     private WatchColor watchColor;
-    private WatchSize watchSize;
+    private int watchSize;
 
     public WatchColor getWatchColor() {
         return watchColor;
@@ -15,19 +15,16 @@ public class Watch extends Product {
         this.watchColor = watchColor;
     }
 
-    public WatchSize getWatchSize() {
+    public int getWatchSize() {
         return watchSize;
     }
 
-    public void setWatchSize(WatchSize watchSize) {
+    public void setWatchSize(int watchSize) {
         this.watchSize = watchSize;
     }
 
     public enum WatchColor {
-        Black, White, Green,
+        שחור, לבן, ירוק,
     }
 
-    public enum WatchSize {
-        L, M, S,
-    }
 }

@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.CartActivity;
 import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
@@ -34,6 +35,7 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.UsersActivity;
+import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 
 import java.io.File;
@@ -42,6 +44,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -213,7 +216,9 @@ public class CartAdapter extends BaseAdapter {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                List<CartDetails> list = new LinkedList<>();
+                list.add(details);
+                Dialogs.createSubmitPurchaseDialog(context, list);
             }
         });
 

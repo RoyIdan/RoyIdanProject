@@ -47,6 +47,42 @@
 
     </RadioGroup>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layoutDirection="rtl">
+
+        <EditText
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:hint="מתאריך"
+            android:focusable="false"
+            android:id="@+id/etFromDate"/>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:hint="עד תאריך"
+            android:focusable="false"
+            android:id="@+id/etUntilDate"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnSearchByDate"
+        android:layout_gravity="center"
+        android:text="חפש לפי תאריך"
+        android:textSize="20sp"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

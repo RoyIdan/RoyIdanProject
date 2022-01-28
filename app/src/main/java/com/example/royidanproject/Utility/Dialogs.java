@@ -25,6 +25,7 @@ import com.example.royidanproject.DatabaseFolder.OrderDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.R;
@@ -217,6 +218,10 @@ public class Dialogs {
             extras[1].setText(String.valueOf(((Smartphone) product).getPhoneScreenSize()));
             extras[2].setText(String.valueOf(((Smartphone) product).getPhoneStorageSize()));
             extras[3].setText(String.valueOf(((Smartphone) product).getPhoneRamSize()));
+        } else if (product instanceof Watch) {
+            extras[0].setText((Watch.toString());
+            extras[1].setText(String.valueOf(((Smartphone) product).getPhoneScreenSize()));
+            // TODO - continue here
         }
     }
 
@@ -306,7 +311,9 @@ public class Dialogs {
 
                 db.orderDetailsDao().insertAll(orderList);
 
-                db.usersDao().deleteCartDetailsByUserId(userId);
+                for (CartDetails detail: detailsList) {
+                    db.usersDao().deleteCartDetailsByReference(detail);
+                }
 
                 Intent intent = new Intent(context, OrderActivity.class);
                 intent.putExtra("order", order);

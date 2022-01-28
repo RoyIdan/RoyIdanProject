@@ -1,6 +1,6 @@
 package com.example.royidanproject;
 
-import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.Black;
+import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
 import android.app.Application;
 import android.app.Dialog;
@@ -126,8 +126,8 @@ public class RoyIdanProject extends Application {
         appleWatch.setProductRating_count(12);
         appleWatch.setProductRating_count(3);
         appleWatch.setProductName("44mm Apple Watch SE GPS");
-        appleWatch.setWatchSize(Watch.WatchSize.M);
-        appleWatch.setWatchColor(Black);
+        appleWatch.setWatchSize(44);
+        appleWatch.setWatchColor(שחור);
 
         db.smartphonesDao().insert(iphone11);
         db.smartphonesDao().insert(galaxyS10);
