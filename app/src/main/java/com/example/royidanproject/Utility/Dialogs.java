@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -191,6 +192,8 @@ public class Dialogs {
         TextView tvStock = dialog.findViewById(R.id.tvStock);
         TextView tvDescription = dialog.findViewById(R.id.tvDescription);
         ImageView ivProductPhoto = dialog.findViewById(R.id.ivProductPhoto);
+        LinearLayout llSmartphone = dialog.findViewById(R.id.llSmartphone);
+        LinearLayout llWatch = dialog.findViewById(R.id.llWatch);
 
         TextView[] extras = null;
 
@@ -198,6 +201,11 @@ public class Dialogs {
             extras = new TextView[] {dialog.findViewById(R.id.tvColor), dialog.findViewById(R.id.tvScreenSize),
                     dialog.findViewById(R.id.tvStorageSize), dialog.findViewById(R.id.tvRamSize)};
             tvType.setText("סמארטפון");
+            llSmartphone.setVisibility(View.VISIBLE);
+        } else if (product instanceof Watch) {
+            extras = new TextView[] {dialog.findViewById(R.id.tvWatchColor), dialog.findViewById(R.id.tvWatchSize)};
+            tvType.setText("שעון");
+            llWatch.setVisibility(View.VISIBLE);
         }
 
         long manufacturerId = product.getManufacturerId();
@@ -219,10 +227,10 @@ public class Dialogs {
             extras[2].setText(String.valueOf(((Smartphone) product).getPhoneStorageSize()));
             extras[3].setText(String.valueOf(((Smartphone) product).getPhoneRamSize()));
         } else if (product instanceof Watch) {
-            extras[0].setText((Watch.toString());
-            extras[1].setText(String.valueOf(((Smartphone) product).getPhoneScreenSize()));
-            // TODO - continue here
+            extras[0].setText(((Watch) product).getWatchColor().toString());
+            extras[1].setText(String.valueOf(((Watch) product).getWatchSize()));
         }
+
     }
 
     public static void createSubmitPurchaseDialog(Context context, List<CartDetails> detailsList) {
