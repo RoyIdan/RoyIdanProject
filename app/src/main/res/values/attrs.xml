@@ -1,14 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CreditCardView">
-        <attr name="cardNumber" format="string">1234567890123456</attr>
-        <attr name="cardExpireDate" format="string">1/2021</attr>
-        <attr name="cardHolder" format="string">ישראל ישראלי</attr>
-    </declare-styleable>
-
-    <declare-styleable name="CreditCardView1">
-        <attr name="cardNumber" format="string">1234567890123456</attr>
-        <attr name="cardExpireDate" format="string">1/2021</attr>
-        <attr name="cardHolder" format="string">ישראל ישראלי</attr>
-    </declare-styleable>
 </resources>

@@ -14,7 +14,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal"
-        android:gravity="center" >
+        android:gravity="center"
+        android:id="@+id/llButtonsLayout">
 
         <Button
             android:layout_width="100dp"
@@ -30,14 +31,11 @@
             android:textSize="15dp"
             android:layout_marginHorizontal= "10dp"
             android:id="@+id/btnManufacturers" />
-        <!--TODO - Replace this with something else-->
-        <Spinner
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:entries="@array/spinner_phone"
-            android:textSize="15dp"
-            android:layout_marginHorizontal= "10dp"
-            android:id="@+id/spiGoTo"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בית"
+            android:id="@+id/btnMainActivity"/>
 
 
     </LinearLayout>
@@ -69,7 +67,8 @@
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/llAddNewProductButtons">
 
             <Button
                 android:layout_width="wrap_content"
@@ -629,6 +628,30 @@
                 android:id="@+id/btnAddManufacturerSubmit" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/llUpdate_buttons" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="בית"
+            android:id="@+id/btnUpdate_mainActivity" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="עדכן"
+            android:id="@+id/btnUpdate"/>
 
     </LinearLayout>
 

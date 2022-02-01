@@ -1,6 +1,7 @@
 package com.example.royidanproject.Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,12 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.royidanproject.CartActivity;
+import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
+import com.example.royidanproject.ManagerActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
@@ -30,6 +33,8 @@ import com.example.royidanproject.Utility.UserImages;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
@@ -157,6 +162,82 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        // manager dialog
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_manager_controls_for_product, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                long tableId = 0;
+                if (product instanceof Smartphone) {
+                    tableId = 1;
+                } else if (product instanceof Watch) {
+                    tableId = 2;
+                } else {
+                    tableId = 3;
+                }
+                long finalTableId = tableId;
+
+                dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                ((TextView) dialog.findViewById(R.id.tvProductName)).setText(product.getProductName());
+
+                dialog.findViewById(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkIfPurchased(product, finalTableId)) {
+                            Toast.makeText(context, "המוצר כבר קיים בסל כלשהו או בהזמנה", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        if (finalTableId == 1) {
+                            db.smartphonesDao().delete((Smartphone) product);
+                        } else if (finalTableId == 2) {
+                            db.watchesDao().delete((Watch) product);
+                        } else {
+                            db.accessoriesDao().delete((Accessory) product);
+                        }
+
+                        productsList.remove(product);
+                        filteredList.remove(product);
+                        notifyDataSetInvalidated();
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.findViewById(R.id.btnUpdate).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ManagerActivity.class);
+                        intent.putExtra("productToUpdate", product);
+                        intent.putExtra("isProductPurchased", checkIfPurchased(product, finalTableId));
+                        context.startActivity(intent);
+                    }
+                });
+
+                return true;
+            }
+
+            private boolean checkIfPurchased(Product product, long tableId) {
+                List<Long> list1 = db.orderDetailsDao().isProductExist(product.getProductId(), tableId);
+                List<Long> list2 = db.usersDao().isProductExist(product.getProductId(), tableId);
+
+                return !list1.isEmpty() || !list2.isEmpty();
             }
         });
 

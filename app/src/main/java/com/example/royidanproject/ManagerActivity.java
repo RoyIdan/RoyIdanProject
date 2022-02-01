@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,12 +32,14 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
+import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,15 +50,15 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class ManagerActivity extends AppCompatActivity {
 
-    private Button btnProducts, btnManufacturers, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd,
+    private Button btnProducts, btnManufacturers, btnMainActivity, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd,
             btnAddNewManufacturer, btnEditExistingManufacturers, btnOpenDescriptionDialog;
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
-    private LinearLayout llProducts, llAddNewProduct, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
-            llAddNewProductSmartphone, llFinalButtons, llAddNewManufacturer;
+    private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
+            llAddNewProductSmartphone, llFinalButtons, llUpdate_buttons, llAddNewManufacturer;
     private EditText etName, etPrice, etStock;
     private RadioGroup rgSmartphoneColor;
-    private Spinner spiGoTo, spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
+    private Spinner /*spiGoTo,*/ spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
     private Bitmap bmProduct;
     private String description;
     private int previousId = 0;
@@ -74,12 +77,15 @@ public class ManagerActivity extends AppCompatActivity {
         ibCamera = findViewById(R.id.ibCamera);
         ibGallery = findViewById(R.id.ibGallery);
         ivPhoto = findViewById(R.id.ivPhoto);
+        llButtonsLayout = findViewById(R.id.llButtonsLayout);
         llAddNewProduct = findViewById(R.id.llAddNewProduct);
+        llAddNewProductButtons = findViewById(R.id.llAddNewProductButtons);
         llProducts = findViewById(R.id.llProducts);
         ll_spiCategory = findViewById(R.id.ll_spiCategory);
         ll_spiManufacturer = findViewById(R.id.ll_spiManufacturer);
         llAddNewProductCommon = findViewById(R.id.llAddNewProductCommon);
         llFinalButtons = findViewById(R.id.llFinalButtons);
+        llUpdate_buttons = findViewById(R.id.llUpdate_buttons);
         llAddNewManufacturer = findViewById(R.id.llAddNewManufacturer);
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
@@ -88,7 +94,9 @@ public class ManagerActivity extends AppCompatActivity {
         spiStorageSize = findViewById(R.id.spiStorageSize);
         spiRamSize = findViewById(R.id.spiRamSize);
         rgSmartphoneColor = findViewById(R.id.rgSmartphoneColor);
-        spiGoTo = findViewById(R.id.spiGoTo);
+//        spiGoTo = findViewById(R.id.spiGoTo);
+        btnMainActivity = findViewById(R.id.btnMainActivity);
+
         spiCategory = findViewById(R.id.spiCategory);
         spiManufacturer = findViewById(R.id.spiManufacturer);
         llAddNewProductSmartphone = findViewById(R.id.llAddNewProductSmartphone);
@@ -135,30 +143,30 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
-        String[] goToList = { "עבור אל" , "דף ראשי" , "דף משתמשים" , "***" };
-        ArrayAdapter<String> goToAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, goToList);
-        spiGoTo.setAdapter(goToAdapter);
-        spiGoTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Class<? extends AppCompatActivity> destination = null;
-                if (i == 1) {
-                    destination = MainActivity.class;
-                } else if (i == 2) {
-                    destination = UsersActivity.class;
-                }
-
-                if (destination != null) {
-                    startActivity(new Intent(ManagerActivity.this, destination));
-                    finish();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        String[] goToList = { "עבור אל" , "דף ראשי" , "דף משתמשים" , "***" };
+//        ArrayAdapter<String> goToAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, goToList);
+//        spiGoTo.setAdapter(goToAdapter);
+//        spiGoTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Class<? extends AppCompatActivity> destination = null;
+//                if (i == 1) {
+//                    destination = MainActivity.class;
+//                } else if (i == 2) {
+//                    destination = UsersActivity.class;
+//                }
+//
+//                if (destination != null) {
+//                    startActivity(new Intent(ManagerActivity.this, destination));
+//                    finish();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -175,6 +183,20 @@ public class ManagerActivity extends AppCompatActivity {
         llProducts.setVisibility(View.GONE);
         llAddNewProduct.setVisibility(View.GONE);
         llAddNewProductSmartphone.setVisibility(View.GONE);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("productToUpdate")) {
+            Product product = (Product) intent.getExtras().getSerializable("productToUpdate");
+            boolean isPurchased = intent.getBooleanExtra("isProductPurchased", false);
+            updateMode(product, isPurchased);
+        }
+
+        btnMainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManagerActivity.this, MainActivity.class));
+            }
+        });
 
         btnProducts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,6 +304,49 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void updateMode(Product product, boolean isPurchased) {
+        llButtonsLayout.setVisibility(View.GONE);
+        llProducts.setVisibility(View.VISIBLE);
+        llAddNewProduct.setVisibility(View.VISIBLE);
+        llAddNewProductCommon.setVisibility(View.VISIBLE);
+        llAddNewProductButtons.setVisibility(View.GONE);
+        llUpdate_buttons.setVisibility(View.VISIBLE);
+        spiCategory.setEnabled(false);
+
+        long tableId;
+        if (product instanceof Smartphone) {
+            tableId = 1;
+        } else if (product instanceof Watch) {
+            tableId = 2;
+        } else {
+            tableId = 3;
+        }
+        ivPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), ManagerActivity.this));
+        spiCategory.setSelection((int) tableId);
+        llFinalButtons.setVisibility(View.GONE);
+        spiManufacturer.setSelection((int) product.getManufacturerId() - 1);
+        etName.setText(product.getProductName());
+        etPrice.setText(String.valueOf(product.getProductPrice()));
+        etStock.setText(String.valueOf(product.getProductStock()));
+
+        if (tableId == 1) {
+            llAddNewProductSmartphone.setVisibility(View.VISIBLE);
+            Smartphone smartphone = (Smartphone) product;
+            int colorIndex = smartphone.getPhoneColor().ordinal();
+            ((RadioButton) rgSmartphoneColor.getChildAt(colorIndex * 2)).setChecked(true);
+            String[] screenSizes = getResources().getStringArray(R.array.screen_size);
+            int screenSizeIndex = Arrays.asList(screenSizes).indexOf(String.valueOf(smartphone.getPhoneScreenSize()));
+            spiScreenSize.setSelection(screenSizeIndex);
+            String[] storageSizes = getResources().getStringArray(R.array.storage_size);
+            int storageSizeIndex = Arrays.asList(storageSizes).indexOf(String.valueOf(smartphone.getPhoneStorageSize()));
+            spiStorageSize.setSelection(storageSizeIndex);
+            String[] ramSizes = getResources().getStringArray(R.array.ram_size);
+            int ramSizeIndex = Arrays.asList(ramSizes).indexOf(String.valueOf(smartphone.getPhoneRamSize()));
+            spiRamSize.setSelection(ramSizeIndex);
+
+        }
     }
 
     @Override

@@ -18,4 +18,7 @@ public interface OrderDetailsDao {
     @Insert
     void insertAll(List<OrderDetails> detailsList);
 
+    @Query("SELECT productId FROM tblOrderDetails WHERE productId = :productId AND tableId = :tableId")
+    List<Long> isProductExist(long productId, long tableId);
+
 }

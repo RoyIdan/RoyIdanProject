@@ -1,11 +1,13 @@
 package com.example.royidanproject.DatabaseFolder;
 
+import java.io.Serializable;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tblSmartphones")
-public class Smartphone extends Product {
+public class Smartphone extends Product implements Serializable {
     private PhoneColor phoneColor;
     private float phoneScreenSize;
     private int phoneStorageSize;
@@ -44,7 +46,7 @@ public class Smartphone extends Product {
     }
 
     public enum PhoneColor {
-        שחור, לבן, אפור,
+        שחור, אפור, לבן,
     }
 
 }

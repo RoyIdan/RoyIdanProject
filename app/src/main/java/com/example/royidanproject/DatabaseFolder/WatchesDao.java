@@ -3,6 +3,7 @@ package com.example.royidanproject.DatabaseFolder;
 import java.util.List;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.RawQuery;
@@ -20,6 +21,9 @@ public interface WatchesDao extends IProductDao {
 
     @Insert
     long insert(Watch watch);
+
+    @Delete
+    void delete(Watch watch);
 
     @RawQuery
     List<Watch> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);

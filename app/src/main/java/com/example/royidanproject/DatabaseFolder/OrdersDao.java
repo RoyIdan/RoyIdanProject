@@ -3,6 +3,8 @@ package com.example.royidanproject.DatabaseFolder;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.Date;
 import java.util.List;
@@ -21,5 +23,6 @@ public interface OrdersDao {
 
     @Query("SELECT * FROM tblorders")
     List<Order> getAll();
+
 
 }

@@ -2,6 +2,8 @@ package com.example.royidanproject.DatabaseFolder;
 
 import android.content.Context;
 
+import java.io.Serializable;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -9,7 +11,7 @@ import androidx.room.Query;
 
 @Entity(tableName = "tblProducts", foreignKeys =
     @ForeignKey(entity=Manufacturer.class, parentColumns = "manufacturerId", childColumns = "manufacturerId"))
-public class Product {
+public class Product implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long productId;
     private String productName;

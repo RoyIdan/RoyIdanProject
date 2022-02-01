@@ -1,9 +1,11 @@
 package com.example.royidanproject.DatabaseFolder;
 
+import java.io.Serializable;
+
 import androidx.room.Entity;
 
 @Entity(tableName = "tblWatches")
-public class Watch extends Product {
+public class Watch extends Product implements Serializable {
     private WatchColor watchColor;
     private int watchSize;
 
