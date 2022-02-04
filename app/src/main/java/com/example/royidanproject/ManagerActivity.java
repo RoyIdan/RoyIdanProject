@@ -1,5 +1,6 @@
 package com.example.royidanproject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -51,13 +52,14 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 public class ManagerActivity extends AppCompatActivity {
 
     private Button btnProducts, btnManufacturers, btnMainActivity, btnAddNewProduct, btnEditExistingProducts, btnReset, btnAdd,
-            btnAddNewManufacturer, btnEditExistingManufacturers, btnOpenDescriptionDialog;
+            btnAddNewManufacturer, btnEditExistingManufacturers, btnOpenDescriptionDialog, btnAddManufacturerSubmit,
+            btnUpdate_mainActivity, btnUpdate;
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
     private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
-            llAddNewProductSmartphone, llFinalButtons, llUpdate_buttons, llAddNewManufacturer;
-    private EditText etName, etPrice, etStock;
-    private RadioGroup rgSmartphoneColor;
+            llAddNewProductSmartphone, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer;
+    private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName;
+    private RadioGroup rgSmartphoneColor, rgWatchColor;
     private Spinner /*spiGoTo,*/ spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
     private Bitmap bmProduct;
     private String description;
@@ -74,6 +76,9 @@ public class ManagerActivity extends AppCompatActivity {
         btnAddNewManufacturer = findViewById(R.id.btnAddNewManufacturer);
         btnEditExistingManufacturers = findViewById(R.id.btnEditExistingManufacturers);
         btnOpenDescriptionDialog = findViewById(R.id.btnOpenDescriptionDialog);
+        btnAddManufacturerSubmit = findViewById(R.id.btnAddManufacturerSubmit);
+        btnUpdate_mainActivity = findViewById(R.id.btnUpdate_mainActivity);
+        btnUpdate = findViewById(R.id.btnUpdate);
         ibCamera = findViewById(R.id.ibCamera);
         ibGallery = findViewById(R.id.ibGallery);
         ivPhoto = findViewById(R.id.ivPhoto);
@@ -86,14 +91,18 @@ public class ManagerActivity extends AppCompatActivity {
         llAddNewProductCommon = findViewById(R.id.llAddNewProductCommon);
         llFinalButtons = findViewById(R.id.llFinalButtons);
         llUpdate_buttons = findViewById(R.id.llUpdate_buttons);
+        llManufacturers = findViewById(R.id.llManufacturers);
         llAddNewManufacturer = findViewById(R.id.llAddNewManufacturer);
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
         etStock = findViewById(R.id.etStock);
+        etWatchSize = findViewById(R.id.etWatchSize);
+        etManufacturerName = findViewById(R.id.etManufacturerName);
         spiScreenSize = findViewById(R.id.spiScreenSize);
         spiStorageSize = findViewById(R.id.spiStorageSize);
         spiRamSize = findViewById(R.id.spiRamSize);
         rgSmartphoneColor = findViewById(R.id.rgSmartphoneColor);
+        rgWatchColor = findViewById(R.id.rgWatchColor);
 //        spiGoTo = findViewById(R.id.spiGoTo);
         btnMainActivity = findViewById(R.id.btnMainActivity);
 
@@ -184,12 +193,6 @@ public class ManagerActivity extends AppCompatActivity {
         llAddNewProduct.setVisibility(View.GONE);
         llAddNewProductSmartphone.setVisibility(View.GONE);
 
-        Intent intent = getIntent();
-        if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("productToUpdate")) {
-            Product product = (Product) intent.getExtras().getSerializable("productToUpdate");
-            boolean isPurchased = intent.getBooleanExtra("isProductPurchased", false);
-            updateMode(product, isPurchased);
-        }
 
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +205,10 @@ public class ManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (llProducts.getVisibility() == View.GONE) {
+                    if (llManufacturers.getVisibility() == View.VISIBLE) {
+                        llManufacturers.setVisibility(View.GONE);
+                        etManufacturerName.setText("");
+                    }
                     llProducts.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -213,13 +220,20 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
-        btnProducts.setOnClickListener(new View.OnClickListener() {
+        btnManufacturers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (llProducts.getVisibility() == View.GONE) {
-                    llProducts.setVisibility(View.VISIBLE);
+                if (llManufacturers.getVisibility() == View.GONE) {
+                    if (llProducts.getVisibility() == View.VISIBLE) {
+                        llProducts.setVisibility(View.GONE);
+                        if (llAddNewProduct.getVisibility() == View.VISIBLE) {
+                            resetCreateNewProductFields();
+                        }
+                    }
+                    llManufacturers.setVisibility(View.VISIBLE);
                 }
                 else {
+                    etManufacturerName.setText("");
                     llProducts.setVisibility(View.GONE);
                 }
             }
@@ -235,6 +249,13 @@ public class ManagerActivity extends AppCompatActivity {
                     llAddNewProduct.setVisibility(View.GONE);
                     resetCreateNewProductFields();
                 }
+            }
+        });
+
+        btnEditExistingProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toast("הכפתור לא זמיו כעת");
             }
         });
 
@@ -304,9 +325,102 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+
+        // Manufacturer layout
+
+        btnAddManufacturerSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String manufacturerName = etManufacturerName.getText().toString().trim();
+                Manufacturer manufacturer = new Manufacturer();
+                manufacturer.setManufacturerName(manufacturerName);
+
+                db.manufacturersDao().insert(manufacturer);
+                toast("היצרן " + manufacturerName + " נוסף בהצלחה");
+
+                etManufacturerName.setText("");
+            }
+        });
+
+        btnEditExistingManufacturers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toast("הכפתור לא זמין כעת");
+            }
+        });
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("productToUpdate")) {
+            Product product = (Product) intent.getExtras().getSerializable("productToUpdate");
+            boolean isPurchased = intent.getBooleanExtra("isProductPurchased", false);
+            updateMode(product, isPurchased);
+        }
+
+    }
+
+    private void update_submit(Product product) {
+        int type = spiCategory.getSelectedItemPosition();
+
+
+        if (!validate(type, false)) {
+            return;
+        }
+
+        switch (type) {
+            case 1:
+                update_smartphone(product);
+                break;
+            case 2:
+                update_watch(product);
+                break;
+            case 3:
+                update_accessory(product);
+                break;
+        }
+
+        toast("Saved!");
+    }
+
+    private void update_smartphone(Product product) {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        String screenSize = (String)spiScreenSize.getSelectedItem();
+        String storageSize = (String)spiStorageSize.getSelectedItem();
+        String ramSize = (String)spiRamSize.getSelectedItem();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+
+
+        String photo = product.getProductPhoto();
+        if (bmProduct != null) {
+            photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+            if (photo == null) {
+                toast("לא ניתן לשמור את התמונה");
+                return;
+            }
+        }
+
+        Smartphone.PhoneColor phoneColor = getPhoneColor();
+
+        Smartphone s = new Smartphone();
+        s.setProductId(product.getProductId());
+        s.setProductName(name);
+        s.setManufacturerId(manufacturerId);
+        s.setProductPrice(Double.parseDouble(price));
+        s.setProductStock(Integer.parseInt(stock));
+        //s.setProductDescription(description); TODO - make description updatable
+        s.setPhoneColor(phoneColor);
+        s.setPhoneScreenSize(Float.parseFloat(screenSize));
+        s.setPhoneStorageSize(Integer.parseInt(storageSize));
+        s.setPhoneRamSize(Integer.parseInt(ramSize));
+        s.setProductPhoto(photo);
+
+        db.smartphonesDao().insert(s);
+
     }
 
     private void updateMode(Product product, boolean isPurchased) {
+        ((TextView) findViewById(R.id.tvAddProductTitle)).setText("דף עדכון מוצר");
         llButtonsLayout.setVisibility(View.GONE);
         llProducts.setVisibility(View.VISIBLE);
         llAddNewProduct.setVisibility(View.VISIBLE);
@@ -314,6 +428,19 @@ public class ManagerActivity extends AppCompatActivity {
         llAddNewProductButtons.setVisibility(View.GONE);
         llUpdate_buttons.setVisibility(View.VISIBLE);
         spiCategory.setEnabled(false);
+        llAddNewProduct.removeView(llFinalButtons);
+        // disable it so it won't reset the fields
+        spiCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         long tableId;
         if (product instanceof Smartphone) {
@@ -325,7 +452,6 @@ public class ManagerActivity extends AppCompatActivity {
         }
         ivPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), ManagerActivity.this));
         spiCategory.setSelection((int) tableId);
-        llFinalButtons.setVisibility(View.GONE);
         spiManufacturer.setSelection((int) product.getManufacturerId() - 1);
         etName.setText(product.getProductName());
         etPrice.setText(String.valueOf(product.getProductPrice()));
@@ -345,8 +471,28 @@ public class ManagerActivity extends AppCompatActivity {
             String[] ramSizes = getResources().getStringArray(R.array.ram_size);
             int ramSizeIndex = Arrays.asList(ramSizes).indexOf(String.valueOf(smartphone.getPhoneRamSize()));
             spiRamSize.setSelection(ramSizeIndex);
-
         }
+
+        if (isPurchased) {
+            etName.setEnabled(false);
+            spiManufacturer.setEnabled(false);
+            if (tableId == 1) {
+                for (int i = 0; i < rgSmartphoneColor.getChildCount(); i+= 2) {
+                    rgSmartphoneColor.getChildAt(i).setEnabled(false);
+                }
+                spiScreenSize.setEnabled(false);
+                spiStorageSize.setEnabled(false);
+                spiRamSize.setEnabled(false);
+            }
+        }
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update_submit(product);
+            }
+        });
+
     }
 
     @Override
@@ -396,7 +542,7 @@ public class ManagerActivity extends AppCompatActivity {
     private void submit() {
         int type = spiCategory.getSelectedItemPosition();
 
-        if (!validate(type)) {
+        if (!validate(type, true)) {
             return;
         }
 
@@ -417,7 +563,7 @@ public class ManagerActivity extends AppCompatActivity {
 
     }
 
-    private boolean validate(int type) {
+    private boolean validate(int type, boolean validateBitmap) {
         boolean isValid = true;
 
         String name = etName.getText().toString().trim();
@@ -458,7 +604,7 @@ public class ManagerActivity extends AppCompatActivity {
             }
         }
 
-        if (bmProduct == null) {
+        if (validateBitmap && bmProduct == null) {
             toast("בחר תמונה");
             isValid = false;
         }
@@ -501,7 +647,33 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     private void submit_watch() {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        String watchSize = etWatchSize.getText().toString().trim();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
 
+        String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+        if (photo == null) {
+            toast("Failed to save the photo");
+            return;
+        }
+
+        Watch.WatchColor watchColor = getWatchColor();
+
+        Watch w = new Watch();
+        w.setProductName(name);
+        w.setManufacturerId(manufacturerId);
+        w.setProductPrice(Double.parseDouble(price));
+        w.setProductStock(Integer.parseInt(stock));
+        w.setProductDescription(description);
+        w.setWatchColor(watchColor);
+        w.setWatchSize(Integer.parseInt(watchSize));
+        w.setProductPhoto(photo);
+
+        db.watchesDao().insert(w);
+
+        resetFields(2);
     }
 
     private void submit_accessory() {
@@ -517,6 +689,18 @@ public class ManagerActivity extends AppCompatActivity {
                 return Smartphone.PhoneColor.אפור;
             default:
                 return Smartphone.PhoneColor.לבן;
+        }
+    }
+
+    private Watch.WatchColor getWatchColor() {
+        int color = rgWatchColor.getCheckedRadioButtonId();
+        switch (color) {
+            case R.id.radWatchBlack:
+                return Watch.WatchColor.שחור;
+            case R.id.radWatchGray:
+                return Watch.WatchColor.אפור;
+            default:
+                return Watch.WatchColor.לבן;
         }
     }
 

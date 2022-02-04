@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
 
     <Button
         android:layout_width="60dp"
@@ -31,8 +32,10 @@
     <TextView
         android:layout_width="350dp"
         android:layout_height="600dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingHorizontal="20dp"
         android:layout_gravity="center"
-        android:layout_marginTop="-120dp"
+        android:layout_marginTop="-70dp"
         android:gravity="center"
         android:text="ברוכים הבאים לאפליקציה ששיגעה את המדינה!\n
 רוצים להתחדש במכשיר סלולרי	 חדש מבלי לצאת מהבית?\n
@@ -46,7 +49,7 @@
 רשת רועי סלולר שמה דגש מיוחד על חדשנות ודואגת לספק ללקוחותיה את הפתרונות המתקדמים ביותר הקיימים בענף הסלולר. \n
 \n
 אז מה נשאר לכם? \n
-להיכנס ללשונית גלריית המוצרים, לבחור את המוצר החדש שלכם, ותוך 7 ימי עסקים זה אצלכם!
+להיכנס לגלריית המוצרים, לבחור את המוצר החדש שלכם, ותוך 7 ימי עסקים זה אצלכם!
 " />
 
 </LinearLayout>

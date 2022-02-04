@@ -26,7 +26,7 @@ public class Watch extends Product implements Serializable {
     }
 
     public enum WatchColor {
-        שחור, לבן, ירוק,
+        שחור, אפור, לבן,
     }
 
 }

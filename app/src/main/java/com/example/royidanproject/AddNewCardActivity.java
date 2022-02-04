@@ -174,9 +174,8 @@ public class AddNewCardActivity extends AppCompatActivity {
 
         year.setAdapter(adapter);
 
-        int currMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         LinkedList<String> monthLl = new LinkedList();
-        for (int i = currMonth; i < 13; i++) {
+        for (int i = 1; i < 13; i++) {
             monthLl.add(String.valueOf(i));
         }
 

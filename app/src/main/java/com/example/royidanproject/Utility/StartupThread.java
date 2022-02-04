@@ -19,7 +19,7 @@ public class StartupThread extends Thread {
             handler.sendMessage(new Message());
 
             try {
-                sleep(500);
+                sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

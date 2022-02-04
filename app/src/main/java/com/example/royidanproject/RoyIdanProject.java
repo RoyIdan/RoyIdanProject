@@ -34,7 +34,7 @@ public class RoyIdanProject extends Application {
         super.onCreate();
 
         isFirstRun = true;
-        firstActivity = StartupActivity.class;
+        firstActivity = MainActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
@@ -43,8 +43,8 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        startActivity(new Intent(getApplicationContext(), MainActivity.class).
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//        startActivity(new Intent(getApplicationContext(), MainActivity.class).
+//                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
     }
 

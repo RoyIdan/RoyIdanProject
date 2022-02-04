@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/abb</item>
         <item name="title">רועי סלולר</item>
+
         <item name="android:direction">left_to_right</item>
 
     </style>

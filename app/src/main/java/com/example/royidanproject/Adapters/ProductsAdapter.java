@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -166,9 +167,13 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         });
 
         // manager dialog
+        View finalView = view;
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (!sp.getBoolean("admin", false)) {
+                    return true;
+                }
 
                 View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_manager_controls_for_product, null);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);

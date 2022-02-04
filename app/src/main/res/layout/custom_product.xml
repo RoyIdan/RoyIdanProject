@@ -4,10 +4,13 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl">
+    android:layout_gravity="center_horizontal"
+    android:layoutDirection="rtl"
+    android:minWidth="400dp">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="210dp"
         android:orientation="vertical"
         android:layoutDirection="rtl">
@@ -94,13 +97,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="110dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="210dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/ivProductPhoto"
-            android:layout_width="110dp"
+            android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_gravity="center"
             android:src="@drawable/iphone11" />
@@ -113,21 +117,28 @@
             android:gravity="center">
 
             <Button
-                android:layout_width="38dp"
+                android:layout_width="match_parent"
                 android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="+"
+                android:gravity="center"
+                android:padding="0dp"
+                android:textSize="18sp"
                 android:id="@+id/btnPlus" />
             <TextView
-                android:layout_width="38dp"
+                android:layout_width="match_parent"
                 android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="1"
                 android:gravity="center"
                 android:id="@+id/tvCount" />
             <Button
-                android:layout_width="38dp"
+                android:layout_width="match_parent"
                 android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="-"
-                android:textSize="15sp"
+                android:textSize="20sp"
+                android:padding="0dp"
                 android:gravity="center"
                 android:id="@+id/btnMinus" />
 

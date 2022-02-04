@@ -17,7 +17,7 @@
         android:layout_marginTop="-40dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:hint="email"
+        android:hint="אימייל"
         android:textSize="20dp"
         android:id="@+id/etEmail" />
 
@@ -27,7 +27,8 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:hint="password"
+        android:hint="סיסמה"
+        android:inputType="textPassword"
         android:textSize="20dp"
         android:id="@+id/etPassword" />
 
@@ -37,7 +38,7 @@
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:hint="Login"
+        android:hint="התחבר"
         android:textSize="25dp"
         android:id="@+id/btnLogin" />
 

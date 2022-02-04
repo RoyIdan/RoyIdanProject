@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +28,9 @@ import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneColor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -47,14 +53,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (((RoyIdanProject)getApplication()).isFirstRun) {
-//            Class<? extends AppCompatActivity> firstActivity = ((RoyIdanProject) getApplication()).firstActivity;
-//            if (!firstActivity.equals(MainActivity.class)) {
-//                ((RoyIdanProject) getApplication()).isFirstRun = false;
-//                startActivity(new Intent(MainActivity.this, firstActivity));
-//                finish();
-//            }
-//        }
+        RoyIdanProject app = ((RoyIdanProject)getApplication());
+        if (app.isFirstRun) {
+            app.isFirstRun = false;
+            if (app.firstActivity != MainActivity.class) {
+                startActivity(new Intent(MainActivity.this, app.firstActivity));
+            }
+        }
 
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();

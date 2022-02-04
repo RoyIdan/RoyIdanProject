@@ -104,6 +104,7 @@
                 android:text="דף הוספת מוצר"
                 android:background="#FFFF00"
                 android:textColor="@color/black"
+                android:id="@+id/tvAddProductTitle"
                 android:textSize="20dp" />
 
             <LinearLayout
@@ -204,6 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginRight="20dp"
                     android:layout_gravity="center">
 
                     <TextView
@@ -216,12 +218,14 @@
 
 
                     <EditText
-                        android:layout_width="150dp"
+                        android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:layout_marginRight="10dp"
-                        android:text="ככג"
-                        android:textSize="18sp"
-                        android:maxLength="25"
+                        android:text="ככhfghgfhgfhgfgdfgdfgfdgfdgfdghdfgdfgdfhfghgfhג"
+                        android:autoSizeTextType="uniform"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:maxLength="20"
                         android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
                         android:id="@+id/etName"/>
 
@@ -293,7 +297,8 @@
                 android:id="@+id/llAddNewProductSmartphone"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <!--
                 private PhoneColor phoneColor;
@@ -440,6 +445,111 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <!--Add new product layout (watch)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/llAddNewProductWatch"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!--
+                private WatchColor watchColor;
+                private int watchSize;
+                -->
+
+                <!--צבע-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:text="צבע:"
+                        android:layout_marginRight="20dp"/>
+
+                    <RadioGroup
+                        android:layout_width="175dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:id="@+id/rgWatchColor"
+                        android:checkedButton="@id/radWatchBlack">
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/radWatchBlack" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_black" />
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/radWatchGray" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_gray" />
+
+                        <RadioButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/radWatchWhite" />
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_white" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!--גודל שעון-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-10dp">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="גודל שעון:" />
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:id="@+id/etWatchSize" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
