@@ -33,6 +33,9 @@ public interface AccessoriesDao extends IProductDao {
     @Delete
     void delete(Accessory accessory);
 
+    @Update
+    void update(Accessory accessory);
+
     @RawQuery
     List<Accessory> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);
 

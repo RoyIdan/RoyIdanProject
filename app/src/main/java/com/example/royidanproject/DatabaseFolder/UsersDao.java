@@ -36,26 +36,7 @@ public interface UsersDao {
     @Query("SELECT * FROM tblUsers WHERE userName LIKE '%' || :input || '%' or userSurname like '%' || :input || '%'")
     List<Users> searchByNameOrSurname(String input);
 
-    @Query("SELECT * FROM tblCartDetails WHERE userId = :userId")
-    List<CartDetails> getCartDetailsByUserId(long userId);
 
-    @Query("SELECT * FROM tblCartDetails WHERE userId = :userId and productId = :productId and tableId = :tableId")
-    CartDetails getCartDetailsByKeys(long userId, long productId, long tableId);
-
-    @Query("SELECT productId FROM tblCartDetails WHERE productId = :productId AND tableId = :tableId")
-    List<Long> isProductExist(long productId, long tableId);
-
-    @Insert
-    long addCartItem(CartDetails cartDetails);
-
-    @Update
-    void updateCartDetails(CartDetails cartDetails);
-
-    @Delete
-    void deleteCartDetailsByReference(CartDetails cartDetails);
-
-    @Query("DELETE FROM tblCartDetails WHERE userId = :userId")
-    void deleteCartDetailsByUserId(long userId);
 
     @Update
     void update(Users user);

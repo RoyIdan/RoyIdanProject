@@ -1,5 +1,6 @@
 package com.example.royidanproject.DatabaseFolder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import androidx.room.Entity;
@@ -7,7 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tblCreditCards", foreignKeys = @ForeignKey(entity = Users.class, parentColumns = "userId", childColumns = "userId"))
-public class CreditCard {
+public class CreditCard implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long cardId;
     private long userId; //FK

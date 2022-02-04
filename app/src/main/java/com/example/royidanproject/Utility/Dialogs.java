@@ -320,7 +320,7 @@ public class Dialogs {
                 db.orderDetailsDao().insertAll(orderList);
 
                 for (CartDetails detail: detailsList) {
-                    db.usersDao().deleteCartDetailsByReference(detail);
+                    db.cartDetailsDao().deleteCartDetailsByReference(detail);
                 }
 
                 Intent intent = new Intent(context, OrderActivity.class);

@@ -24,5 +24,8 @@ public interface OrdersDao {
     @Query("SELECT * FROM tblorders")
     List<Order> getAll();
 
+    @Query("SELECT * FROM tblOrders WHERE customerId = :customerId LIMIT 1")
+    Order hasAny(long customerId);
+
 
 }

@@ -1,6 +1,5 @@
 package com.example.royidanproject;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -29,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
@@ -36,12 +36,10 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
-import com.example.royidanproject.Utility.UserImages;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
@@ -57,7 +55,7 @@ public class ManagerActivity extends AppCompatActivity {
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
     private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
-            llAddNewProductSmartphone, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer;
+            llAddNewProductSmartphone, llAddNewProductWatch, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer;
     private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName;
     private RadioGroup rgSmartphoneColor, rgWatchColor;
     private Spinner /*spiGoTo,*/ spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
@@ -109,7 +107,7 @@ public class ManagerActivity extends AppCompatActivity {
         spiCategory = findViewById(R.id.spiCategory);
         spiManufacturer = findViewById(R.id.spiManufacturer);
         llAddNewProductSmartphone = findViewById(R.id.llAddNewProductSmartphone);
-
+        llAddNewProductWatch = findViewById(R.id.llAddNewProductWatch);
     }
 
     private void createSpinnerData() {
@@ -361,7 +359,6 @@ public class ManagerActivity extends AppCompatActivity {
     private void update_submit(Product product) {
         int type = spiCategory.getSelectedItemPosition();
 
-
         if (!validate(type, false)) {
             return;
         }
@@ -379,6 +376,9 @@ public class ManagerActivity extends AppCompatActivity {
         }
 
         toast("Saved!");
+
+        startActivity(new Intent(ManagerActivity.this, GalleryActivity.class));
+        finish();
     }
 
     private void update_smartphone(Product product) {
@@ -408,15 +408,85 @@ public class ManagerActivity extends AppCompatActivity {
         s.setManufacturerId(manufacturerId);
         s.setProductPrice(Double.parseDouble(price));
         s.setProductStock(Integer.parseInt(stock));
-        //s.setProductDescription(description); TODO - make description updatable
+        s.setProductDescription(description);
         s.setPhoneColor(phoneColor);
         s.setPhoneScreenSize(Float.parseFloat(screenSize));
         s.setPhoneStorageSize(Integer.parseInt(storageSize));
         s.setPhoneRamSize(Integer.parseInt(ramSize));
         s.setProductPhoto(photo);
 
-        db.smartphonesDao().insert(s);
+        s.setProductRating_count(product.getProductRating_count());
+        s.setProductRating_sum(product.getProductRating_sum());
 
+        db.smartphonesDao().update(s);
+
+    }
+
+    private void update_watch(Product product) {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        String watchSize = etWatchSize.getText().toString().trim();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+
+
+        String photo = product.getProductPhoto();
+        if (bmProduct != null) {
+            photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+            if (photo == null) {
+                toast("לא ניתן לשמור את התמונה");
+                return;
+            }
+        }
+
+        Watch.WatchColor watchColor = getWatchColor();
+
+        Watch w = new Watch();
+        w.setProductId(product.getProductId());
+        w.setProductName(name);
+        w.setManufacturerId(manufacturerId);
+        w.setProductPrice(Double.parseDouble(price));
+        w.setProductStock(Integer.parseInt(stock));
+        w.setProductDescription(description);
+        w.setWatchColor(watchColor);
+        w.setWatchSize(Integer.parseInt(watchSize));
+        w.setProductPhoto(photo);
+
+        w.setProductRating_count(product.getProductRating_count());
+        w.setProductRating_sum(product.getProductRating_sum());
+
+        db.watchesDao().update(w);
+    }
+
+    private void update_accessory(Product product) {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+
+
+        String photo = product.getProductPhoto();
+        if (bmProduct != null) {
+            photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+            if (photo == null) {
+                toast("לא ניתן לשמור את התמונה");
+                return;
+            }
+        }
+
+        Accessory a = new Accessory();
+        a.setProductId(product.getProductId());
+        a.setProductName(name);
+        a.setManufacturerId(manufacturerId);
+        a.setProductPrice(Double.parseDouble(price));
+        a.setProductStock(Integer.parseInt(stock));
+        a.setProductDescription(description);
+        a.setProductPhoto(photo);
+
+        a.setProductRating_count(product.getProductRating_count());
+        a.setProductRating_sum(product.getProductRating_sum());
+
+        db.accessoriesDao().update(a);
     }
 
     private void updateMode(Product product, boolean isPurchased) {
@@ -430,17 +500,7 @@ public class ManagerActivity extends AppCompatActivity {
         spiCategory.setEnabled(false);
         llAddNewProduct.removeView(llFinalButtons);
         // disable it so it won't reset the fields
-        spiCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        spiCategory.setOnItemSelectedListener(null);
 
         long tableId;
         if (product instanceof Smartphone) {
@@ -456,6 +516,7 @@ public class ManagerActivity extends AppCompatActivity {
         etName.setText(product.getProductName());
         etPrice.setText(String.valueOf(product.getProductPrice()));
         etStock.setText(String.valueOf(product.getProductStock()));
+        description = product.getProductDescription();
 
         if (tableId == 1) {
             llAddNewProductSmartphone.setVisibility(View.VISIBLE);
@@ -471,6 +532,12 @@ public class ManagerActivity extends AppCompatActivity {
             String[] ramSizes = getResources().getStringArray(R.array.ram_size);
             int ramSizeIndex = Arrays.asList(ramSizes).indexOf(String.valueOf(smartphone.getPhoneRamSize()));
             spiRamSize.setSelection(ramSizeIndex);
+        } else if (tableId == 2) {
+            llAddNewProductWatch.setVisibility(View.VISIBLE);
+            Watch watch = (Watch) product;
+            int colorIndex = watch.getWatchColor().ordinal();
+            ((RadioButton) rgWatchColor.getChildAt(colorIndex * 2)).setChecked(true);
+            etWatchSize.setText(String.valueOf((watch).getWatchSize()));
         }
 
         if (isPurchased) {
@@ -483,6 +550,11 @@ public class ManagerActivity extends AppCompatActivity {
                 spiScreenSize.setEnabled(false);
                 spiStorageSize.setEnabled(false);
                 spiRamSize.setEnabled(false);
+            } else if (tableId == 2) {
+                for (int i = 0; i < rgWatchColor.getChildCount(); i+= 2) {
+                    rgWatchColor.getChildAt(i).setEnabled(false);
+                }
+                etWatchSize.setEnabled(false);
             }
         }
 
@@ -590,6 +662,9 @@ public class ManagerActivity extends AppCompatActivity {
             if (price < 10) {
                 etPrice.setError("המחיר המינימלי של מוצר הוא 10 שקלים");
                 isValid = false;
+            } else if (price > 25000) {
+                etPrice.setError("המחיר המקסימלי של מוצר הוא 25,000 שקלים");
+                isValid = false;
             }
         }
 
@@ -601,6 +676,24 @@ public class ManagerActivity extends AppCompatActivity {
             if (stock < 1) {
                 etStock.setError("חייב להיות לפחות מוצר אחד במלאי");
                 isValid = false;
+            } else if (stock > 50) {
+                etStock.setError("לא ניתן להוסיף יותר מ50 מוצרים למלאי");
+                isValid = false;
+            }
+        }
+
+        if (type == 2) {
+            int watchSize = 0;
+            String strWatchSize = etWatchSize.getText().toString().trim();
+            if (strWatchSize.isEmpty()) {
+                etWatchSize.setError("אנא מלא שדה זה");
+                isValid = false;
+            } else {
+                watchSize = Integer.parseInt(strWatchSize);
+                if (watchSize < 20) {
+                    etWatchSize.setError("גודל השעון חייב להיות לפחות 20");
+                    isValid = false;
+                }
             }
         }
 
@@ -619,7 +712,7 @@ public class ManagerActivity extends AppCompatActivity {
         String screenSize = (String)spiScreenSize.getSelectedItem();
         String storageSize = (String)spiStorageSize.getSelectedItem();
         String ramSize = (String)spiRamSize.getSelectedItem();
-        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+        long manufacturerId = ((Manufacturer) spiManufacturer.getSelectedItem()).getManufacturerId();
 
         String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
         if (photo == null) {
@@ -651,7 +744,7 @@ public class ManagerActivity extends AppCompatActivity {
         String price = etPrice.getText().toString().trim();
         String stock = etStock.getText().toString().trim();
         String watchSize = etWatchSize.getText().toString().trim();
-        long manufacturerId = spiManufacturer.getSelectedItemPosition() + 1;
+        long manufacturerId = ((Manufacturer) spiManufacturer.getSelectedItem()).getManufacturerId();
 
         String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
         if (photo == null) {
@@ -677,7 +770,28 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     private void submit_accessory() {
+        String name = etName.getText().toString().trim();
+        String price = etPrice.getText().toString().trim();
+        String stock = etStock.getText().toString().trim();
+        long manufacturerId = ((Manufacturer) spiManufacturer.getSelectedItem()).getManufacturerId();
 
+        String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
+        if (photo == null) {
+            toast("Failed to save the photo");
+            return;
+        }
+
+        Accessory a = new Accessory();
+        a.setProductName(name);
+        a.setManufacturerId(manufacturerId);
+        a.setProductPrice(Double.parseDouble(price));
+        a.setProductStock(Integer.parseInt(stock));
+        a.setProductDescription(description);
+        a.setProductPhoto(photo);
+
+        db.accessoriesDao().insert(a);
+
+        resetFields(3);
     }
 
     private Smartphone.PhoneColor getPhoneColor() {
@@ -716,11 +830,16 @@ public class ManagerActivity extends AppCompatActivity {
 
         if (i == 1) {
             // Smartphone
+            rgSmartphoneColor.check(R.id.radBlack);
             spiScreenSize.setSelection(0);
             spiStorageSize.setSelection(0);
             spiRamSize.setSelection(0);
+            bmProduct = null;
+            ivPhoto.setImageBitmap(null);
         } else if (i == 2) {
-
+            // Watch
+            rgWatchColor.check(R.id.radWatchBlack);
+            etWatchSize.setText("");
         } else if (i == 3) {
 
         }
@@ -754,7 +873,7 @@ public class ManagerActivity extends AppCompatActivity {
         } else if (i == 3) {
 
         } else if (i == 4) {
-            resetCategoriesFields(spiCategory.getSelectedItemPosition());
+            resetCategoriesFields(spiCategory.getSelectedItemPosition() + 1);
         }
 
     }

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
@@ -139,7 +140,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnCart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CartActivity.class));
+                if (db.cartDetailsDao().hasAny(sp.getLong("id", 0)) != null) {
+                    startActivity(new Intent(MainActivity.this, CartActivity.class));
+                } else {
+                    Toast.makeText(MainActivity.this, "הסל הזמני שלך ריק", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         findViewById(R.id.btnCreditCards).setOnClickListener(new View.OnClickListener() {
@@ -151,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnOrderHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, OrderHistoryActivity.class));
+                if (db.ordersDao().hasAny(sp.getLong("id", 0)) != null || sp.getBoolean("admin", false)) {
+                    startActivity(new Intent(MainActivity.this, OrderHistoryActivity.class));
+                } else {
+                    Toast.makeText(MainActivity.this, "היסטורית ההזמנות שלך ריקה", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

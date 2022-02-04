@@ -33,6 +33,9 @@ public interface SmartphonesDao extends IProductDao {
     @Delete
     void delete(Smartphone smartphone);
 
+    @Update
+    void update(Smartphone smartphone);
+
     @RawQuery
     List<Smartphone> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);
 

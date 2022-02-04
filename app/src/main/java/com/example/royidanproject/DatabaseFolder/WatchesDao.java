@@ -7,6 +7,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.RawQuery;
+import androidx.room.Update;
 
 @Dao
 public interface WatchesDao extends IProductDao {
@@ -24,6 +25,9 @@ public interface WatchesDao extends IProductDao {
 
     @Delete
     void delete(Watch watch);
+
+    @Update
+    void update(Watch watch);
 
     @RawQuery
     List<Watch> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);

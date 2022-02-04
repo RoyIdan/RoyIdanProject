@@ -2,6 +2,7 @@ package com.example.royidanproject.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.AddNewCardActivity;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Users;
@@ -24,6 +26,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 public class CreditCardsAdapter extends BaseAdapter {
@@ -138,6 +141,9 @@ public class CreditCardsAdapter extends BaseAdapter {
                 btnAddBalance.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (etAddBalance.getText().toString().trim().isEmpty()) {
+                            return;
+                        }
                         double bonusBalance = Double.parseDouble(etAddBalance.getText().toString().trim());
                         double newBalance = card.getCardBalance() + bonusBalance;
                         card.setCardBalance(newBalance);
@@ -157,9 +163,12 @@ public class CreditCardsAdapter extends BaseAdapter {
                 btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context, "לא ניתן לעדכן בגרסה זו של האפליקציה", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, "לא ניתן לעדכן בגרסה זו של האפליקציה", Toast.LENGTH_LONG).show();
 
-                        //TODO - make card update thingy
+                        Intent intent = new Intent(context, AddNewCardActivity.class);
+                        intent.putExtra("cardToUpdate", card);
+                        context.startActivity(intent);
+                        ((AppCompatActivity) context).finish();
                     }
                 });
 

@@ -115,7 +115,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
-                android:digits="1234567890"
+                android:digits="1234567890."
                 android:textSize="20sp"
                 android:id="@+id/etAddBalance"/>
 

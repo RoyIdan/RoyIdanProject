@@ -173,7 +173,7 @@ public class CartAdapter extends BaseAdapter {
                     p1.setProductStock(p1.getProductStock() - 1);
                     finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
                     details.setProductQuantity(currentVal + 1);
-                    db.usersDao().updateCartDetails(details);
+                    db.cartDetailsDao().updateCartDetails(details);
                 }
 
             }
@@ -189,9 +189,9 @@ public class CartAdapter extends BaseAdapter {
                     p1.setProductStock(p1.getProductStock() + 1);
                     finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
                     details.setProductQuantity(currentVal - 1);
-                    db.usersDao().updateCartDetails(details);
+                    db.cartDetailsDao().updateCartDetails(details);
                     if (currentVal == 1) {
-                        db.usersDao().deleteCartDetailsByReference(details);
+                        db.cartDetailsDao().deleteCartDetailsByReference(details);
                         detailsList.remove(details);
                         notifyDataSetInvalidated();
                     }
@@ -207,7 +207,7 @@ public class CartAdapter extends BaseAdapter {
                 int currentVal = Integer.parseInt(tvProductQuantity.getText().toString());
                 p1.setProductStock(p1.getProductStock() + currentVal);
                 finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
-                db.usersDao().deleteCartDetailsByReference(details);
+                db.cartDetailsDao().deleteCartDetailsByReference(details);
                 detailsList.remove(details);
                 notifyDataSetInvalidated();
             }

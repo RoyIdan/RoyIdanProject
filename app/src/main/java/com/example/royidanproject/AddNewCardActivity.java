@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -148,6 +150,59 @@ public class AddNewCardActivity extends AppCompatActivity {
                 startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
             }
         });
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("cardToUpdate")) {
+            updateMode((CreditCard) intent.getSerializableExtra("cardToUpdate"));
+        }
+    }
+
+    private void updateMode(CreditCard card) {
+//        CreditCard originalCard = new CreditCard();
+//        originalCard.setCardId(cardToUpdate.getCardId());
+//        originalCard.setCardBalance(cardToUpdate.getCardBalance());
+//        originalCard.setCardNumber(cardToUpdate.getCardNumber());
+//        originalCard.setUserId(cardToUpdate.getUserId());
+//        originalCard.setCvv(cardToUpdate.getCvv());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
+
+        etCardNumber.setText(card.getCardNumber());
+        etCardExpireDate.setText(sdf.format(card.getCardExpireDate()));
+        etCardCvv.setText(card.getCvv());
+
+        tvCardExpireDate.setText(sdf.format(card.getCardExpireDate()));
+
+        btnAdd.setText("עדכן");
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String number = etCardNumber.getText().toString().trim();
+                String cvv = etCardCvv.getText().toString().trim();
+                String expire = etCardExpireDate.getText().toString().trim();
+                Date expireDate = null;
+                try {
+                    expireDate = new SimpleDateFormat("MM/yy").parse(expire);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (number.length() < 16) {
+                    toast("כרטיס באשראי חייב להכיל 16 ספרות");
+                    return;
+                }
+                if (cvv.length() < 3) {
+                    toast("הcvv חייב להכיל 3 ספרות");
+                    return;
+                }
+                card.setCardNumber(number);
+                card.setCvv(cvv);
+                card.setCardExpireDate(expireDate);
+
+                db.creditCardDao().update(card);
+                startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
+                finish();
+            }
+        });
+
     }
 
     private void buildDatePickerDialog() {

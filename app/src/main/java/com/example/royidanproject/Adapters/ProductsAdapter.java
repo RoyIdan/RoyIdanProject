@@ -240,7 +240,7 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
 
             private boolean checkIfPurchased(Product product, long tableId) {
                 List<Long> list1 = db.orderDetailsDao().isProductExist(product.getProductId(), tableId);
-                List<Long> list2 = db.usersDao().isProductExist(product.getProductId(), tableId);
+                List<Long> list2 = db.cartDetailsDao().isProductExist(product.getProductId(), tableId);
 
                 return !list1.isEmpty() || !list2.isEmpty();
             }
@@ -279,12 +279,12 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         }
 
         long tableId = cd.getTableId();
-        CartDetails existingDetails = db.usersDao().getCartDetailsByKeys(userId, productId, tableId);
+        CartDetails existingDetails = db.cartDetailsDao().getCartDetailsByKeys(userId, productId, tableId);
         if (existingDetails != null) {
             existingDetails.setProductQuantity(existingDetails.getProductQuantity() + quantity);
-            db.usersDao().updateCartDetails(existingDetails);
+            db.cartDetailsDao().updateCartDetails(existingDetails);
         } else {
-            db.usersDao().addCartItem(cd);
+            db.cartDetailsDao().addCartItem(cd);
         }
     }
 

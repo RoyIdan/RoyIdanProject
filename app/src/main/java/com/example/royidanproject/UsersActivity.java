@@ -84,17 +84,12 @@ public class UsersActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                    adapter.getFilter().filter(s);
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (s.length() == 0) {
-                        adapter.updateUsersList(usersList);
-                    } else {
-                        adapter.updateUsersList(db.usersDao().searchByNameOrSurname(s.toString()));
-                    }
-                    adapter.notifyDataSetInvalidated();
+
                 }
             });
 

@@ -94,8 +94,6 @@ public class GalleryActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                System.out.println("Text ["+s+"]");
-
                 adapter.getFilter().filter(s.toString());
             }
 

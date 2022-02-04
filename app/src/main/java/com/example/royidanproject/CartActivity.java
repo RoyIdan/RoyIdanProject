@@ -59,7 +59,7 @@ public class CartActivity extends AppCompatActivity {
         if (userId == 0) {
             startActivity(new Intent(CartActivity.this, MainActivity.class));
         }
-        detailsList = db.usersDao().getCartDetailsByUserId(userId);
+        detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
         adapter = new CartAdapter(CartActivity.this, detailsList);
         lvCart = findViewById(R.id.lvCart);
         lvCart.setAdapter(adapter);
@@ -75,7 +75,7 @@ public class CartActivity extends AppCompatActivity {
         findViewById(R.id.btnBuy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detailsList = db.usersDao().getCartDetailsByUserId(userId);
+                detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
                 Dialogs.createSubmitPurchaseDialog(CartActivity.this, detailsList);
             }
         });
