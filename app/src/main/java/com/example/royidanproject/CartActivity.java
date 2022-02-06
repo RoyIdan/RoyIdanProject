@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.Dialogs;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,6 +48,31 @@ public class CartActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
+    TextView tvTotalPrice;
+
+    public void addToTotalPrice(double amount) {
+        String current = tvTotalPrice.getText().toString().trim();
+        double currentVal = Double.parseDouble(current.trim().substring(1));
+
+        double newVal = currentVal + amount;
+
+        tvTotalPrice.setText('₪' + fmt(newVal));
+    }
+
+    public void removeFromTotalPrice(double amount) {
+        String current = tvTotalPrice.getText().toString().trim();
+        double currentVal = Double.parseDouble(current.trim().substring(1));
+
+        double newVal = currentVal - amount;
+
+        tvTotalPrice.setText('₪' + fmt(newVal));
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        tvTotalPrice.setText("₪" + totalPrice);
+        Log.i(CartActivity.class.getSimpleName(), "updated price to: " + totalPrice);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +82,9 @@ public class CartActivity extends AppCompatActivity {
         editor = sp.edit();
 
         db = AppDatabase.getInstance(CartActivity.this);
+
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
+
         long userId = sp.getLong("id", 0);
         if (userId == 0) {
             startActivity(new Intent(CartActivity.this, MainActivity.class));
@@ -64,13 +94,12 @@ public class CartActivity extends AppCompatActivity {
         lvCart = findViewById(R.id.lvCart);
         lvCart.setAdapter(adapter);
 
-        TextView tvTotalPrice = findViewById(R.id.tvTotalPrice);
-        tvTotalPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvTotalPrice.setText(String.valueOf(adapter.getTotalPrice()));
-            }
-        });
+//        tvTotalPrice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                tvTotalPrice.setText(String.valueOf(adapter.getTotalPrice()));
+//            }
+//        });
 
         findViewById(R.id.btnBuy).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +108,10 @@ public class CartActivity extends AppCompatActivity {
                 Dialogs.createSubmitPurchaseDialog(CartActivity.this, detailsList);
             }
         });
+    }
+
+    public void onAdapterFinish(double totalPrice) {
+        tvTotalPrice.setText('₪' + fmt(totalPrice));
     }
 
     @Override
@@ -127,5 +160,13 @@ public class CartActivity extends AppCompatActivity {
 
     private void toast(String message) {
         Toast.makeText(CartActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return new DecimalFormat("#.##").format(d);
     }
 }

@@ -7,5 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".TestingActivity">
 
+    <com.example.royidanproject.Views.CreditCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        custom:cardNumber="432432432432"/>
+
 
 </LinearLayout>

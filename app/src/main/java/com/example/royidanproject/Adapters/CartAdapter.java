@@ -150,19 +150,13 @@ public class CartAdapter extends BaseAdapter {
         Button btnRemove = view.findViewById(R.id.btnRemove);
         Button btnBuy = view.findViewById(R.id.btnBuy);
 
-//        long ageInDays = TimeUnit.MILLISECONDS.toDays(new Date().getTime() - user.getUserBirthdate().getTime());
-//        double ageInYears =  ageInDays * 0.00273790926;
-//        double ageInMonths =  ageInDays / 30.436875;
-//
-//        String age = Math.round(ageInYears) + ", " + Math.round(ageInMonths / 12);
-
         tvProductName.setText(product.getProductName());
         tvProductQuantity.setText(String.valueOf(details.getProductQuantity()));
         //tvProductPrice.setText(String.valueOf(product.getProductPrice()));
         tvProductPrice.setText(fmt(product.getProductPrice()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
-        Product p1 = product;
+        final Product p1 = product;
         IProductDao finalProductDao = productDao;
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,13 +168,15 @@ public class CartAdapter extends BaseAdapter {
                     finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
                     details.setProductQuantity(currentVal + 1);
                     db.cartDetailsDao().updateCartDetails(details);
-                }
 
+                    totalPrice += p1.getProductPrice();
+                    ((CartActivity) context).setTotalPrice(totalPrice);
+                    //((CartActivity) context).addToTotalPrice(p1.getProductPrice());
+                }
             }
         });
 
         btnMinus.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 int currentVal = Integer.parseInt(tvProductQuantity.getText().toString());
@@ -195,10 +191,12 @@ public class CartAdapter extends BaseAdapter {
                         detailsList.remove(details);
                         notifyDataSetInvalidated();
                     }
+
+                    totalPrice -= p1.getProductPrice();
+                    ((CartActivity) context).setTotalPrice(totalPrice);
+//                    ((CartActivity) context).removeFromTotalPrice(p1.getProductPrice());
                 }
-
             }
-
         });
 
         btnRemove.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +208,10 @@ public class CartAdapter extends BaseAdapter {
                 db.cartDetailsDao().deleteCartDetailsByReference(details);
                 detailsList.remove(details);
                 notifyDataSetInvalidated();
+
+                totalPrice -= p1.getProductPrice() * details.getProductQuantity();
+                ((CartActivity) context).setTotalPrice(totalPrice);
+                //((CartActivity) context).removeFromTotalPrice(p1.getProductPrice() * details.getProductQuantity());
             }
         });
 
@@ -222,6 +224,12 @@ public class CartAdapter extends BaseAdapter {
             }
         });
 
+        if (i == getCount() - 1) {
+            if (context instanceof CartActivity) {
+                ((CartActivity) context).onAdapterFinish(totalPrice);
+            }
+        }
+
         return view;
     }
 
@@ -230,7 +238,7 @@ public class CartAdapter extends BaseAdapter {
         if(d == (long) d)
             return String.format("%d",(long)d);
         else
-            return new DecimalFormat("#.##").format(1.199);
+            return new DecimalFormat("#.##").format(d);
     }
 
 }

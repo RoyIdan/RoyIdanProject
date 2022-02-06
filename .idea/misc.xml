@@ -23,11 +23,11 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_receiption.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_startup.xml" value="0.25" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_testing.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_testing.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_thread.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_users.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_about.xml" value="0.25" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_cart_item.xml" value="0.13269927536231885" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_cart_item.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_credit_card.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_credit_card_detailed.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_delete_prompt.xml" value="0.2971014492753623" />
@@ -40,6 +40,7 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_startup.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_users.xml" value="0.2971014492753623" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/order_history_item.xml" value="1.21875" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/view_credit_card.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/menu/menu_main.xml" value="0.346875" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/drawable/circle.xml" value="0.2595" />

@@ -34,7 +34,7 @@ public class RoyIdanProject extends Application {
         super.onCreate();
 
         isFirstRun = true;
-        firstActivity = MainActivity.class;
+        firstActivity = TestingActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
