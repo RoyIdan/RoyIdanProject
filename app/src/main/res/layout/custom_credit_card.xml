@@ -13,9 +13,9 @@
 
         <TextView
             android:id="@+id/tvCardNumber"
-            android:layout_width="350dp"
+            android:layout_width="380dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
 
             android:layout_marginTop="120dp"
             android:background="#212121"
@@ -23,15 +23,13 @@
             android:fontFamily="@font/ocr_a_regular"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="1234 5678 9012 3456"
             android:textColor="@color/white"
-            android:textSize="31sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:layout_width="55dp"
             android:layout_height="23dp"
             android:gravity="center"
-            android:text="01/01"
             android:textSize="20sp"
             android:layout_marginStart="158dp"
             android:background="#212121"
@@ -45,7 +43,6 @@
             android:layout_height="35dp"
             android:layout_marginStart="30dp"
             android:gravity="center"
-            android:text="רועי עידן"
             android:autoSizeTextType="uniform"
             android:textSize="20sp"
             android:background="#212121"

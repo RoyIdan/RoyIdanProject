@@ -5,12 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestingActivity">
+    tools:context=".TestingActivity"
+    android:orientation="vertical"
+    android:id="@+id/llRoot">
 
-    <com.example.royidanproject.Views.CreditCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        custom:cardNumber="432432432432"/>
+
+
+        <com.example.royidanproject.Views.CreditCardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            custom:cardNumber="1234567890123456"
+            custom:cardHolder="abc"/>
 
 
 </LinearLayout>
