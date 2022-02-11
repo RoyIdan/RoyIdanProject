@@ -177,9 +177,9 @@ public class UsersAdapter extends BaseAdapter implements Filterable {
             age.setMonth(age.getMonth() + 12);
         }
 
-        String strDate = age.getYear() + " | " + age.getMonth();
+        String strDate = age.getYear() + ", " + age.getMonth();
 
-        tvUserBirthday.setText(new SimpleDateFormat("dd/MM/yyyy").format(user.getUserBirthdate()) + " | " + strDate);
+        tvUserBirthday.setText(strDate);
         tvUserName.setText(user.getUserName()+ " " + user.getUserSurname());
         tvUserPhone.setText(user.getUserPhone());
         tvUserEmail.setText(user.getUserEmail());

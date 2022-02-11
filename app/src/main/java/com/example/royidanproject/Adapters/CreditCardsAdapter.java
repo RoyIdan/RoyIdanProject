@@ -102,7 +102,6 @@ public class CreditCardsAdapter extends BaseAdapter {
                 dialog.show();
 
                 CreditCardView ccv = dialog.findViewById(R.id.ccvCard);
-                ccv.centerViews();
 
                 Button btnAddBalance = dialog.findViewById(R.id.btnAddBalance),
                         btnRemove = dialog.findViewById(R.id.btnRemove),

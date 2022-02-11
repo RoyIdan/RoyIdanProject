@@ -152,7 +152,8 @@ public class ReceiptAdapter extends BaseAdapter {
         tvTotalPrice.setText(fmt(details.getProductQuantity() * product.getProductPrice()));
 
         if (i == getCount() - 1) {
-            ((ReceiptActivity)context).onAdapterFinish(totalPrice / 4);
+            ((ReceiptActivity)context).onAdapterFinish(totalPrice);
+            totalPrice = 0;
         } else {
             view.findViewById(R.id.viewBottomBorder).setVisibility(View.VISIBLE);
         }
@@ -165,7 +166,7 @@ public class ReceiptAdapter extends BaseAdapter {
         if(d == (long) d)
             return String.format("%d",(long)d);
         else
-            return new DecimalFormat("#.##").format(1.199);
+            return new DecimalFormat("#.##").format(d);
     }
 
 }

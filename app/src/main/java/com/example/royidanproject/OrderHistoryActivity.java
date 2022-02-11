@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
@@ -33,10 +35,10 @@ import java.util.List;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class OrderHistoryActivity extends AppCompatActivity {
-    Button btnMainActivity, btnSearchByDate;
+    Button btnMainActivity;
     RadioGroup rgOrderHistory;
     RadioButton rbManagerOnly, rbEveryone;
-    EditText etFromDate, etUntilDate;
+    EditText etFromDate, etUntilDate, etFilter;
     ListView lvOrderHistory;
     AppDatabase db;
     SharedPreferences sp;
@@ -46,12 +48,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private void setViewPointers() {
         btnMainActivity = findViewById(R.id.btnMainActivity);
-        btnSearchByDate = findViewById(R.id.btnSearchByDate);
         rgOrderHistory = findViewById(R.id.rgOrderHistory);
         rbManagerOnly = findViewById(R.id.rbManagerOnly);
         rbEveryone = findViewById(R.id.rbEveryone);
         etFromDate = findViewById(R.id.etFromDate);
         etUntilDate = findViewById(R.id.etUntilDate);
+        etFilter = findViewById(R.id.etFilter);
         lvOrderHistory = findViewById(R.id.lvOrderHistory);
     }
 
@@ -118,36 +120,23 @@ public class OrderHistoryActivity extends AppCompatActivity {
             }
         });
 
-        btnSearchByDate.setOnClickListener(new View.OnClickListener() {
+        etFilter.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                String strFrom = etFromDate.getText().toString().trim();
-                String strUntil = etUntilDate.getText().toString().trim();
+            }
 
-                Date from = null, until = null;
-                try {
-                    from = sdf.parse(strFrom);
-                    until = sdf.parse(strUntil);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String val = etFilter.getText().toString().trim();
+                adapter.getFilter().filter(val);
+            }
 
-                from.setHours(0);
-                from.setMinutes(0);
-                from.setSeconds(0);
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                until.setHours(23);
-                until.setMinutes(59);
-                until.setSeconds(59);
-
-                orders = db.ordersDao().getByDateRange(from, until);
-                adapter.updateList(orders);
-                adapter.notifyDataSetInvalidated();
             }
         });
-
     }
 
     private void buildDateDialog(int view) {
@@ -216,9 +205,11 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private class setDate implements DatePickerDialog.OnDateSetListener {
         private EditText etView;
+        private int view;
 
         public setDate(int view) {
             etView = view == 0 ? etFromDate : etUntilDate;
+            this.view = view;
         }
 
         @Override
@@ -229,6 +220,41 @@ public class OrderHistoryActivity extends AppCompatActivity {
             String str = day + "/" + month + "/" + year;
 
             etView.setText(str);
+
+            if (view == 1) {
+                filterAdapterByDate();
+            } else {
+                etUntilDate.setText("");
+                adapter.updateList(db.ordersDao().getAll());
+                adapter.getFilter().filter(etFilter.getText().toString().trim());
+            }
         }
+    }
+
+    public void filterAdapterByDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        String strFrom = etFromDate.getText().toString().trim();
+        String strUntil = etUntilDate.getText().toString().trim();
+
+        Date from = null, until = null;
+        try {
+            from = sdf.parse(strFrom);
+            until = sdf.parse(strUntil);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        from.setHours(0);
+        from.setMinutes(0);
+        from.setSeconds(0);
+
+        until.setHours(23);
+        until.setMinutes(59);
+        until.setSeconds(59);
+
+        orders = db.ordersDao().getByDateRange(from, until);
+        adapter.updateList(orders);
+        adapter.getFilter().filter(etFilter.getText().toString().trim());
     }
 }

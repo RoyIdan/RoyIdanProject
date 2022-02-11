@@ -15,6 +15,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.OrderDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.OrderHistoryActivity;
 import com.example.royidanproject.R;
@@ -42,6 +43,7 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
         this.orderList = orderList;
         filteredList = orderList;
         inflater = LayoutInflater.from(context);
+        filter = new OrderHistoryFilter();
         db = AppDatabase.getInstance(context);
         sp = context.getSharedPreferences(SP_NAME, 0);
         sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -54,22 +56,22 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        return orderList.size();
+        return filteredList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return orderList.get(position);
+        return filteredList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return filteredList.get(position).getOrderId();
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        Order order = orderList.get(position);
+        Order order = filteredList.get(position);
 
         List<OrderDetails> detailsList = db.orderDetailsDao().getByOrderId(order.getOrderId());
 
@@ -77,6 +79,7 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
 
         TextView tvOrderNumber = view.findViewById(R.id.tvOrderNumber),
                 tvOrderDate = view.findViewById(R.id.tvOrderDate),
+                tvOrderCustomer = view.findViewById(R.id.tvOrderCustomer),
                 tvOrderItemsCount = view.findViewById(R.id.tvOrderItemsCount),
                 tvOrderTotalCost = view.findViewById(R.id.tvOrderTotalCost);
 
@@ -86,8 +89,11 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
             totalCost += details.getProductOriginalPrice() * details.getProductQuantity();
         }
 
+        Users customer = db.usersDao().getUserById(order.getCustomerId());
+
         tvOrderNumber.setText(String.valueOf(order.getOrderId()));
         tvOrderDate.setText(sdf.format(order.getOrderDatePurchased()));
+        tvOrderCustomer.setText(customer.getUserName() + " " + customer.getUserSurname());
         tvOrderItemsCount.setText(String.valueOf(detailsList.size()));
         tvOrderTotalCost.setText(fmt(totalCost));
 
@@ -109,12 +115,12 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
         if(d == (long) d)
             return String.format("%d",(long)d);
         else
-            return new DecimalFormat("#.##").format(1.199);
+            return "₪" + new DecimalFormat("#.##").format(d);
     }
 
     @Override
     public Filter getFilter() {
-        return null;
+        return filter;
     }
 
     private class OrderHistoryFilter extends Filter {

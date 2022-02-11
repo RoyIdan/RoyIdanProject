@@ -18,9 +18,11 @@ import com.example.royidanproject.DatabaseFolder.Order;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import static com.example.royidanproject.Utility.CommonMethods.fmt;
+
 public class ReceiptActivity extends AppCompatActivity {
 
-    TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptTotalPrice;
+    TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptBeforeVat, tvReceiptVat, tvReceiptTotalPrice;
     ListView lvDetails;
     Button btnReturn;
     ReceiptAdapter adapter;
@@ -36,6 +38,8 @@ public class ReceiptActivity extends AppCompatActivity {
         tvReceiptNumber = findViewById(R.id.tvReceiptNumber);
         tvReceiptDate = findViewById(R.id.tvReceiptDate);
         tvReceiptCreditCard = findViewById(R.id.tvReceiptCreditCard);
+        tvReceiptBeforeVat = findViewById(R.id.tvReceiptBeforeVat);
+        tvReceiptVat = findViewById(R.id.tvReceiptVat);
         tvReceiptTotalPrice = findViewById(R.id.tvReceiptTotalPrice);
         lvDetails = findViewById(R.id.lvDetails);
         btnReturn = findViewById(R.id.btnReturn);
@@ -81,15 +85,12 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
     public void onAdapterFinish(double totalPrice) {
+        double beforeVat = totalPrice / 1.17;
+        double vat = totalPrice - beforeVat;
+        tvReceiptBeforeVat.setText(fmt(beforeVat));
+        tvReceiptVat.setText(fmt(vat));
         tvReceiptTotalPrice.setText(fmt(totalPrice));
     }
 
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return new DecimalFormat("#.##").format(d);
-    }
 
 }

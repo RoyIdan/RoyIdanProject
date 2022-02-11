@@ -46,6 +46,7 @@ public class OrderAdapter extends BaseAdapter {
     private List<OrderDetails> detailsList;
     private LayoutInflater inflater;
     private AppDatabase db;
+    private Filter mFilter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
@@ -120,7 +121,7 @@ public class OrderAdapter extends BaseAdapter {
 //            rating += star_unfilled;
 //        }
         ratingBar.setRating((float)product.getProductRating());
-        tvProductQuantity.setText("במלאי: " + String.valueOf(details.getProductQuantity()));
+        tvProductQuantity.setText("כמות: " + String.valueOf(details.getProductQuantity()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
 
@@ -153,6 +154,7 @@ public class OrderAdapter extends BaseAdapter {
 
         if (i == getCount() - 1) {
             ((OrderActivity)context).onAdapterFinish(totalPrice);
+            totalPrice = 0;
         }
 
         return view;
@@ -208,6 +210,5 @@ public class OrderAdapter extends BaseAdapter {
             }
         });
     }
-
 }
 

@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:layoutDirection="ltr">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="מסך משתמשים"
+            android:text="דף משתמש"
             android:id="@+id/btnUsersActivity"/>
 
         <Button
@@ -103,12 +104,6 @@
             android:text="התחברות"
             android:id="@+id/btnLogin"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="***" />
 
     </LinearLayout>
 
@@ -123,13 +118,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="דף מוצרים"
         android:layout_gravity="center"
         android:id="@+id/btnGalleryActivity" />
 
     <Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -91,6 +91,7 @@ public class CartActivity extends AppCompatActivity {
         }
         detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
         adapter = new CartAdapter(CartActivity.this, detailsList);
+
         lvCart = findViewById(R.id.lvCart);
         lvCart.setAdapter(adapter);
 

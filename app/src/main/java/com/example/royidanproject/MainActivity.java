@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
-                ((Button)findViewById(R.id.btnUsersActivity)).setText("Users screen");
+                ((Button)findViewById(R.id.btnUsersActivity)).setText("מסך משתמשים");
                 ((Button)findViewById(R.id.btnManagerActivity)).setVisibility(View.VISIBLE);
                 ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
                     @Override

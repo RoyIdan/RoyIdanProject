@@ -5,7 +5,9 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,8 +29,16 @@ public class CreditCardView extends LinearLayout {
     private TextView tvCardNumber, tvCardExpireDate, tvCardHolder;
     private TypedArray typedArray;
 
+    private long w, h;
+
     SharedPreferences sp;
     AppDatabase db;
+
+    private void setViewPointers() {
+        tvCardNumber = findViewById(R.id.tvCardNumber);
+        tvCardExpireDate = findViewById(R.id.tvCardExpireDate);
+        tvCardHolder = findViewById(R.id.tvCardHolder);
+    }
 
     public CreditCardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -38,22 +48,38 @@ public class CreditCardView extends LinearLayout {
 
         inflate(context, R.layout.custom_credit_card, this);
 
-        tvCardNumber = findViewById(R.id.tvCardNumber);
-        tvCardExpireDate = findViewById(R.id.tvCardExpireDate);
-        tvCardHolder = findViewById(R.id.tvCardHolder);
+        setViewPointers();
+
+        init();
+
+        String attrsHolder = "";
 
         if (attrs != null) {
 
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.CreditCardView);
 
-            String b = typedArray.getString(R.styleable.CreditCardView_cardNumber);
             setCardNumber(typedArray.getString(R.styleable.CreditCardView_cardNumber));
             setCardExpireDate(typedArray.getString(R.styleable.CreditCardView_cardExpireDate));
-            setCardHolder(typedArray.getString(R.styleable.CreditCardView_cardHolder));
+            attrsHolder = typedArray.getString(R.styleable.CreditCardView_cardHolder);
 
             typedArray.recycle();
         }
 
+        String holder = "UNKNOWN";
+        if (sp.getLong("id", 0) != 0) {
+            holder = getSpHolderName();
+        }
+
+        if (attrsHolder != null && !attrsHolder.isEmpty()) {
+            holder = attrsHolder;
+        }
+
+        setCardHolder(holder);
+
+
+    }
+
+    private void init() {
 
     }
 
@@ -61,14 +87,28 @@ public class CreditCardView extends LinearLayout {
         setCardHolder(getSpHolderName());
     }
 
-    public void centerViews() {
-        float numberX, expX, holderX;;
-        expX = tvCardExpireDate.getX();
-        holderX = tvCardHolder.getX();
-        numberX = tvCardNumber.getX();
-        tvCardNumber.setX(0);
-        tvCardExpireDate.setX(expX - 20);
-        tvCardHolder.setX(holderX - 20);
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        w = this.getWidth();
+        h = this.getHeight();
+
+        setMargins();
+    }
+
+    private void setMargins() {
+        long numberW = tvCardNumber.getWidth();
+        long numberMargin = (w - numberW) / 2;
+        tvCardNumber.setX(numberMargin);
+
+        long expW = tvCardExpireDate.getWidth();
+        long expMargin = (w - expW) * 4 / 9;
+        tvCardExpireDate.setX(expMargin);
+
+        long holderW = tvCardHolder.getWidth();
+        long holderMargin = (w - holderW) / 8;
+        tvCardHolder.setX(holderMargin);
+
     }
 
     private String getSpHolderName() {
