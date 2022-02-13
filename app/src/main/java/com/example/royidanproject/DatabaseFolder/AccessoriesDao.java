@@ -15,6 +15,10 @@ public interface AccessoriesDao extends IProductDao {
     @Query("SELECT * FROM tblAccessories")
     List<Accessory> getAll();
 
+    @Query("SELECT * FROM tblAccessories WHERE productStock > 0")
+    List<Accessory> getAll_whereInStock();
+
+
     @Query("SELECT * FROM tblAccessories ORDER BY productName")
     List<Accessory> getAll_orderByName();
 

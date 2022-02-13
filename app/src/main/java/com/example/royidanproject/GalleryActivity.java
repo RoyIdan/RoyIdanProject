@@ -6,6 +6,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.royidanproject.Adapters.ProductsAdapter;
+import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
@@ -33,6 +35,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.example.royidanproject.MainActivity.SP_NAME;
+
 public class GalleryActivity extends AppCompatActivity {
 
     TextInputEditText etFrom, etTo, etFilter;
@@ -40,6 +44,7 @@ public class GalleryActivity extends AppCompatActivity {
     ListView lvProducts;
     ProductsAdapter adapter;
     AppDatabase db;
+    SharedPreferences sp;
 
     private void setViewPointers() {
         etFrom = findViewById(R.id.etFrom);
@@ -67,13 +72,20 @@ public class GalleryActivity extends AppCompatActivity {
 
         setViewPointers();
         db = AppDatabase.getInstance(GalleryActivity.this);
+        sp = getSharedPreferences(SP_NAME, 0);
 
         etFrom.clearFocus();
 
         List<Product> productList = new LinkedList<>();
-        productList.addAll(db.smartphonesDao().getAll());
-        productList.addAll(db.watchesDao().getAll());
-        // TODO - add the rest
+        if (sp.getBoolean("admin", false)) {
+            productList.addAll(db.smartphonesDao().getAll());
+            productList.addAll(db.watchesDao().getAll());
+            productList.addAll(db.accessoriesDao().getAll());
+        } else {
+            productList.addAll(db.smartphonesDao().getAll_whereInStock());
+            productList.addAll(db.watchesDao().getAll_whereInStock());
+            productList.addAll(db.accessoriesDao().getAll_whereInStock());
+        }
 
         // sort by product name
         productList.sort(new Comparator<Product>() {
@@ -107,13 +119,12 @@ public class GalleryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean[] boxes = new boolean[3];
-                int index = 0;
                 LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
                 int count = llCategories.getChildCount();
                 for (int i = 1; i < count; i++) {
                     View view = llCategories.getChildAt(i);
                     if (view instanceof CheckBox) {
-                        boxes[index++] = (((CheckBox) view).isChecked());
+                        boxes[i - 1] = (((CheckBox) view).isChecked());
                     }
                 }
                 String query = "";
@@ -171,7 +182,12 @@ public class GalleryActivity extends AppCompatActivity {
                         smartphonesList = db.smartphonesDao().getAll();
                     }
                     else {
-                        String baseSPQuery = "SELECT * FROM tblSmartphones WHERE productStock > 0 AND ";
+                        String baseSPQuery;
+                        if (sp.getBoolean("admin", false)) {
+                            baseSPQuery = "SELECT * FROM tblSmartphones WHERE ";
+                        } else {
+                            baseSPQuery = "SELECT * FROM tblSmartphones WHERE productStock > 0 AND ";
+                        }
                         String finalSPQuery = baseSPQuery + query;
                         SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalSPQuery);
                         smartphonesList = db.smartphonesDao().getByQuery(ssq);
@@ -184,16 +200,49 @@ public class GalleryActivity extends AppCompatActivity {
                 if (boxes[1]) {
                     List<Watch> watchesList;
                     if (query.isEmpty()) {
-                        watchesList = db.watchesDao().getAll();
+                        if (sp.getBoolean("admin", false)) {
+                            watchesList = db.watchesDao().getAll_whereInStock();
+                        } else {
+                            watchesList = db.watchesDao().getAll();
+                        }
                     }
                     else {
-                        String baseWatchesQuery = "SELECT * FROM tblWatches WHERE productStock > 0 AND ";
+                        String baseWatchesQuery;
+                        if (sp.getBoolean("admin", false)) {
+                            baseWatchesQuery = "SELECT * FROM tblWatches WHERE ";
+                        } else {
+                            baseWatchesQuery = "SELECT * FROM tblWatches WHERE productStock > 0 AND ";
+                        }
                         String finalWatchesQuery = baseWatchesQuery + query;
                         SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalWatchesQuery);
                         watchesList = db.watchesDao().getByQuery(ssq);
                     }
 
                     productList.addAll(watchesList);
+                }
+
+                if (boxes[2]) {
+                    List<Accessory> accessoriesList;
+                    if (query.isEmpty()) {
+                        if (sp.getBoolean("admin", false)) {
+                            accessoriesList = db.accessoriesDao().getAll_whereInStock();
+                        } else {
+                            accessoriesList = db.accessoriesDao().getAll();
+                        }
+                    }
+                    else {
+                        String baseAccessoriesQuery;
+                        if (sp.getBoolean("admin", false)) {
+                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE ";
+                        } else {
+                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE productStock > 0 AND ";
+                        }
+                        String finalAccessoriesQuery = baseAccessoriesQuery + query;
+                        SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalAccessoriesQuery);
+                        accessoriesList = db.accessoriesDao().getByQuery(ssq);
+                    }
+
+                    productList.addAll(accessoriesList);
                 }
 
                 orderByName(productList);

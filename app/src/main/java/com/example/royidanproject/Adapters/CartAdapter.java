@@ -186,14 +186,18 @@ public class CartAdapter extends BaseAdapter {
                     finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
                     details.setProductQuantity(currentVal - 1);
                     db.cartDetailsDao().updateCartDetails(details);
-                    if (currentVal == 1) {
-                        db.cartDetailsDao().deleteCartDetailsByReference(details);
-                        detailsList.remove(details);
-                        notifyDataSetInvalidated();
-                    }
 
                     totalPrice -= p1.getProductPrice();
                     ((CartActivity) context).setTotalPrice(totalPrice);
+
+                    if (currentVal == 1) {
+                        db.cartDetailsDao().deleteCartDetailsByReference(details);
+                        detailsList.remove(details);
+                        totalPrice = 0;
+                        notifyDataSetInvalidated();
+                    }
+
+
 //                    ((CartActivity) context).removeFromTotalPrice(p1.getProductPrice());
                 }
             }
@@ -207,10 +211,12 @@ public class CartAdapter extends BaseAdapter {
                 finalProductDao.updateStockById(p1.getProductId(), p1.getProductStock());
                 db.cartDetailsDao().deleteCartDetailsByReference(details);
                 detailsList.remove(details);
-                notifyDataSetInvalidated();
 
                 totalPrice -= p1.getProductPrice() * details.getProductQuantity();
                 ((CartActivity) context).setTotalPrice(totalPrice);
+
+                totalPrice = 0;
+                notifyDataSetInvalidated();
                 //((CartActivity) context).removeFromTotalPrice(p1.getProductPrice() * details.getProductQuantity());
             }
         });

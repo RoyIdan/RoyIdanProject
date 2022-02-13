@@ -69,7 +69,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public void setTotalPrice(double totalPrice) {
-        tvTotalPrice.setText("₪" + totalPrice);
+        tvTotalPrice.setText("₪" + fmt(totalPrice));
         Log.i(CartActivity.class.getSimpleName(), "updated price to: " + totalPrice);
     }
 

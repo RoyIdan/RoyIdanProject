@@ -35,6 +35,9 @@ public interface WatchesDao extends IProductDao {
     @Query("SELECT * FROM tblWatches")
     List<Watch> getAll();
 
+    @Query("SELECT * FROM tblWatches WHERE productStock > 0")
+    List<Watch> getAll_whereInStock();
+
     @Query("SELECT * FROM tblWatches ORDER BY productName")
     List<Watch> getAll_orderByName();
 }

@@ -102,7 +102,7 @@ public class CreditCardView extends LinearLayout {
         tvCardNumber.setX(numberMargin);
 
         long expW = tvCardExpireDate.getWidth();
-        long expMargin = (w - expW) * 4 / 9;
+        float expMargin = (w - expW) * 0.445f;
         tvCardExpireDate.setX(expMargin);
 
         long holderW = tvCardHolder.getWidth();

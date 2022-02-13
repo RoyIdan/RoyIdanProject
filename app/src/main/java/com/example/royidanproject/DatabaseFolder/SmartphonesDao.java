@@ -15,6 +15,9 @@ public interface SmartphonesDao extends IProductDao {
     @Query("SELECT * FROM tblSmartphones")
     List<Smartphone> getAll();
 
+    @Query("SELECT * FROM tblSmartphones WHERE productStock > 0")
+    List<Smartphone> getAll_whereInStock();
+
     @Query("SELECT * FROM tblSmartphones ORDER BY productName")
     List<Smartphone> getAll_orderByName();
 

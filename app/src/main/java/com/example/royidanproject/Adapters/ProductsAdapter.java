@@ -328,6 +328,7 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
 
+
     }
 
 }
