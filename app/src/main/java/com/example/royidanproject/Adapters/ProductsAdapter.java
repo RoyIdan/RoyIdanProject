@@ -113,6 +113,22 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
+        LinearLayout llAddToCartControls = view.findViewById(R.id.llAddToCartControls);
+        TextView tvNotLoggedInAlert = view.findViewById(R.id.tvNotLoggedInAlert);
+        if (sp.contains("id")) {
+            if (product.getProductStock() == 0) {
+                tvNotLoggedInAlert.setVisibility(View.VISIBLE);
+                llAddToCartControls.setVisibility(View.GONE);
+                tvNotLoggedInAlert.setText("המוצר חסר במלאי");
+            } else {
+                tvNotLoggedInAlert.setVisibility(View.GONE);
+                llAddToCartControls.setVisibility(View.VISIBLE);
+            }
+        } else {
+            tvNotLoggedInAlert.setVisibility(View.VISIBLE);
+            llAddToCartControls.setVisibility(View.GONE);
+        }
+
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

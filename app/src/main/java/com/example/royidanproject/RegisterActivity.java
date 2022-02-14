@@ -233,8 +233,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void updateMode() {
-        ((TextView)findViewById(R.id.tvTitle)).setText("Update form");
-        btnRegister.setText("Update");
+        ((TextView)findViewById(R.id.tvTitle)).setText("טופס עדכון");
+        btnRegister.setText("עדכן");
         btnLogin.setVisibility(View.GONE);
 
         Users user = (Users) getIntent().getExtras().getSerializable("user");
@@ -248,7 +248,7 @@ public class RegisterActivity extends AppCompatActivity {
         etAddress.setText(user.getUserAddress());
         String city = user.getUserCity();
         etPassword.setText(user.getUserPassword());
-        rgGender.check(gender.equals("male") ? R.id.rdMale : R.id.rdFemale);
+        rgGender.check(gender.equals("זכר") ? R.id.rdMale : R.id.rdFemale);
         String photo = user.getUserPhoto();
 
         spiCity.setSelection(Arrays.asList(getResources().getStringArray(R.array.spinner_city)).indexOf(city));
@@ -293,7 +293,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!(bmUser == originPhoto)) {
                     String photo = UserImages.savePhoto(bmUser, RegisterActivity.this);
                     if (photo == null) {
-                        toast("Failed to save the photo");
+                        toast("שמירת התמונה נכשלה");
                         return;
                     }
                     UserImages.deletePhoto(user.getUserPhoto(), RegisterActivity.this);
@@ -312,13 +312,13 @@ public class RegisterActivity extends AppCompatActivity {
                 db.usersDao().update(user);
 
                 // Shared Preferences
-                if (sp.getLong("id", 0l) == user.getUserId()) {
+                if (sp.getLong("id", 0L) == user.getUserId()) {
                     editor.putString("name", name + " " + surname);
                     editor.putString("image", user.getUserPhoto());
                     editor.commit();
                 }
 
-                toast("Successfully updated");
+                toast("המנוי עודכן בהצלחה");
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             }
 
@@ -327,14 +327,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                 for (Users u : users) {
                     if (u.getUserId() != user.getUserId() && email.equals(u.getUserEmail())) {
-                        toast("email is already in use.");
+                        toast("האימייל כבר נמצא בשימוש");
                         return false;
                     }
                 }
 
                 for (Users u : users) {
                     if (u.getUserId() != user.getUserId() && phone.equals(u.getUserPhone())) {
-                        toast("phone is already in use.");
+                        toast("הטלפון כבר נמצא בשימוש");
                         return false;
                     }
                 }
@@ -349,11 +349,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         for (Users u : users) {
             if (email.equals(u.getUserEmail())) {
-                toast("email is already in use.");
+                toast("האימייל כבר נמצא בשימוש");
                 return false;
             }
             if (phone.equals(u.getUserPhone())) {
-                toast("phone is already in use.");
+                toast("הטלפון כבר נמצא  בשימוש");
                 return false;
             }
         }

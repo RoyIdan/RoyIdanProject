@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="5dp"
-        android:text="Registration form"
+        android:text="טופס הרשמה"
         android:textSize="20dp"
         android:id="@+id/tvTitle"
         />
@@ -99,7 +99,7 @@
             android:gravity="center"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="30dp"
-            android:text="male"
+            android:text="זכר"
             android:id="@+id/rdMale"/>
         <RadioButton
             android:layout_width="80dp"
@@ -107,7 +107,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginLeft="25dp"
-            android:text="female"
+            android:text="נקבה"
             android:id="@+id/rdFemale"/>
     </RadioGroup>
 
@@ -215,21 +215,21 @@
             android:layout_height="40dp"
             android:textSize="13dp"
             android:layout_width="140dp"
-            android:text="Return to Main"
+            android:text="מעבר לדף ראשי"
             android:textAllCaps="false"
             android:id="@+id/btnReturn"
             />
         <Button
             android:layout_height="40dp"
             android:layout_width="135dp"
-            android:text="Register"
+            android:text="הרשמה"
             android:textAllCaps="false"
             android:id="@+id/btnRegister"
             />
         <Button
             android:layout_height="40dp"
             android:layout_width="140dp"
-            android:text="Login"
+            android:text="התחבר"
             android:textAllCaps="false"
             android:id="@+id/btnLogin"
             />

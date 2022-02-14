@@ -47,6 +47,12 @@
             android:digits="אבגדהוזחטיכלמנסעפצקרשת -"
             android:id="@+id/tvCardHolder"/>
 
+        <ImageView
+            android:layout_width="71dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-51dp"
+            android:id="@+id/ivCardCompany" />
+
 
     </LinearLayout>
 

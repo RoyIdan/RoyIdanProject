@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.royidanproject.AddNewCardActivity;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
+import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
 import com.example.royidanproject.Views.CreditCardView;
@@ -80,6 +81,7 @@ public class CreditCardsAdapter extends BaseAdapter {
 
         String number = card.getCardNumber();
 
+        CardCompany company = card.getCardCompany();
 
         String userName = user.getUserName() + " " + user.getUserSurname();
 
@@ -90,6 +92,7 @@ public class CreditCardsAdapter extends BaseAdapter {
         ccv.setCardNumber(number);
         ccv.setCardExpireDate(card.getCardExpireDate());
         ccv.setSpHolder();
+        ccv.setCardCompany(company);
 
         ccv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +125,7 @@ public class CreditCardsAdapter extends BaseAdapter {
                 ccv.setCardNumber(number);
                 ccv.setCardExpireDate(card.getCardExpireDate());
                 ccv.setSpHolder();
+                ccv.setCardCompany(company);
                 tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
 
                 btnAddBalance.setOnClickListener(new View.OnClickListener() {

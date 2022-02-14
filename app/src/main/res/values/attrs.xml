@@ -4,5 +4,11 @@
         <attr name="cardNumber" format="string" />
         <attr name="cardExpireDate" format="string" />
         <attr name="cardHolder" format="string" />
+        <attr name="cardCompany" format="enum" >
+            <enum name="AMERICAN_EXPRESS" value="0"/>
+            <enum name="ISRACARD" value="1"/>
+            <enum name="MASTERCARD" value="2"/>
+            <enum name="VISA" value="3"/>
+        </attr>
     </declare-styleable>
 </resources>

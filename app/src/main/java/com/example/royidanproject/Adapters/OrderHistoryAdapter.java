@@ -51,7 +51,7 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
 
     public void updateList(List<Order> orderList) {
         this.orderList = orderList;
-        notifyDataSetInvalidated();
+
     }
 
     @Override

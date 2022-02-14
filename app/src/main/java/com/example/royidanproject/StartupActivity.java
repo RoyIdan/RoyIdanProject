@@ -126,7 +126,7 @@ public class StartupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String password = etPassword.getText().toString().trim();
 
-                if (db.usersDao().validatePasswordById(sp.getLong("id", -1), password) != null) {
+                if (db.usersDao().validatePasswordById(sp.getLong("id", -1), password) != 0) {
                     startActivity(new Intent(StartupActivity.this, MainActivity.class));
                     finish();
                     return;

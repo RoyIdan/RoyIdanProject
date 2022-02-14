@@ -60,8 +60,6 @@ public class GalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        Log.i("aad", "gal");
-
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +177,11 @@ public class GalleryActivity extends AppCompatActivity {
                 if (boxes[0]) {
                     List<Smartphone> smartphonesList;
                     if (query.isEmpty()) {
-                        smartphonesList = db.smartphonesDao().getAll();
+                        if (sp.getBoolean("admin", false)) {
+                            smartphonesList = db.smartphonesDao().getAll();
+                        } else {
+                            smartphonesList = db.smartphonesDao().getAll_whereInStock();
+                        }
                     }
                     else {
                         String baseSPQuery;
@@ -201,9 +203,9 @@ public class GalleryActivity extends AppCompatActivity {
                     List<Watch> watchesList;
                     if (query.isEmpty()) {
                         if (sp.getBoolean("admin", false)) {
-                            watchesList = db.watchesDao().getAll_whereInStock();
-                        } else {
                             watchesList = db.watchesDao().getAll();
+                        } else {
+                            watchesList = db.watchesDao().getAll_whereInStock();
                         }
                     }
                     else {
@@ -225,9 +227,9 @@ public class GalleryActivity extends AppCompatActivity {
                     List<Accessory> accessoriesList;
                     if (query.isEmpty()) {
                         if (sp.getBoolean("admin", false)) {
-                            accessoriesList = db.accessoriesDao().getAll_whereInStock();
-                        } else {
                             accessoriesList = db.accessoriesDao().getAll();
+                        } else {
+                            accessoriesList = db.accessoriesDao().getAll_whereInStock();
                         }
                     }
                     else {

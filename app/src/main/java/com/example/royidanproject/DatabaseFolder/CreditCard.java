@@ -17,6 +17,11 @@ public class CreditCard implements Serializable {
     private Double cardBalance;
     @androidx.room.TypeConverters(TypeConverters.class)
     private Date cardExpireDate;
+    private CardCompany cardCompany;
+
+    public enum CardCompany {
+        AMERICAN_EXPRESS, ISRACARD, MASTERCARD, VISA
+    }
 
     public long getCardId() {
         return cardId;
@@ -66,8 +71,16 @@ public class CreditCard implements Serializable {
         this.cardExpireDate = cardExpireDate;
     }
 
+    public CardCompany getCardCompany() {
+        return cardCompany;
+    }
+
+    public void setCardCompany(CardCompany cardCompany) {
+        this.cardCompany = cardCompany;
+    }
+
     @Override
     public String toString() {
-        return "xxxx-xxxx-xxxx-" + cardNumber.substring(12);
+        return cardCompany + " - " + cardNumber.substring(12);
     }
 }

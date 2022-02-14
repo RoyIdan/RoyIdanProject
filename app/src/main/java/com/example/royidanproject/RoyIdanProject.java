@@ -34,7 +34,7 @@ public class RoyIdanProject extends Application {
         super.onCreate();
 
         isFirstRun = true;
-        firstActivity = MainActivity.class;
+        firstActivity = StartupActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
@@ -74,6 +74,7 @@ public class RoyIdanProject extends Application {
 
         CreditCard cc = new CreditCard();
         cc.setCardBalance(100000D);
+        cc.setCardCompany(CreditCard.CardCompany.VISA);
         cc.setCardNumber("1234567890123456");
         cc.setCardExpireDate(cardDate);
         cc.setCvv("123");

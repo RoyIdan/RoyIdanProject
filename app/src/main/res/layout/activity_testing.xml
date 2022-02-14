@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             custom:cardNumber="1234567890123456"
-            custom:cardExpireDate="15/11"/>
+            custom:cardExpireDate="15/11"
+            custom:cardCompany="ISRACARD" />
 
 
 </LinearLayout>

@@ -91,7 +91,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     orders = db.ordersDao().getAll();
                 }
                 adapter.updateList(orders);
-                adapter.notifyDataSetInvalidated();
+                adapter.getFilter().filter(etFilter.getText().toString().trim());
+                adapter.notifyDataSetChanged();
             }
         });
 

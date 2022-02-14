@@ -12,10 +12,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,23 +34,31 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
+import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
+import com.example.royidanproject.Views.CreditCardView;
 
 public class AddNewCardActivity extends AppCompatActivity {
-    TextView tvCardNumber, tvCardExpireDate, tvCardHolder;
+//    TextView tvCardNumber, tvCardExpireDate, tvCardHolder;
+//    ImageView ivCardCompany;
+    CreditCardView creditCard;
     EditText etCardNumber, etCardExpireDate, etCardHolder, etCardCvv;
+    Spinner spiCardCompany;
     Button btnMainActivity, btnCreditCardsActivity, btnAdd;
 
     SharedPreferences sp;
     AppDatabase db;
 
     private void setViewPointers() {
-        tvCardNumber = findViewById(R.id.tvCardNumber);
-        tvCardExpireDate = findViewById(R.id.tvCardExpireDate);
-        tvCardHolder = findViewById(R.id.tvCardHolder);
+//        tvCardNumber = findViewById(R.id.tvCardNumber);
+//        tvCardExpireDate = findViewById(R.id.tvCardExpireDate);
+//        tvCardHolder = findViewById(R.id.tvCardHolder);
+//        ivCardCompany = findViewById(R.id.ivCardCompany);
+        creditCard = findViewById(R.id.creditCard);
         etCardNumber = findViewById(R.id.etCardNumber);
         etCardExpireDate = findViewById(R.id.etCardExpireDate);
         etCardHolder = findViewById(R.id.etCardHolder);
         etCardCvv = findViewById(R.id.etCardCvv);
+        spiCardCompany = findViewById(R.id.spiCardCompany);
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnCreditCardsActivity = findViewById(R.id.btnCreditCardsActivity);
         btnAdd = findViewById(R.id.btnAdd);
@@ -67,13 +77,29 @@ public class AddNewCardActivity extends AppCompatActivity {
         String userName = sp.getString("name", "ERROR");
 
         etCardHolder.setText(userName);
-        tvCardHolder.setText(userName);
+        creditCard.setCardHolder(userName);
         etCardHolder.setFocusable(false);
 
         etCardExpireDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 buildDatePickerDialog();
+            }
+        });
+
+        CardCompany[] values = CardCompany.values();
+        ArrayAdapter<CardCompany> adapter = new ArrayAdapter<CardCompany>(this, android.R.layout.simple_spinner_item, values);
+        spiCardCompany.setAdapter(adapter);
+
+        spiCardCompany.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                creditCard.setCardCompany(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -85,17 +111,19 @@ public class AddNewCardActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String number = charSequence.toString().trim();
-                String formatted = "";
-                for (int j = 0; j < number.length(); j++) {
-                    if (j != 0 && j % 4 == 0) {
-                        formatted += " ";
-                    }
+//                String number = charSequence.toString().trim();
+//                String formatted = "";
+//                for (int j = 0; j < number.length(); j++) {
+//                    if (j != 0 && j % 4 == 0) {
+//                        formatted += " ";
+//                    }
+//
+//                    formatted += number.charAt(j);
+//                }
+//
+//                tvCardNumber.setText(formatted);
 
-                    formatted += number.charAt(j);
-                }
-
-                tvCardNumber.setText(formatted);
+                creditCard.setCardNumber(charSequence.toString().trim());
             }
 
             @Override
@@ -122,6 +150,7 @@ public class AddNewCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 long userId = sp.getLong("id", 0);
+                CardCompany company = (CardCompany) spiCardCompany.getSelectedItem();
                 String number = etCardNumber.getText().toString().trim();
                 String cvv = etCardCvv.getText().toString().trim();
                 String expire = etCardExpireDate.getText().toString().trim();
@@ -142,6 +171,7 @@ public class AddNewCardActivity extends AppCompatActivity {
                 CreditCard cc = new CreditCard();
                 cc.setUserId(userId);
                 cc.setCardNumber(number);
+                cc.setCardCompany(company);
                 cc.setCvv(cvv);
                 cc.setCardExpireDate(expireDate);
                 cc.setCardBalance(0d);
@@ -166,16 +196,19 @@ public class AddNewCardActivity extends AppCompatActivity {
 //        originalCard.setCvv(cardToUpdate.getCvv());
         SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
 
+        spiCardCompany.setSelection(card.getCardCompany().ordinal());
         etCardNumber.setText(card.getCardNumber());
         etCardExpireDate.setText(sdf.format(card.getCardExpireDate()));
         etCardCvv.setText(card.getCvv());
 
-        tvCardExpireDate.setText(sdf.format(card.getCardExpireDate()));
+        creditCard.setCardCompany(card.getCardCompany());
+        creditCard.setCardExpireDate(card.getCardExpireDate());
 
         btnAdd.setText("עדכן");
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CardCompany company = (CardCompany) spiCardCompany.getSelectedItem();
                 String number = etCardNumber.getText().toString().trim();
                 String cvv = etCardCvv.getText().toString().trim();
                 String expire = etCardExpireDate.getText().toString().trim();
@@ -196,6 +229,7 @@ public class AddNewCardActivity extends AppCompatActivity {
                 card.setCardNumber(number);
                 card.setCvv(cvv);
                 card.setCardExpireDate(expireDate);
+                card.setCardCompany(company);
 
                 db.creditCardDao().update(card);
                 startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
@@ -269,7 +303,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
                 String finalDate = valMonth + "/" + valYear;
                 etCardExpireDate.setText(finalDate);
-                tvCardExpireDate.setText(finalDate);
+                creditCard.setCardExpireDate(finalDate);
 
                 dialog.dismiss();
             }

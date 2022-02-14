@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
 
@@ -27,6 +31,7 @@ public class CreditCardView extends LinearLayout {
     public static SimpleDateFormat cardSdf = new SimpleDateFormat("MM/yy");
 
     private TextView tvCardNumber, tvCardExpireDate, tvCardHolder;
+    private ImageView ivCardCompany;
     private TypedArray typedArray;
 
     private long w, h;
@@ -38,6 +43,7 @@ public class CreditCardView extends LinearLayout {
         tvCardNumber = findViewById(R.id.tvCardNumber);
         tvCardExpireDate = findViewById(R.id.tvCardExpireDate);
         tvCardHolder = findViewById(R.id.tvCardHolder);
+        ivCardCompany = findViewById(R.id.ivCardCompany);
     }
 
     public CreditCardView(Context context, @Nullable AttributeSet attrs) {
@@ -61,6 +67,12 @@ public class CreditCardView extends LinearLayout {
             setCardNumber(typedArray.getString(R.styleable.CreditCardView_cardNumber));
             setCardExpireDate(typedArray.getString(R.styleable.CreditCardView_cardExpireDate));
             attrsHolder = typedArray.getString(R.styleable.CreditCardView_cardHolder);
+
+            if (typedArray.hasValue(R.styleable.CreditCardView_cardCompany)) {
+                int value = typedArray.getInt(R.styleable.CreditCardView_cardCompany, -1);
+                if (value != -1)
+                    setCardCompany(value);
+            }
 
             typedArray.recycle();
         }
@@ -109,6 +121,10 @@ public class CreditCardView extends LinearLayout {
         long holderMargin = (w - holderW) / 8;
         tvCardHolder.setX(holderMargin);
 
+        long companyW = ivCardCompany.getWidth();
+        float companyMargin = (w - companyW) * 0.84f;
+        ivCardCompany.setX(companyMargin);
+
     }
 
     private String getSpHolderName() {
@@ -155,11 +171,61 @@ public class CreditCardView extends LinearLayout {
         setCardExpireDate(cardExpireDate);
     }
 
-    public String  getCardHolder() {
+    public String getCardHolder() {
         return tvCardHolder.getText().toString();
     }
 
     public void setCardHolder(String cardHolder) {
         this.tvCardHolder.setText(cardHolder);
+    }
+
+    public Drawable getCardCompany() {
+        return ivCardCompany.getDrawable();
+    }
+
+    public void setCardCompany(int ordinal) {
+        CardCompany cc;
+        switch(ordinal) {
+            case 0:
+                cc = CardCompany.AMERICAN_EXPRESS;
+                break;
+            case 1:
+                cc = CardCompany.ISRACARD;
+                break;
+            case 2:
+                cc = CardCompany.MASTERCARD;
+                break;
+            default:
+                cc = CardCompany.VISA;
+                break;
+        }
+
+        setCardCompany(cc);
+    }
+
+    public void setCardCompany(CardCompany cardCompany) {
+        int resId;
+        switch (cardCompany) {
+            case VISA:
+                resId = R.drawable.visa;
+                break;
+            case ISRACARD:
+                resId = R.drawable.isracard;
+                break;
+            case MASTERCARD:
+                resId = R.drawable.mastercard;
+                break;
+            case AMERICAN_EXPRESS:
+                resId = R.drawable.american;
+                break;
+            default:
+                // error
+                resId = 0;
+        }
+
+        Drawable companyImg =
+                ResourcesCompat.getDrawable(getResources(), resId, null);
+
+        ivCardCompany.setImageDrawable(companyImg);
     }
 }

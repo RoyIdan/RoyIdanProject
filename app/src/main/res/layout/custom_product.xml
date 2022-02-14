@@ -112,45 +112,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center">
+            android:id="@+id/llAddToCartControls"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="18sp"
+                    android:id="@+id/btnPlus" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:gravity="center"
+                    android:id="@+id/tvCount" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:textSize="20sp"
+                    android:padding="0dp"
+                    android:gravity="center"
+                    android:id="@+id/btnMinus" />
+
+            </LinearLayout>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:text="+"
-                android:gravity="center"
-                android:padding="0dp"
-                android:textSize="18sp"
-                android:id="@+id/btnPlus" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:text="1"
-                android:gravity="center"
-                android:id="@+id/tvCount" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:text="-"
-                android:textSize="20sp"
-                android:padding="0dp"
-                android:gravity="center"
-                android:id="@+id/btnMinus" />
+                android:layout_width="110dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="35dp"
+                android:paddingVertical="0dp"
+                android:layout_gravity="center"
+                android:text="הוסף לסל"
+                android:id="@+id/btnAddToCart"/>
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="110dp"
-            android:layout_marginTop="5dp"
-            android:layout_height="35dp"
-            android:paddingVertical="0dp"
-            android:text="הוסף לסל"
-            android:id="@+id/btnAddToCart"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="התחבר או הירשם כדי לרכוש מוצר זה"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textSize="17sp"
+            android:id="@+id/tvNotLoggedInAlert" />
 
     </LinearLayout>
 

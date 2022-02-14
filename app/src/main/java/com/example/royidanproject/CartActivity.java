@@ -44,6 +44,7 @@ public class CartActivity extends AppCompatActivity {
     private ListView lvCart;
     private List<CartDetails> detailsList;
     private CartAdapter adapter;
+    private Button btnMainActivity;
     AppDatabase db;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -82,6 +83,14 @@ public class CartActivity extends AppCompatActivity {
         editor = sp.edit();
 
         db = AppDatabase.getInstance(CartActivity.this);
+
+        btnMainActivity = findViewById(R.id.btnMainActivity);
+        btnMainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this, MainActivity.class));
+            }
+        });
 
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
 

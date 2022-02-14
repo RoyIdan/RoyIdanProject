@@ -28,7 +28,7 @@ public interface UsersDao {
     Users getUserByLogin(String userEmail, String userPassword);
 
     @Query("SELECT userId FROM tblUsers WHERE userId = :id AND userPassword = :password")
-    Users validatePasswordById(long id, String password);
+    long validatePasswordById(long id, String password);
 
     @Delete
     void deleteUserByReference(Users user);

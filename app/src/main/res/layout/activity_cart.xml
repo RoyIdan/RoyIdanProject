@@ -8,6 +8,13 @@
     tools:context=".CartActivity"
     android:layoutDirection="ltr">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="מעבר לדף ראשי"
+        android:id="@+id/btnMainActivity"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
