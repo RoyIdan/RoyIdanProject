@@ -12,28 +12,30 @@
         android:id="@+id/btnClose" />
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="-40dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:maxLength="18"
         android:hint="אימייל"
         android:textSize="20dp"
         android:id="@+id/etEmail" />
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:hint="סיסמה"
+        android:maxLength="16"
         android:inputType="textPassword"
         android:textSize="20dp"
         android:id="@+id/etPassword" />
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"

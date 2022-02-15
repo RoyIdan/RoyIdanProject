@@ -31,6 +31,7 @@ import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.ReceiptActivity;
+import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
@@ -97,7 +98,7 @@ public class OrderAdapter extends BaseAdapter {
             product = db.accessoriesDao().getAccessoryById(details.getProductId());
         }
 
-        totalPrice += product.getProductPrice() * details.getProductQuantity();
+        totalPrice += details.getProductOriginalPrice() * details.getProductQuantity();
 
         TextView tvProductName = view.findViewById(R.id.tvProductName);
         TextView tvProductPrice = view.findViewById(R.id.tvProductPrice);
@@ -110,7 +111,7 @@ public class OrderAdapter extends BaseAdapter {
         TextView tvCurrentRating = view.findViewById(R.id.tvCurrentRating);
 
         tvProductName.setText(product.getProductName());
-        tvProductPrice.setText("מחיר: " + String.valueOf(details.getProductOriginalPrice()));
+        tvProductPrice.setText("מחיר: " + CommonMethods.fmt(details.getProductOriginalPrice()));
         tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
 //        String rating = "";
 //        int j = 0, max = (int)(product.getProductRating());
@@ -129,7 +130,8 @@ public class OrderAdapter extends BaseAdapter {
         btnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRateDialog(finalProduct, details, tvCurrentRating, btnRate);
+                openRateDialog(finalProduct, details, tvCurrentRating, btnRate, ratingBar);
+
             }
         });
 
@@ -160,7 +162,7 @@ public class OrderAdapter extends BaseAdapter {
         return view;
     }
 
-    private void openRateDialog(Product product, OrderDetails details, TextView tvCurrentRating, Button btnRate) {
+    private void openRateDialog(Product product, OrderDetails details, TextView tvCurrentRating, Button btnRate, RatingBar ratingBar) {
         View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_rate_product_dialog, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setView(promptDialog);
@@ -179,7 +181,6 @@ public class OrderAdapter extends BaseAdapter {
                     Toast.makeText(context, "הדירוג חייב להיות בין 1 ל5", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 IProductDao dao = null;
                 if (product instanceof Smartphone)
                     dao = db.smartphonesDao();
@@ -207,6 +208,18 @@ public class OrderAdapter extends BaseAdapter {
                         Toast.makeText(context, "לא ניתן לדרג יותר מפעם אחת", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                double newRating = 0;
+                if (product instanceof Smartphone) {
+                    newRating = db.smartphonesDao().getSmartphoneById(product.getProductId()).getProductRating();
+                } else if (product instanceof Watch) {
+                    newRating = db.watchesDao().getWatchById(product.getProductId()).getProductRating();
+                } else {
+                    newRating = db.accessoriesDao().getAccessoryById(product.getProductId()).getProductRating();
+                }
+
+                ratingBar.setRating((float) newRating);
+
             }
         });
     }

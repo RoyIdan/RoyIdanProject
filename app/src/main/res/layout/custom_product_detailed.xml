@@ -5,26 +5,33 @@
     android:layout_height="match_parent"
     android:layoutDirection="rtl">
 
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="X"
-        android:layout_gravity="right"
-        android:id="@+id/btnClose" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="-50dp"
-        android:text="iPhone 11"
-        android:maxLines="1"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="15sp"
-        android:autoSizeMaxTextSize="40sp"
-        android:autoSizeStepGranularity="2sp"
-        android:id="@+id/tvTitle"/>
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="X"
+            android:layout_gravity="right"
+            android:id="@+id/btnClose" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:text="iPhone 11"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="15sp"
+            android:autoSizeMaxTextSize="40sp"
+            android:autoSizeStepGranularity="2sp"
+            android:id="@+id/tvTitle"/>
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="150dp"

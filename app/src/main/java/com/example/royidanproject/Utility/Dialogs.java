@@ -350,7 +350,7 @@ public class Dialogs {
         spiCreditCard.setSelection(0);
 
         etName.setText(context.getSharedPreferences(SP_NAME, 0).getString("name", "ERROR"));
-        etPrice.setText("₪" + totalPrice);
+        etPrice.setText(CommonMethods.fmt(totalPrice));
 
     }
     private static Product createSubmitPurchaseDialog_getProduct(AppDatabase db, long productId, long tableId) {

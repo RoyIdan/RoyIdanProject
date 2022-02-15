@@ -128,7 +128,7 @@ public class ReceiptAdapter extends BaseAdapter {
             product = db.accessoriesDao().getAccessoryById(details.getProductId());
         }
 
-        totalPrice += product.getProductPrice() * details.getProductQuantity();
+        totalPrice += details.getProductOriginalPrice() * details.getProductQuantity();
 
         view = inflater.inflate(R.layout.custom_receipt_item, null);
 
@@ -147,9 +147,9 @@ public class ReceiptAdapter extends BaseAdapter {
         });
 
         tvDescription.setText(product.getProductName());
-        tvPrice.setText(fmt(product.getProductPrice()));
+        tvPrice.setText(fmt(details.getProductOriginalPrice()));
         tvQuantity.setText(String.valueOf(details.getProductQuantity()));
-        tvTotalPrice.setText(fmt(details.getProductQuantity() * product.getProductPrice()));
+        tvTotalPrice.setText(fmt(details.getProductQuantity() * details.getProductOriginalPrice()));
 
         if (i == getCount() - 1) {
             ((ReceiptActivity)context).onAdapterFinish(totalPrice);

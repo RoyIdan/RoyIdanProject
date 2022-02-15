@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.example.royidanproject.Adapters.OrderAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.OrderDetails;
+import com.example.royidanproject.Utility.CommonMethods;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +60,7 @@ public class OrderActivity extends AppCompatActivity {
 
         tvOrderNumber.setText(String.valueOf(order.getOrderId()));
         tvOrderDate.setText(sdf.format(order.getOrderDatePurchased()));
+        tvOrderDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
 
         btnReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,17 +76,15 @@ public class OrderActivity extends AppCompatActivity {
         OrderAdapter adapter = new OrderAdapter(OrderActivity.this, detailsList);
         lvDetails.setAdapter(adapter);
 
+        double totalPrice = 0;
+        for (int i = 0; i < detailsList.size(); i++) {
+            totalPrice += detailsList.get(i).getProductOriginalPrice() * detailsList.get(i).getProductOriginalPrice();
+        }
+        tvTotalPrice.setText(CommonMethods.fmt(totalPrice));
+
     }
 
     public void onAdapterFinish(double totalPrice) {
-        tvTotalPrice.setText(fmt(totalPrice));
-    }
-
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return new DecimalFormat("#.##").format(1.199);
+        tvTotalPrice.setText(CommonMethods.fmt(totalPrice));
     }
 }
