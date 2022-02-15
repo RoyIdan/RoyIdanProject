@@ -35,6 +35,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="5dp"
+        android:paddingHorizontal="10dp"
         android:inputType="textMultiLine"
         android:id="@+id/etTextBox"/>
 

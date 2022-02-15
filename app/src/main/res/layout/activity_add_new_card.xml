@@ -55,7 +55,7 @@
 <!--            android:background="#212121"-->
 <!--            android:textColor="@color/white"-->
 <!--            android:maxLines="1"-->
-<!--            android:digits="אבגדהוזחטיכלמנסעפצקרשת -"-->
+<!--            android:digits="אבגדהוזחטיכלמנסעפצקרשתםןףץ -"-->
 <!--            android:id="@+id/tvCardHolder"/>-->
 
 <!--    </LinearLayout>-->

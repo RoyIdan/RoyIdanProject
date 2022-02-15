@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.UsersActivity;
+import com.example.royidanproject.Utility.UserImages;
 
 import java.io.File;
 import java.io.Serializable;
@@ -184,8 +186,7 @@ public class UsersAdapter extends BaseAdapter implements Filterable {
         tvUserPhone.setText(user.getUserPhone());
         tvUserEmail.setText(user.getUserEmail());
 
-        File folder = new File(Environment.getExternalStorageDirectory() + "/" + USERS_FOLDER_NAME);
-        Uri uri = Uri.parse("file://" + folder + "/" + photoName);
+        Uri uri = UserImages.getImage(photoName, context);
         ivPhoto.setImageURI(uri);
         return view;
     }

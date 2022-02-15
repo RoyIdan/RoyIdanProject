@@ -95,16 +95,16 @@ public class UsersActivity extends AppCompatActivity {
                 }
             });
 
-            findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String input = etSearchBox.getText().toString().trim();
-
-                    adapter.updateUsersList(db.usersDao().searchByNameOrSurname(input));
-
-                    adapter.notifyDataSetInvalidated();
-                }
-            });
+//            findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String input = etSearchBox.getText().toString().trim();
+//
+//                    adapter.updateUsersList(db.usersDao().searchByNameOrSurname(input));
+//
+//                    adapter.notifyDataSetInvalidated();
+//                }
+//            });
         }
 
     }

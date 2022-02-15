@@ -28,6 +28,7 @@ import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.ManagerActivity;
 import com.example.royidanproject.R;
+import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
@@ -99,7 +100,7 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         TextView tvCount = view.findViewById(R.id.tvCount);
 
         tvProductName.setText(product.getProductName());
-        tvProductPrice.setText("מחיר: " + String.valueOf(product.getProductPrice()));
+        tvProductPrice.setText("מחיר: " + CommonMethods.fmt(product.getProductPrice()));
         tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
 //        String rating = "";
 //        int j = 0, max = (int)(product.getProductRating());

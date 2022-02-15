@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -128,7 +129,7 @@ public class ManagerActivity extends AppCompatActivity {
                         llAddNewProductSmartphone.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        // Watches
+                        llAddNewProductWatch.setVisibility(View.VISIBLE);
                         break;
                     case 3:
                         // Accessories
@@ -231,8 +232,11 @@ public class ManagerActivity extends AppCompatActivity {
                     llManufacturers.setVisibility(View.VISIBLE);
                 }
                 else {
-                    etManufacturerName.setText("");
-                    llProducts.setVisibility(View.GONE);
+                    if (llAddNewManufacturer.getVisibility() == View.VISIBLE) {
+                        etManufacturerName.setText("");
+                        llAddNewManufacturer.setVisibility(View.GONE);
+                    }
+                    llManufacturers.setVisibility(View.GONE);
                 }
             }
         });
@@ -253,7 +257,20 @@ public class ManagerActivity extends AppCompatActivity {
         btnEditExistingProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast("הכפתור לא זמיו כעת");
+                toast("הכפתור לא זמין כעת\nניתן לערוך מוצרים דרך הגלרייה");
+            }
+        });
+
+        btnAddNewManufacturer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (llAddNewManufacturer.getVisibility() == View.GONE) {
+                    llAddNewManufacturer.setVisibility(View.VISIBLE);
+                }
+                else {
+                    llAddNewManufacturer.setVisibility(View.GONE);
+                    etManufacturerName.setText("");
+                }
             }
         });
 
@@ -317,7 +334,14 @@ public class ManagerActivity extends AppCompatActivity {
                 descriptionDialog.findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        description = ((EditText)descriptionDialog.findViewById(R.id.etTextBox)).getText().toString().trim();
+                        String description = ((EditText)descriptionDialog.findViewById(R.id.etTextBox)).getText().toString().trim();
+                        if (description.split("\r\n|\r|\n").length > 3) {
+                            toast("תיאור המוצר לא יכול להיות יותר מ3 שורות");
+                            return;
+                        }
+                        ManagerActivity.this.description = description;
+                        toast("תיאור המוצר נשמר בהצלחה");
+                        descriptionDialog.dismiss();
                     }
                 });
             }
@@ -335,6 +359,10 @@ public class ManagerActivity extends AppCompatActivity {
 
                 db.manufacturersDao().insert(manufacturer);
                 toast("היצרן " + manufacturerName + " נוסף בהצלחה");
+                List<Manufacturer> manufacturersList = db.manufacturersDao().getAll();
+                ArrayAdapter<Manufacturer> manufacturersAdapter = new ArrayAdapter<Manufacturer>(
+                        ManagerActivity.this, android.R.layout.simple_spinner_item, manufacturersList);
+                spiManufacturer.setAdapter(manufacturersAdapter);
 
                 etManufacturerName.setText("");
             }
@@ -375,7 +403,7 @@ public class ManagerActivity extends AppCompatActivity {
                 break;
         }
 
-        toast("Saved!");
+        toast("המוצר עודכן בהצלחה");
 
         startActivity(new Intent(ManagerActivity.this, GalleryActivity.class));
         finish();
@@ -501,6 +529,13 @@ public class ManagerActivity extends AppCompatActivity {
         llAddNewProduct.removeView(llFinalButtons);
         // disable it so it won't reset the fields
         spiCategory.setOnItemSelectedListener(null);
+        btnUpdate_mainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManagerActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
         long tableId;
         if (product instanceof Smartphone) {
@@ -614,6 +649,11 @@ public class ManagerActivity extends AppCompatActivity {
     private void submit() {
         int type = spiCategory.getSelectedItemPosition();
 
+        if (spiManufacturer.getCount() == 0) {
+            toast("לא קיימים יצרנים, ניתן להוסיף בעמודה יצרנים");
+            return;
+        }
+
         if (!validate(type, true)) {
             return;
         }
@@ -632,6 +672,8 @@ public class ManagerActivity extends AppCompatActivity {
 
         toast("Saved!");
 
+        bmProduct = null;
+        ivPhoto.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.iphone11, null));
 
     }
 
@@ -841,7 +883,7 @@ public class ManagerActivity extends AppCompatActivity {
             rgWatchColor.check(R.id.radWatchBlack);
             etWatchSize.setText("");
         } else if (i == 3) {
-
+            // watch don't have a special layout
         }
     }
 
@@ -869,11 +911,11 @@ public class ManagerActivity extends AppCompatActivity {
         if (i == 1) {
             llAddNewProductSmartphone.setVisibility(View.GONE);
         } else if (i == 2) {
-
+            llAddNewProductWatch.setVisibility(View.GONE);
         } else if (i == 3) {
 
         } else if (i == 4) {
-            resetCategoriesFields(spiCategory.getSelectedItemPosition() + 1);
+            resetCategoriesFields(spiCategory.getSelectedItemPosition());
         }
 
     }

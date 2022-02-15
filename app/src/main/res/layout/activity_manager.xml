@@ -226,7 +226,7 @@
                         android:textSize="16sp"
                         android:maxLines="1"
                         android:maxLength="20"
-                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתםןףץabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
                         android:id="@+id/etName"/>
 
                 </LinearLayout>
@@ -644,7 +644,8 @@
             android:id="@+id/llAddNewManufacturer"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="150dp"
@@ -722,9 +723,10 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
-                        android:text="Apple"
+                        android:text=""
+                        android:maxLength="10"
                         android:textSize="18dp"
-                        android:digits="אבגדהוזחטיכלמנסעפצקרשתabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתםןףץabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
                         android:id="@+id/etManufacturerName"/>
 
                 </LinearLayout>

@@ -180,7 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.commit();
 
                     bmUser = null;
-                    toast("Successfully registered");
+                    toast("נרשמת בהצלחה!");
 
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 }
@@ -434,7 +434,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (bmUser == null) {
-            toast("Please select an image.");
+            toast("בחר תמונה");
             return false;
         }
         return true;
@@ -482,11 +482,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         DatePickerDialog picker = new DatePickerDialog(RegisterActivity.this, new setDate(), year, month, day);
 
-        Calendar maxCalender = Calendar.getInstance();
+        Calendar maxCalendar = Calendar.getInstance();
+        maxCalendar.set(Calendar.YEAR, maxCalendar.get(Calendar.YEAR) - 14);
 
-        maxCalender.set(Calendar.YEAR, maxCalender.get(Calendar.YEAR));
-
-        picker.getDatePicker().setMaxDate(maxCalender.getTimeInMillis());
+        picker.getDatePicker().setMaxDate(maxCalendar.getTimeInMillis());
 
         picker.show();
     }
