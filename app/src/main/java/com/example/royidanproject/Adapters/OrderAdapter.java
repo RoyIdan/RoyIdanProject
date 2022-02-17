@@ -113,14 +113,6 @@ public class OrderAdapter extends BaseAdapter {
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + CommonMethods.fmt(details.getProductOriginalPrice()));
         tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
-//        String rating = "";
-//        int j = 0, max = (int)(product.getProductRating());
-//        while (j++ < max) {
-//            rating += star_filled;
-//        }
-//        while (max++ < 5) {
-//            rating += star_unfilled;
-//        }
         ratingBar.setRating((float)product.getProductRating());
         tvProductQuantity.setText("כמות: " + String.valueOf(details.getProductQuantity()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));

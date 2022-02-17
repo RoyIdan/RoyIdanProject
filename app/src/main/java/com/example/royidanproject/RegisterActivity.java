@@ -251,7 +251,7 @@ public class RegisterActivity extends AppCompatActivity {
         rgGender.check(gender.equals("זכר") ? R.id.rdMale : R.id.rdFemale);
         String photo = user.getUserPhoto();
 
-        spiCity.setSelection(Arrays.asList(getResources().getStringArray(R.array.spinner_city)).indexOf(city));
+        spiCity.setSelection(CitiesIsrael.GetListCitiesInIsrael().indexOf(city));
         spiPhone.setSelection(Integer.parseInt(String.valueOf(phone.charAt(2))));
         etPhone.setText(phone.substring(3));
         bmUser = UserImages.getImageBitmap(photo, RegisterActivity.this);

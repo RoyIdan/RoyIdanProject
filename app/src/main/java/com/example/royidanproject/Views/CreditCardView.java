@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -92,7 +93,22 @@ public class CreditCardView extends LinearLayout {
     }
 
     private void init() {
-
+        tvCardNumber.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreditCardView.this.callOnClick();
+            }
+        });
+        tvCardHolder.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreditCardView.this.callOnClick();            }
+        });
+        tvCardExpireDate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreditCardView.this.callOnClick();            }
+        });
     }
 
     public void setSpHolder() {

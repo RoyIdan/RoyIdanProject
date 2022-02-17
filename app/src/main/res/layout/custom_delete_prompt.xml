@@ -8,14 +8,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete user"
+        android:text="אישור מחיקת משתמש"
         android:textSize="20dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Are you sure that you want to delete?"
+        android:text="האם אתה בטוח שאתה רוצה למחוק את המשתמש?"
         android:textSize="15dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"/>
@@ -31,7 +31,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="no"
+            android:text="לא"
             android:textColor="#FF0000"
             android:layout_marginRight="10dp"
             android:id="@+id/btnNo"/>
@@ -39,7 +39,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="yes"
+            android:text="כן"
             android:textColor="#00FF00"
             android:layout_marginLeft="10dp"
             android:id="@+id/btnYes"/>

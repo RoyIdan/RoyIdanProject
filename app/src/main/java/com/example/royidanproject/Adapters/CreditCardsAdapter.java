@@ -165,10 +165,14 @@ public class CreditCardsAdapter extends BaseAdapter {
                 btnRemove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        db.creditCardDao().delete(card);
-                        dialog.dismiss();
-                        cardList.remove(card);
-                        notifyDataSetInvalidated();
+                        if (db.ordersDao().hasAnyCard(card.getCardId()) == null) {
+                            db.creditCardDao().delete(card);
+                            dialog.dismiss();
+                            cardList.remove(card);
+                            notifyDataSetInvalidated();
+                        } else {
+                            Toast.makeText(context, "לא ניתן למחוק את הכרטיס כי כבר נעשה בו שימוש", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 

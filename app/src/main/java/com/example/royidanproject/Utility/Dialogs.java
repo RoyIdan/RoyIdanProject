@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
@@ -206,6 +207,8 @@ public class Dialogs {
             extras = new TextView[] {dialog.findViewById(R.id.tvWatchColor), dialog.findViewById(R.id.tvWatchSize)};
             tvType.setText("שעון");
             llWatch.setVisibility(View.VISIBLE);
+        } else if (product instanceof Accessory) {
+            tvType.setText("אביזר");
         }
 
         long manufacturerId = product.getManufacturerId();
