@@ -41,6 +41,15 @@
         android:stepSize="1"
         android:id="@+id/rbRatingBar" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:hint="הוסף ביקורת למוצר (אופציונלי)"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/etReview" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

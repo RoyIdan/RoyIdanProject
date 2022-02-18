@@ -85,22 +85,22 @@
                 android:text="מחיר: " />
 
             <TextView
-                android:layout_width="65dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="20sp"
                 android:text="3000"
                 android:id="@+id/tvProductPrice" />
 
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent" />
+<!--            <Space-->
+<!--                android:layout_width="10dp"-->
+<!--                android:layout_height="match_parent" />-->
 
-            <TextView
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:text="הנחה"
-                android:id="@+id/tvDiscountedPrice" />
+<!--            <TextView-->
+<!--                android:layout_width="65dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:textSize="20sp"-->
+<!--                android:text="הנחה"-->
+<!--                android:id="@+id/tvDiscountedPrice" />-->
 
         </LinearLayout>
         

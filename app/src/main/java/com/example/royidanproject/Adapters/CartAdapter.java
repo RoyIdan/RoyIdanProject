@@ -53,6 +53,7 @@ import java.util.zip.Inflater;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 public class CartAdapter extends BaseAdapter {
@@ -144,7 +145,7 @@ public class CartAdapter extends BaseAdapter {
         TextView tvProductPrice = view.findViewById(R.id.tvProductPrice);
         ImageView ivProductPhoto = view.findViewById(R.id.ivProductPhoto);
 
-        TextView tvDiscountedPrice = view.findViewById(R.id.tvDiscountedPrice);
+        //TextView tvDiscountedPrice = view.findViewById(R.id.tvDiscountedPrice);
         Button btnPlus = view.findViewById(R.id.btnPlus);
         Button btnMinus = view.findViewById(R.id.btnMinus);
         Button btnRemove = view.findViewById(R.id.btnRemove);
@@ -239,12 +240,13 @@ public class CartAdapter extends BaseAdapter {
         return view;
     }
 
+    @NonNull
     public static String fmt(double d)
     {
         if(d == (long) d)
-            return String.format("%d",(long)d);
+            return "₪" +  String.format("%d",(long)d);
         else
-            return new DecimalFormat("#.##").format(d);
+            return "₪" + new DecimalFormat("#.##").format(d);
     }
 
 }

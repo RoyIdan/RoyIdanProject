@@ -11,6 +11,7 @@ public class Rating {
     long productId;
     long tableId;
     int rating;
+    String review;
 
     public long getUserId() {
         return userId;
@@ -42,5 +43,13 @@ public class Rating {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 }

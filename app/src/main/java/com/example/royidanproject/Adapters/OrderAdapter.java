@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -127,17 +129,20 @@ public class OrderAdapter extends BaseAdapter {
             }
         });
 
-        long userId = sp.getLong("id", 0);
+        long userId = db.ordersDao().getCustomerIdByOrderId(details.getOrderId());
         Rating rating = db.ratingsDao().getByParams(userId, details.getProductId(), details.getTableId());
         if (rating != null) {
+            btnRate.setText("הצג ביקורת");
+            btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
             btnRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "לא ניתן לדרג יותר מפעם אחת", Toast.LENGTH_SHORT).show();
+                    openReviewDialog(finalProduct, rating);
                 }
             });
             tvCurrentRating.setText("דירוג נוכחי: " + rating.getRating());
         }
+
 
         btnDetailedInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +171,8 @@ public class OrderAdapter extends BaseAdapter {
 
         RatingBar rbRatingBar = dialog.findViewById(R.id.rbRatingBar);
 
+        EditText etReview = dialog.findViewById(R.id.etReview);
+
         dialog.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,7 +180,7 @@ public class OrderAdapter extends BaseAdapter {
                     Toast.makeText(context, "הדירוג חייב להיות בין 1 ל5", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                IProductDao dao = null;
+                IProductDao dao;
                 if (product instanceof Smartphone)
                     dao = db.smartphonesDao();
                 else if(product instanceof Watch)
@@ -184,11 +191,16 @@ public class OrderAdapter extends BaseAdapter {
                 int rating = (int)rbRatingBar.getRating();
                 dao.addRatingById(product.getProductId(), rating);
 
+                String review = etReview.getText().toString().trim();
+
                 Rating rating1 = new Rating();
                 rating1.setUserId(sp.getLong("id", 0));
                 rating1.setProductId(product.getProductId());
                 rating1.setTableId(details.getTableId());
                 rating1.setRating(rating);
+                if (!review.isEmpty()) {
+                    rating1.setReview(review);
+                }
 
                 db.ratingsDao().insert(rating1);
 
@@ -201,7 +213,7 @@ public class OrderAdapter extends BaseAdapter {
                     }
                 });
 
-                double newRating = 0;
+                double newRating;
                 if (product instanceof Smartphone) {
                     newRating = db.smartphonesDao().getSmartphoneById(product.getProductId()).getProductRating();
                 } else if (product instanceof Watch) {
@@ -212,6 +224,37 @@ public class OrderAdapter extends BaseAdapter {
 
                 ratingBar.setRating((float) newRating);
 
+            }
+        });
+    }
+
+    private void openReviewDialog(Product product, Rating rating) {
+        View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_rate_product_dialog, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(promptDialog);
+        final AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        Button btnSubmit = dialog.findViewById(R.id.btnSubmit);
+
+        ((TextView)dialog.findViewById(R.id.tvProductName)).setText(product.getProductName());
+
+        RatingBar rbRatingBar = dialog.findViewById(R.id.rbRatingBar);
+
+        EditText etReview = dialog.findViewById(R.id.etReview);
+
+        rbRatingBar.setIsIndicator(true);
+        etReview.setFocusable(false);
+
+        rbRatingBar.setRating((float) rating.getRating());
+        etReview.setText(rating.getReview());
+
+        btnSubmit.setText("מחק דירוג");
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO - continue
             }
         });
     }

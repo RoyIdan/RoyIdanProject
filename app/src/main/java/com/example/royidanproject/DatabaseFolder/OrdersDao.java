@@ -21,6 +21,9 @@ public interface OrdersDao {
     @Query("SELECT * FROM tblOrders WHERE orderDatePurchased BETWEEN :from AND :until")
     List<Order> getByDateRange(Date from, Date until);
 
+    @Query("SELECT * FROM tblOrders WHERE orderDatePurchased BETWEEN (:from AND :until) AND customerId = :customerId")
+    List<Order> getByDateRangeAndCustomerId(Date from, Date until, long customerId);
+
     @Query("SELECT * FROM tblorders")
     List<Order> getAll();
 
@@ -29,6 +32,9 @@ public interface OrdersDao {
 
     @Query("SELECT * FROM tblOrders WHERE creditCardId = :cardId LIMIT 1")
     Order hasAnyCard(long cardId);
+
+    @Query("SELECT customerId FROM tblOrders WHERE orderId = :orderId")
+    long getCustomerIdByOrderId(long orderId);
 
 
 }

@@ -254,7 +254,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
         until.setMinutes(59);
         until.setSeconds(59);
 
-        orders = db.ordersDao().getByDateRange(from, until);
+        if (sp.getBoolean("admin", false) && rbEveryone.isChecked()) {
+            orders = db.ordersDao().getByDateRange(from, until);
+        } else {
+            orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, sp.getLong("userId", 0));
+        }
+
         adapter.updateList(orders);
         adapter.getFilter().filter(etFilter.getText().toString().trim());
     }

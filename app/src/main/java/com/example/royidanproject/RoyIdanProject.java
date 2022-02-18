@@ -37,8 +37,9 @@ public class RoyIdanProject extends Application {
         firstActivity = StartupActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
-        if (false) { // use fake products
+        if (true) { // use fake products
             if (db.manufacturersDao().getAll().isEmpty()) {
+                addSampleManager(); // s32334@nhs.co.il : 123
                 addSampleProducts();
             }
         }
@@ -48,7 +49,7 @@ public class RoyIdanProject extends Application {
 
     }
 
-    private void addSampleProducts() {
+    private void addSampleManager() {
 
         Calendar cal = Calendar.getInstance();
         cal.set(2004, 8, 10);
@@ -81,6 +82,10 @@ public class RoyIdanProject extends Application {
         cc.setUserId(managerId);
 
         db.creditCardDao().insert(cc);
+
+    }
+
+    private void addSampleProducts() {
 
         Manufacturer apple = new Manufacturer();
         apple.setManufacturerName("Apple");
