@@ -28,9 +28,6 @@ public interface AccessoriesDao extends IProductDao {
     @Query("UPDATE tblAccessories SET productStock = :stock WHERE productId = :id")
     void updateStockById(long id, int stock);
 
-    @Query("UPDATE tblaccessories SET productRating_count = productRating_count + 1 , productRating_sum = productRating_sum + :rating WHERE productId = :id")
-    void addRatingById(long id, int rating);
-
     @Insert
     long insert(Accessory accessory);
 

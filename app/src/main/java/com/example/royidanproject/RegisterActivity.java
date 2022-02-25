@@ -16,6 +16,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -111,26 +113,32 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                ((TextView) findViewById(R.id.tvGenderError)).setError(null);
+            }
+        });
+
+        addErrorListeners();
+
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("user")) {
             updateMode();
         }
         else {
+            ((ArrayAdapter) spiCity.getAdapter()).insert("בחר עיר", 0);
             btnRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (rgGender.getCheckedRadioButtonId() == -1) {
-                        ((TextView) findViewById(R.id.tvGenderError)).setError("בחר מגדר.");
-                        return;
-                    }
-
-                    ArrayAdapter adapter = (ArrayAdapter)spiCity.getAdapter();
-
 
                     String email = etEmail.getText().toString().trim();
                     String phone = spiPhone.getSelectedItem().toString() + etPhone.getText().toString().trim();
                     String name = etName.getText().toString().trim();
                     String surname = etSurname.getText().toString().trim();
-                    String gender = ((RadioButton) findViewById(rgGender.getCheckedRadioButtonId())).getText().toString();
+                    String gender = "";
+                    if (rgGender.getCheckedRadioButtonId() != -1) {
+                        gender = ((RadioButton) findViewById(rgGender.getCheckedRadioButtonId())).getText().toString();
+                    }
                     String strBirthdate = etBirthdate.getText().toString().trim();
                     String address = etAddress.getText().toString().trim();
                     String city = spiCity.getSelectedItem().toString();
@@ -221,6 +229,128 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addErrorListeners() {
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validateName(s.toString().trim());
+                if (!error.isEmpty()) {
+                    etName.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etSurname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validateSurname(s.toString().trim());
+                if (!error.isEmpty()) {
+                    etSurname.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validateEmail(s.toString().trim());
+                if (!error.isEmpty()) {
+                    etEmail.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validateAddress(s.toString().trim());
+                if (!error.isEmpty()) {
+                    etAddress.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validatePassword(s.toString().trim());
+                if (!error.isEmpty()) {
+                    etPassword.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String error = Validator.validatePhone(spiPhone.getSelectedItem() + s.toString().trim());
+                if (!error.isEmpty()) {
+                    etPhone.setError(error);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void setSpinnerData() {
@@ -362,74 +492,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validateForm(String name, String surname, String date, String email, String address, String city, String password, String password2, String phone) {
-        String error = Validator.validateEmptyFields(name, surname, date, email, address, city, password, password2, phone);
-        if (!error.isEmpty()) {
-            toast(error);
-            return false;
-        }
+//        String error = Validator.validateEmptyFields(name, surname, date, email, address, city, password, password2, phone);
+//        if (!error.isEmpty()) {
+//            toast(error);
+//            return false;
+//        }
 
-        boolean valid = true;
-
-        error = "";
-        error = Validator.validateName(name);
-        if (!error.isEmpty()) {
-            etName.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validateSurname(surname);
-        if (!error.isEmpty()) {
-            etSurname.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validateBirthdate(date);
-        if (!error.isEmpty()) {
-            etBirthdate.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validateEmail(email);
-        if (!error.isEmpty()) {
-            etEmail.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validateCity(city);
-        if (!error.isEmpty()) {
-            TextView errorText = (TextView)spiCity.getSelectedView();
-            errorText.setError("");
-            errorText.setTextColor(Color.RED);
-            errorText.setText("Please select city.");
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validatePassword(password);
-        if (!error.isEmpty()) {
-            etPassword.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validatePasswordValidation(password, password2);
-        if (!error.isEmpty()) {
-            etPasswordValidation.setError(error);
-            valid = false;
-        }
-
-        error = "";
-        error = Validator.validatePhone(phone);
-        if (!error.isEmpty()) {
-            etPhone.setError(error);
-            valid = false;
-        }
-
-        if (!valid) {
+        if (hasErrors()) {
             return false;
         }
 
@@ -437,7 +506,146 @@ public class RegisterActivity extends AppCompatActivity {
             toast("בחר תמונה");
             return false;
         }
+
+        if (name.isEmpty()) {
+            etName.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (surname.isEmpty()) {
+            etSurname.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (rgGender.getCheckedRadioButtonId() == -1) {
+            ((TextView)findViewById(R.id.tvGenderError)).setError("אנא בחר מגדר");
+            return false;
+        }
+        if (date.isEmpty()) {
+            etBirthdate.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (email.isEmpty()) {
+            etEmail.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (address.isEmpty()) {
+            etAddress.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (spiCity.getSelectedItemPosition() == 0) {
+            ((TextView)spiCity.getSelectedView()).setError("אנא בחר עיר");
+            return false;
+        }
+        if (password.isEmpty()) {
+            etPassword.setError("אנא לא שדה זה");
+            return false;
+        }
+        if (password2.isEmpty()) {
+            etPasswordValidation.setError("אנא מלא שדה זה");
+            return false;
+        }
+        if (!Validator.validatePasswordValidation(password, password2).isEmpty()) {
+            etPasswordValidation.setError("הסיסמאות לא תואמות");
+            return false;
+        }
+        if (phone.length() == 3) {
+            etPhone.setError("אנא מלא שדה זה");
+            return false;
+        }
+//        error = "";
+//        error = Validator.validateName(name);
+//        if (!error.isEmpty()) {
+//            etName.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validateSurname(surname);
+//        if (!error.isEmpty()) {
+//            etSurname.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validateBirthdate(date);
+//        if (!error.isEmpty()) {
+//            etBirthdate.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validateEmail(email);
+//        if (!error.isEmpty()) {
+//            etEmail.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validateCity(city);
+//        if (!error.isEmpty()) {
+//            TextView errorText = (TextView)spiCity.getSelectedView();
+//            errorText.setError("");
+//            errorText.setTextColor(Color.RED);
+//            errorText.setText("Please select city.");
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validatePassword(password);
+//        if (!error.isEmpty()) {
+//            etPassword.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validatePasswordValidation(password, password2);
+//        if (!error.isEmpty()) {
+//            etPasswordValidation.setError(error);
+//            valid = false;
+//        }
+//
+//        error = "";
+//        error = Validator.validatePhone(phone);
+//        if (!error.isEmpty()) {
+//            etPhone.setError(error);
+//            valid = false;
+//        }
+
         return true;
+    }
+
+    private boolean hasErrors() {
+        if (etName.getError() != null) {
+            return true;
+        }
+        if (etSurname.getError() != null) {
+            return true;
+        }
+        if (((TextView) findViewById(R.id.tvGenderError)).getError() != null) {
+            return true;
+        }
+        if (etBirthdate.getError() != null) {
+            return true;
+        }
+        if (etEmail.getError() != null) {
+            return true;
+        }
+        if (etAddress.getError() != null) {
+            return true;
+        }
+        if (((TextView) spiCity.getSelectedView()).getError() != null) {
+            return true;
+        }
+        if (etPassword.getError() != null) {
+            return true;
+        }
+        if (etPasswordValidation.getError() != null) {
+            return true;
+        }
+        if (etPhone.getError() != null) {
+            return true;
+        }
+
+        return false;
     }
 
     private void getPermission(Activity activity) {
@@ -499,6 +707,8 @@ public class RegisterActivity extends AppCompatActivity {
             String str = day + "/" + month + "/" + year;
 
             etBirthdate.setText(str);
+
+            etBirthdate.setError(null);
         }
     }
 

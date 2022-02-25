@@ -41,6 +41,8 @@ import com.example.royidanproject.Utility.UserImages;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class OrderAdapter extends BaseAdapter {
@@ -90,7 +92,7 @@ public class OrderAdapter extends BaseAdapter {
 
         OrderDetails details = detailsList.get(i);
 
-        Product product = null;
+        Product product;
 
         if (details.getTableId() == 1) {
             product = db.smartphonesDao().getSmartphoneById(details.getProductId());
@@ -112,10 +114,12 @@ public class OrderAdapter extends BaseAdapter {
         Button btnRate = view.findViewById(R.id.btnRate);
         TextView tvCurrentRating = view.findViewById(R.id.tvCurrentRating);
 
+        float averageRating = db.ratingsDao().getAverageByProduct(details.getProductId(), details.getTableId());
+
         tvProductName.setText(product.getProductName());
         tvProductPrice.setText("מחיר: " + CommonMethods.fmt(details.getProductOriginalPrice()));
         tvProductManufacturer.setText("יצרן: " + db.manufacturersDao().getManufacturerById(product.getManufacturerId()));
-        ratingBar.setRating((float)product.getProductRating());
+        ratingBar.setRating(averageRating);
         tvProductQuantity.setText("כמות: " + String.valueOf(details.getProductQuantity()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 
@@ -125,7 +129,6 @@ public class OrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 openRateDialog(finalProduct, details, tvCurrentRating, btnRate, ratingBar);
-
             }
         });
 
@@ -137,7 +140,7 @@ public class OrderAdapter extends BaseAdapter {
             btnRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openReviewDialog(finalProduct, rating);
+                    openReviewDialog(product, rating, details, tvCurrentRating, btnRate, ratingBar);
                 }
             });
             tvCurrentRating.setText("דירוג נוכחי: " + rating.getRating());
@@ -173,25 +176,27 @@ public class OrderAdapter extends BaseAdapter {
 
         EditText etReview = dialog.findViewById(R.id.etReview);
 
+        dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         dialog.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (rbRatingBar.getRating() == 0) {
+                int rating = (int)rbRatingBar.getRating();
+                String review = etReview.getText().toString().trim();
+
+                if (rating == 0) {
                     Toast.makeText(context, "הדירוג חייב להיות בין 1 ל5", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                IProductDao dao;
-                if (product instanceof Smartphone)
-                    dao = db.smartphonesDao();
-                else if(product instanceof Watch)
-                    dao = db.watchesDao();
-                else
-                    dao = db.accessoriesDao();
-
-                int rating = (int)rbRatingBar.getRating();
-                dao.addRatingById(product.getProductId(), rating);
-
-                String review = etReview.getText().toString().trim();
+                if (review.split("\r\n|\r|\n").length > 4) {
+                    Toast.makeText(context, "ביקורת המוצר לא יכולה להיות יותר מ4 שורות", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Rating rating1 = new Rating();
                 rating1.setUserId(sp.getLong("id", 0));
@@ -206,21 +211,16 @@ public class OrderAdapter extends BaseAdapter {
 
                 dialog.dismiss();
                 tvCurrentRating.setText("דירוג נוכחי: " + rating);
+                btnRate.setText("הצג ביקורת");
+                btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
                 btnRate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(context, "לא ניתן לדרג יותר מפעם אחת", Toast.LENGTH_SHORT).show();
+                        openReviewDialog(product, rating1, details, tvCurrentRating, btnRate, ratingBar);
                     }
                 });
 
-                double newRating;
-                if (product instanceof Smartphone) {
-                    newRating = db.smartphonesDao().getSmartphoneById(product.getProductId()).getProductRating();
-                } else if (product instanceof Watch) {
-                    newRating = db.watchesDao().getWatchById(product.getProductId()).getProductRating();
-                } else {
-                    newRating = db.accessoriesDao().getAccessoryById(product.getProductId()).getProductRating();
-                }
+                double newRating = db.ratingsDao().getAverageByProduct(details.getProductId(), details.getTableId());
 
                 ratingBar.setRating((float) newRating);
 
@@ -228,7 +228,8 @@ public class OrderAdapter extends BaseAdapter {
         });
     }
 
-    private void openReviewDialog(Product product, Rating rating) {
+    private void openReviewDialog(@NonNull Product product, @NonNull Rating rating, OrderDetails details,
+                                  TextView tvCurrentRating, Button btnRate, RatingBar ratingBar) {
         View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_rate_product_dialog, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setView(promptDialog);
@@ -240,6 +241,8 @@ public class OrderAdapter extends BaseAdapter {
 
         ((TextView)dialog.findViewById(R.id.tvProductName)).setText(product.getProductName());
 
+        ((TextView)dialog.findViewById(R.id.etReview)).setHint("");
+
         RatingBar rbRatingBar = dialog.findViewById(R.id.rbRatingBar);
 
         EditText etReview = dialog.findViewById(R.id.etReview);
@@ -250,11 +253,33 @@ public class OrderAdapter extends BaseAdapter {
         rbRatingBar.setRating((float) rating.getRating());
         etReview.setText(rating.getReview());
 
+        dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         btnSubmit.setText("מחק דירוג");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO - continue
+                db.ratingsDao().delete(rating);
+                dialog.dismiss();
+
+                tvCurrentRating.setText("דירוג נוכחי: אין");
+                btnRate.setText("דרג");
+                btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
+                btnRate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openRateDialog(product, details, tvCurrentRating, btnRate, ratingBar);
+                    }
+                });
+
+                double newRating = db.ratingsDao().getAverageByProduct(details.getProductId(), details.getTableId());
+
+                ratingBar.setRating((float) newRating);
             }
         });
     }

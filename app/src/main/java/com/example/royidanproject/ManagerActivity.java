@@ -443,9 +443,6 @@ public class ManagerActivity extends AppCompatActivity {
         s.setPhoneRamSize(Integer.parseInt(ramSize));
         s.setProductPhoto(photo);
 
-        s.setProductRating_count(product.getProductRating_count());
-        s.setProductRating_sum(product.getProductRating_sum());
-
         db.smartphonesDao().update(s);
 
     }
@@ -480,9 +477,6 @@ public class ManagerActivity extends AppCompatActivity {
         w.setWatchSize(Integer.parseInt(watchSize));
         w.setProductPhoto(photo);
 
-        w.setProductRating_count(product.getProductRating_count());
-        w.setProductRating_sum(product.getProductRating_sum());
-
         db.watchesDao().update(w);
     }
 
@@ -510,9 +504,6 @@ public class ManagerActivity extends AppCompatActivity {
         a.setProductStock(Integer.parseInt(stock));
         a.setProductDescription(description);
         a.setProductPhoto(photo);
-
-        a.setProductRating_count(product.getProductRating_count());
-        a.setProductRating_sum(product.getProductRating_sum());
 
         db.accessoriesDao().update(a);
     }

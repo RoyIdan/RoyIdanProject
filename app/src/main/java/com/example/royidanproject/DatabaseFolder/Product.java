@@ -19,8 +19,6 @@ public class Product implements Serializable {
     private int productStock;
     private String productDescription;
     private long manufacturerId;
-    private int productRating_sum;
-    private int productRating_count;
     private String productPhoto;
 
     public long getProductId() {
@@ -71,22 +69,6 @@ public class Product implements Serializable {
         this.manufacturerId = manufacturerId;
     }
 
-    public int getProductRating_sum() {
-        return productRating_sum;
-    }
-
-    public void setProductRating_sum(int productRating_sum) {
-        this.productRating_sum = productRating_sum;
-    }
-
-    public int getProductRating_count() {
-        return productRating_count;
-    }
-
-    public void setProductRating_count(int productRating_count) {
-        this.productRating_count = productRating_count;
-    }
-
     public String getProductPhoto() {
         return productPhoto;
     }
@@ -95,12 +77,5 @@ public class Product implements Serializable {
         this.productPhoto = productPhoto;
     }
 
-    public double getProductRating() {
-        return (double) productRating_sum / productRating_count;
-    }
 
-    public void addProductRating(int rating) {
-        productRating_sum += rating;
-        productRating_count++;
-    }
 }

@@ -17,9 +17,6 @@ public interface WatchesDao extends IProductDao {
     @Query("UPDATE tblWatches SET productStock = :stock WHERE productId = :id")
     void updateStockById(long id, int stock);
 
-    @Query("UPDATE tblwatches SET productRating_count = productRating_count + 1 , productRating_sum = productRating_sum + :rating WHERE productId = :id")
-    void addRatingById(long id, int rating);
-
     @Insert
     long insert(Watch watch);
 

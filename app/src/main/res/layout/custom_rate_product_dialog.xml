@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:text="iPhone 11 Pro"
+        android:layout_marginTop="15dp"
         android:id="@+id/tvProductName"
         android:textColor="@color/black"/>
 
@@ -45,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:lines="3"
+        android:lines="5"
         android:hint="הוסף ביקורת למוצר (אופציונלי)"
         android:layout_marginHorizontal="20dp"
         android:id="@+id/etReview" />

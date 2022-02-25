@@ -34,7 +34,7 @@ public class RoyIdanProject extends Application {
         super.onCreate();
 
         isFirstRun = true;
-        firstActivity = StartupActivity.class;
+        firstActivity = MainActivity.class;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
@@ -106,8 +106,6 @@ public class RoyIdanProject extends Application {
         iphone11.setPhoneStorageSize(128);
         iphone11.setManufacturerId(1); // Apple
         iphone11.setProductPrice(2000);
-        iphone11.setProductRating_count(5);
-        iphone11.setProductRating_sum(21);
         iphone11.setProductName("iPhone 11");
 
         Smartphone galaxyS10 = new Smartphone();
@@ -119,8 +117,6 @@ public class RoyIdanProject extends Application {
         galaxyS10.setPhoneStorageSize(64);
         galaxyS10.setManufacturerId(2); // Samsung
         galaxyS10.setProductPrice(1500);
-        galaxyS10.setProductRating_sum(22);
-        galaxyS10.setProductRating_count(5);
         galaxyS10.setProductName("Galaxy S10");
 
         Watch appleWatch = new Watch();
@@ -128,9 +124,6 @@ public class RoyIdanProject extends Application {
         appleWatch.setProductStock(4);
         appleWatch.setManufacturerId(1); // Apple
         appleWatch.setProductPrice(900);
-        appleWatch.setProductRating_sum(19);
-        appleWatch.setProductRating_count(12);
-        appleWatch.setProductRating_count(3);
         appleWatch.setProductName("44mm Apple Watch SE GPS");
         appleWatch.setWatchSize(44);
         appleWatch.setWatchColor(שחור);

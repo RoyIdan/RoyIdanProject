@@ -197,23 +197,27 @@ public class Dialogs {
         LinearLayout llWatch = dialog.findViewById(R.id.llWatch);
 
         TextView[] extras = null;
+        long tableId = 0;
 
         if (product instanceof Smartphone) {
             extras = new TextView[] {dialog.findViewById(R.id.tvColor), dialog.findViewById(R.id.tvScreenSize),
                     dialog.findViewById(R.id.tvStorageSize), dialog.findViewById(R.id.tvRamSize)};
             tvType.setText("סמארטפון");
             llSmartphone.setVisibility(View.VISIBLE);
+            tableId = 1;
         } else if (product instanceof Watch) {
             extras = new TextView[] {dialog.findViewById(R.id.tvWatchColor), dialog.findViewById(R.id.tvWatchSize)};
             tvType.setText("שעון");
             llWatch.setVisibility(View.VISIBLE);
+            tableId = 2;
         } else if (product instanceof Accessory) {
             tvType.setText("אביזר");
+            tableId = 3;
         }
 
         long manufacturerId = product.getManufacturerId();
         Manufacturer manufacturer = AppDatabase.getInstance(context).manufacturersDao().getManufacturerById(manufacturerId);
-        float rating = (float)product.getProductRating();
+        float rating = AppDatabase.getInstance(context).ratingsDao().getAverageByProduct(product.getProductId(), tableId);
         Uri uri = ProductImages.getImage(product.getProductPhoto(), context);
 
         tvTitle.setText(product.getProductName());

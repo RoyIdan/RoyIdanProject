@@ -23,6 +23,7 @@ import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Rating;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
@@ -110,7 +111,18 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
 //        while (max++ < 5) {
 //            rating += star_unfilled;
 //        }
-        ratingBar.setRating((float)product.getProductRating());
+
+        long tableId;
+        if (product instanceof Smartphone)
+            tableId = 1;
+        else if (product instanceof Watch)
+            tableId = 2;
+        else
+            tableId = 3;
+
+        float rating = db.ratingsDao().getAverageByProduct(product.getProductId(), tableId);
+
+        ratingBar.setRating(rating);
         tvProductStock.setText("במלאי: " + String.valueOf(product.getProductStock()));
         ivProductPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), context));
 

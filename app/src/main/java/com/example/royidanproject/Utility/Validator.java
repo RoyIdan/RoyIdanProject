@@ -85,6 +85,16 @@ public class Validator {
         return "";
     }
 
+    public static String validateAddress(String address) {
+        if (address.length() < 4 || address.length() > 15) {
+            return "הכתובת צריכה להיות בין 4 ל15 תווים";
+        }
+        if (!allCharactersOrSpace(address)) {
+            return "הכתובת יכולה להכיל רק אותיות בעברית ורווחים";
+        }
+        return "";
+    }
+
     public static String validateCity(String city) {
         // city
         if (city.equals("select city")) {
