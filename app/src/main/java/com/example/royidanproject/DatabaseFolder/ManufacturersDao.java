@@ -16,7 +16,16 @@ public interface ManufacturersDao {
     public Manufacturer getManufacturerById(long manufacturerId);
 
     @Query("select * from tblManufacturers where manufacturerName = :manufacturerName")
-    public Manufacturer getManufacturerByName(long manufacturerName);
+    public Manufacturer getManufacturerByName(String manufacturerName);
+
+    @Query("SELECT CASE WHEN EXISTS (" +
+            "SELECT *" +
+            "FROM [tblManufacturers]" +
+            "WHERE LOWER(manufacturerName) = LOWER(:manufacturerName)" +
+            ")" +
+            "THEN CAST(1 AS BIT)" +
+            "ELSE CAST(0 AS BIT) END")
+    boolean hasName_caseInsensitive(String manufacturerName);
 
     @Insert
     public void insert(Manufacturer manufacturer);

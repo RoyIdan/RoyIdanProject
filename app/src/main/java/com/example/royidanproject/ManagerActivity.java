@@ -15,6 +15,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +25,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.Adapters.ManufacturerAdapter;
 import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
@@ -56,10 +60,11 @@ public class ManagerActivity extends AppCompatActivity {
     private ImageButton ibCamera, ibGallery;
     private ImageView ivPhoto;
     private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
-            llAddNewProductSmartphone, llAddNewProductWatch, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer;
+            llAddNewProductSmartphone, llAddNewProductWatch, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer, llEditExistingManufacturers;
     private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName;
     private RadioGroup rgSmartphoneColor, rgWatchColor;
     private Spinner /*spiGoTo,*/ spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
+    private ListView lvManufacturers;
     private Bitmap bmProduct;
     private String description;
     private int previousId = 0;
@@ -92,6 +97,7 @@ public class ManagerActivity extends AppCompatActivity {
         llUpdate_buttons = findViewById(R.id.llUpdate_buttons);
         llManufacturers = findViewById(R.id.llManufacturers);
         llAddNewManufacturer = findViewById(R.id.llAddNewManufacturer);
+        llEditExistingManufacturers = findViewById(R.id.llEditExistingManufacturers);
         etName = findViewById(R.id.etName);
         etPrice = findViewById(R.id.etPrice);
         etStock = findViewById(R.id.etStock);
@@ -109,6 +115,7 @@ public class ManagerActivity extends AppCompatActivity {
         spiManufacturer = findViewById(R.id.spiManufacturer);
         llAddNewProductSmartphone = findViewById(R.id.llAddNewProductSmartphone);
         llAddNewProductWatch = findViewById(R.id.llAddNewProductWatch);
+        lvManufacturers = findViewById(R.id.lvManufacturers);
     }
 
     private void createSpinnerData() {
@@ -350,10 +357,33 @@ public class ManagerActivity extends AppCompatActivity {
 
         // Manufacturer layout
 
+        btnAddNewManufacturer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (llAddNewManufacturer.getVisibility() == View.GONE) {
+                    if (llEditExistingManufacturers.getVisibility() == View.VISIBLE) {
+                        llEditExistingManufacturers.setVisibility(View.GONE);
+                        etSearchManufacturerByName.setText("");
+                    }
+                    llAddNewManufacturer.setVisibility(View.VISIBLE);
+                }
+                else {
+                    if (llAddNewProduct.getVisibility() == View.VISIBLE) {
+                        resetCreateNewProductFields();
+                    }
+                    llProducts.setVisibility(View.GONE);
+                }
+            }
+        });
+
         btnAddManufacturerSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String manufacturerName = etManufacturerName.getText().toString().trim();
+                if (db.manufacturersDao().hasName_caseInsensitive(manufacturerName)) {
+                    etManufacturerName.setError("שם היצרן כבר קיים במערכת");
+                    return;
+                }
                 Manufacturer manufacturer = new Manufacturer();
                 manufacturer.setManufacturerName(manufacturerName);
 
@@ -375,6 +405,27 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+        List<Manufacturer> manufacturersList = db.manufacturersDao().getAll();
+        ManufacturerAdapter adapter = new ManufacturerAdapter(ManagerActivity.this, manufacturersList);
+        lvManufacturers.setAdapter(adapter);
+
+        etManufacturerName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("productToUpdate")) {
             Product product = (Product) intent.getExtras().getSerializable("productToUpdate");
@@ -382,6 +433,12 @@ public class ManagerActivity extends AppCompatActivity {
             updateMode(product, isPurchased);
         }
 
+    }
+
+    public void updateManufacturerList(List<Manufacturer> manufacturersList) {
+        ArrayAdapter<Manufacturer> manufacturersAdapter = new ArrayAdapter<Manufacturer>(
+                ManagerActivity.this, android.R.layout.simple_spinner_item, manufacturersList);
+        spiManufacturer.setAdapter(manufacturersAdapter);
     }
 
     private void update_submit(Product product) {

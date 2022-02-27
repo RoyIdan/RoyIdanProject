@@ -48,7 +48,7 @@
         android:gravity="center"
         android:id="@+id/llProducts"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="150dp"
@@ -691,8 +691,6 @@
 
 <!--            </LinearLayout>-->
 
-
-
             <!--Add new manufacturer layout (properties)-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -740,6 +738,76 @@
                 android:layout_marginTop="20dp"
                 android:text="הוסף"
                 android:id="@+id/btnAddManufacturerSubmit" />
+
+        </LinearLayout>
+
+        <!--Edit existing manufacturers layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/llEditExistingManufacturers"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="דף עריכת יצרנים"
+                android:background="#FFFF00"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+
+            <!--Edit existing manufacturers layout (search by name)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/llEditExistingManufacturerProperties"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--שם מוצר-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:text="חפש לפי שם:" />
+
+
+                    <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:text=""
+                        android:maxLength="10"
+                        android:textSize="18dp"
+                        android:digits="אבגדהוזחטיכלמנסעפצקרשתםןףץabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 _-"
+                        android:id="@+id/etSearchManufacturerByName"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/lvManufacturers" />
 
         </LinearLayout>
 

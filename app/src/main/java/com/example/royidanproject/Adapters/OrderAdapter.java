@@ -51,7 +51,6 @@ public class OrderAdapter extends BaseAdapter {
     private List<OrderDetails> detailsList;
     private LayoutInflater inflater;
     private AppDatabase db;
-    private Filter mFilter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 

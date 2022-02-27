@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,24 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
-import com.example.royidanproject.DatabaseFolder.Manufacturer;
-import com.example.royidanproject.DatabaseFolder.ManufacturersDao;
-import com.example.royidanproject.DatabaseFolder.Smartphone;
-import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
-import com.example.royidanproject.DatabaseFolder.Smartphone.PhoneColor;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-
-import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
 public class MainActivity extends AppCompatActivity {
 

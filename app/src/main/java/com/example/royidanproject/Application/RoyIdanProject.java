@@ -1,4 +1,4 @@
-package com.example.royidanproject;
+package com.example.royidanproject.Application;
 
 import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
@@ -18,6 +18,7 @@ import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
+import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.StartupThread;
 
