@@ -16,17 +16,11 @@ public class TestingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LinearLayout llRoot = findViewById(R.id.llRoot);
-        LayoutInflater.from(TestingActivity.this).inflate(R.layout.custom_toolbar, llRoot);
-        setContentView(R.layout.activity_testing);
-
-
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_toolbar);
-        getSupportActionBar().hide();
+    setContentView(R.layout.activity_testing);
 
 
 
     }
+
+
 }

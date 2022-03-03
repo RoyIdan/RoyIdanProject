@@ -61,7 +61,7 @@ public class ManagerActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
             llAddNewProductSmartphone, llAddNewProductWatch, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer, llEditExistingManufacturers;
-    private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName;
+    private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName, etSearchManufacturerByName;
     private RadioGroup rgSmartphoneColor, rgWatchColor;
     private Spinner /*spiGoTo,*/ spiCategory, spiManufacturer, spiScreenSize, spiStorageSize, spiRamSize;
     private ListView lvManufacturers;
@@ -103,6 +103,7 @@ public class ManagerActivity extends AppCompatActivity {
         etStock = findViewById(R.id.etStock);
         etWatchSize = findViewById(R.id.etWatchSize);
         etManufacturerName = findViewById(R.id.etManufacturerName);
+        etSearchManufacturerByName = findViewById(R.id.etSearchManufacturerByName);
         spiScreenSize = findViewById(R.id.spiScreenSize);
         spiStorageSize = findViewById(R.id.spiStorageSize);
         spiRamSize = findViewById(R.id.spiRamSize);
@@ -213,7 +214,13 @@ public class ManagerActivity extends AppCompatActivity {
                 if (llProducts.getVisibility() == View.GONE) {
                     if (llManufacturers.getVisibility() == View.VISIBLE) {
                         llManufacturers.setVisibility(View.GONE);
-                        etManufacturerName.setText("");
+                        if (llAddNewManufacturer.getVisibility() == View.VISIBLE) {
+                            etManufacturerName.setText("");
+                            llAddNewManufacturer.setVisibility(View.GONE);
+                        } else if (llEditExistingManufacturers.getVisibility() == View.VISIBLE) {
+                            etSearchManufacturerByName.setText("");
+                            llEditExistingManufacturers.setVisibility(View.GONE);
+                        }
                     }
                     llProducts.setVisibility(View.VISIBLE);
                 }
@@ -237,13 +244,15 @@ public class ManagerActivity extends AppCompatActivity {
                         }
                     }
                     llManufacturers.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
+                    llManufacturers.setVisibility(View.GONE);
                     if (llAddNewManufacturer.getVisibility() == View.VISIBLE) {
                         etManufacturerName.setText("");
                         llAddNewManufacturer.setVisibility(View.GONE);
+                    } else if (llEditExistingManufacturers.getVisibility() == View.VISIBLE) {
+                        etSearchManufacturerByName.setText("");
+                        llEditExistingManufacturers.setVisibility(View.GONE);
                     }
-                    llManufacturers.setVisibility(View.GONE);
                 }
             }
         });
@@ -368,10 +377,8 @@ public class ManagerActivity extends AppCompatActivity {
                     llAddNewManufacturer.setVisibility(View.VISIBLE);
                 }
                 else {
-                    if (llAddNewProduct.getVisibility() == View.VISIBLE) {
-                        resetCreateNewProductFields();
-                    }
-                    llProducts.setVisibility(View.GONE);
+                    etManufacturerName.setText("");
+                    llAddNewManufacturer.setVisibility(View.GONE);
                 }
             }
         });
@@ -401,7 +408,17 @@ public class ManagerActivity extends AppCompatActivity {
         btnEditExistingManufacturers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast("הכפתור לא זמין כעת");
+                if (llEditExistingManufacturers.getVisibility() == View.GONE) {
+                    if (llAddNewManufacturer.getVisibility() == View.VISIBLE) {
+                        llAddNewManufacturer.setVisibility(View.GONE);
+                        etManufacturerName.setText("");
+                    }
+                    llEditExistingManufacturers.setVisibility(View.VISIBLE);
+                }
+                else {
+                    etSearchManufacturerByName.setText("");
+                    llEditExistingManufacturers.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -409,7 +426,7 @@ public class ManagerActivity extends AppCompatActivity {
         ManufacturerAdapter adapter = new ManufacturerAdapter(ManagerActivity.this, manufacturersList);
         lvManufacturers.setAdapter(adapter);
 
-        etManufacturerName.addTextChangedListener(new TextWatcher() {
+        etSearchManufacturerByName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

@@ -21,7 +21,7 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_order_history.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_receipt.xml" value="0.17617753623188406" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_receiption.xml" value="0.2223731884057971" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_startup.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_testing.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_thread.xml" value="0.25" />
@@ -33,12 +33,9 @@
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_delete_prompt.xml" value="0.2971014492753623" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_login.xml" value="0.3496376811594203" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manager_controls_for_product.xml" value="0.32155797101449274" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manufacturer.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_history_item.xml" value="0.33559782608695654" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_item.xml" value="0.18" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product.xml" value="0.25" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product_detailed.xml" value="0.25" />
-        <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_rate_product_dialog.xml" value="0.16" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_receipt_item.xml" value="0.23125" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_startup.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/s32334/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_users.xml" value="0.2971014492753623" />
@@ -74,6 +71,7 @@
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_get_description.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_login.xml" value="0.16271442986881937" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manager_controls_for_product.xml" value="0.3359375" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manufacturer.xml" value="0.10393541876892028" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_month_year_picker_dialog.xml" value="0.16271442986881937" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_history_item.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_item.xml" value="0.16271442986881937" />

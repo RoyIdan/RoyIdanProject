@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
@@ -257,6 +258,20 @@ public class GalleryActivity extends AppCompatActivity {
                 adapter.getFilter().filter(etFilter.getText().toString().trim());
             }
         });
+
+        Intent intent = getIntent();
+
+        if (intent != null && intent.getExtras() != null &&
+                intent.getExtras().containsKey("manufacturerId")) {
+            long manufacturerId = intent.getLongExtra("manufacturerId", 0);
+            productList.removeIf(new Predicate<Product>() {
+                @Override
+                public boolean test(Product product) {
+                    return product.getManufacturerId() != manufacturerId;
+                }
+            });
+            adapter.updateProductsList(productList);
+        }
 
     }
 

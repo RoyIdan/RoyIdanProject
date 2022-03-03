@@ -2,6 +2,7 @@ package com.example.royidanproject.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,19 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
+import com.example.royidanproject.GalleryActivity;
 import com.example.royidanproject.ManagerActivity;
 import com.example.royidanproject.R;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class ManufacturerAdapter extends BaseAdapter implements Filterable {
@@ -102,8 +107,22 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
                         filteredList.remove(manufacturer);
                         notifyDataSetInvalidated();
                         ((ManagerActivity) context).updateManufacturerList(manufacturerList);
+                        dialog.dismiss();
                     }
                 });
+            }
+        });
+
+        view.findViewById(R.id.btnViewProducts).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "toasty", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, GalleryActivity.class);
+                intent.putExtra("manufacturerId", manufacturer.getManufacturerId());
+                context.startActivity(intent);
+                ((AppCompatActivity) context).finish();
+
+                // TODO - change it to manufacturer activity
             }
         });
 
@@ -116,11 +135,10 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
     }
 
     private class ManufacturerFilter extends Filter {
-
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            String filter = constraint.toString().trim();
+            String filter = constraint.toString().trim().toLowerCase(Locale.ROOT);
 
             FilterResults results = new FilterResults();
 
@@ -129,7 +147,7 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
             Manufacturer temp;
             for (int i = 0; i < manufacturerList.size(); i++) {
                 temp = manufacturerList.get(i);
-                if (temp.getManufacturerName().contains(filter)) {
+                if (temp.getManufacturerName().toLowerCase(Locale.ROOT).contains(filter)) {
                     tempList.add(temp);
                 }
             }
