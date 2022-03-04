@@ -1,14 +1,20 @@
 package com.example.royidanproject.Utility;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.telephony.SmsManager;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.royidanproject.Adapters.CreditCardsAdapter;
 import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
@@ -32,13 +39,22 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.ReceiptActivity;
+import com.example.royidanproject.Views.CreditCardView;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.SEND_SMS;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static androidx.core.content.PermissionChecker.PERMISSION_DENIED;
+import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 import static com.example.royidanproject.MainActivity.ADMIN_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
@@ -330,6 +346,8 @@ public class Dialogs {
                     db.cartDetailsDao().deleteCartDetailsByReference(detail);
                 }
 
+                createSubmitPurchaseDialog_sendMessage((Activity) context, orderId, finalTotalPrice);
+
                 Intent intent = new Intent(context, OrderActivity.class);
                 intent.putExtra("order", order);
                 context.startActivity(intent);
@@ -339,6 +357,30 @@ public class Dialogs {
 
 
     }
+
+    private static void createSubmitPurchaseDialog_sendMessage(Activity activity, long orderId, double totalPrice) {
+        SmsManager smsManager = SmsManager.getDefault();
+        StringBuilder builder = new StringBuilder();
+
+        if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity, new String[]{
+                    SEND_SMS
+            }, 1);
+            createSubmitPurchaseDialog_sendMessage(activity, orderId, totalPrice);
+        }
+
+        builder.append("הזמנה מספר ");
+        builder.append(orderId);
+        builder.append(" אושרה בהצלחה.");
+        builder.append("\n");
+        builder.append("סכום כולל ששולם: ");
+        builder.append(CommonMethods.fmt(totalPrice));
+
+        String msg = builder.toString();
+
+        smsManager.sendTextMessage("0509254011", null, msg, null, null);
+    }
+
     private static void createSubmitPurchaseDialog_setData(Context context, Dialog dialog, double totalPrice) {
         EditText etName, etPrice;
         Spinner spiCreditCard;
@@ -350,8 +392,42 @@ public class Dialogs {
         long userId = context.getSharedPreferences(SP_NAME, 0).getLong("id", 0);
         List<CreditCard> cards = AppDatabase.getInstance(context).creditCardDao().getByUserId(userId);
 
+//        BaseAdapter adapter = new BaseAdapter() {
+//            @Override
+//            public int getCount() {
+//                return cards.size();
+//            }
+//
+//            @Override
+//            public Object getItem(int position) {
+//                return cards.get(position);
+//            }
+//
+//            @Override
+//            public long getItemId(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                CreditCard card = cards.get(position);
+//                long userId = card.getUserId();
+//                Users user = AppDatabase.getInstance(context).usersDao().getUserById(userId);
+//
+//                CreditCardView ccv = new CreditCardView(context, null);
+//
+//                ccv.setLayoutParams(params);
+//
+//                ccv.setCardNumber(card.getCardNumber());
+//                ccv.setCardExpireDate(card.getCardExpireDate());
+//                ccv.setCardHolder(user.getUserName());
+//                ccv.setCardCompany(card.getCardCompany());
+//
+//                return ccv;
+//            }
+//        };
 
-        ArrayAdapter<CreditCard> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, cards);
+        ArrayAdapter<CreditCard> adapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, cards);
         spiCreditCard.setAdapter(adapter);
 
         spiCreditCard.setSelection(0);
@@ -360,6 +436,7 @@ public class Dialogs {
         etPrice.setText(CommonMethods.fmt(totalPrice));
 
     }
+
     private static Product createSubmitPurchaseDialog_getProduct(AppDatabase db, long productId, long tableId) {
         Product product;
 

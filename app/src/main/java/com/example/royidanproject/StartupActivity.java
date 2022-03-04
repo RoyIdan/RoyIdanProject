@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
-import com.example.royidanproject.Utility.CircleThread;
-import com.example.royidanproject.Utility.StartupThread;
+import com.example.royidanproject.Threads.StartupThread;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 

@@ -37,13 +37,24 @@ public class CreditCardsAdapter extends BaseAdapter {
     private List<CreditCard> cardList;
     private LayoutInflater inflater;
     private AppDatabase db;
+    private boolean useClickListener;
 
     public CreditCardsAdapter(List<CreditCard> cardsList, Context context) {
         this.context = context;
         this.cardList = cardsList;
         inflater = LayoutInflater.from(context);
         db = AppDatabase.getInstance(context);
+        useClickListener = true;
     }
+
+    public CreditCardsAdapter(List<CreditCard> cardsList, Context context, boolean useClickListener) {
+        this.context = context;
+        this.cardList = cardsList;
+        inflater = LayoutInflater.from(context);
+        db = AppDatabase.getInstance(context);
+        this.useClickListener = useClickListener;
+    }
+
 
     @Override
     public int getCount() {
@@ -93,6 +104,10 @@ public class CreditCardsAdapter extends BaseAdapter {
         ccv.setCardExpireDate(card.getCardExpireDate());
         ccv.setSpHolder();
         ccv.setCardCompany(company);
+
+        if (!useClickListener) {
+            return ccv;
+        }
 
         ccv.setOnClickListener(new View.OnClickListener() {
             @Override

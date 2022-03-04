@@ -3,14 +3,13 @@ package com.example.royidanproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 
-import com.example.royidanproject.Utility.CircleThread;
+import com.example.royidanproject.Threads.CircleThread;
 
 public class ThreadActivity extends AppCompatActivity {
 

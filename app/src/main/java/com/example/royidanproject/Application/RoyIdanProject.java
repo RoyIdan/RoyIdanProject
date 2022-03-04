@@ -3,12 +3,6 @@ package com.example.royidanproject.Application;
 import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
 import android.app.Application;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +13,6 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
-import com.example.royidanproject.Utility.Dialogs;
-import com.example.royidanproject.Utility.StartupThread;
 
 import java.util.Calendar;
 import java.util.Date;
