@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="-123dp"
+    android:layout_gravity="left"
     android:id="@+id/ll">
 
     <TextView

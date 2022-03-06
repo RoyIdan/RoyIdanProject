@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,10 +36,15 @@ public class TestingActivity extends AppCompatActivity {
         llRoot = findViewById(R.id.llRoot);
 
         ll = findViewById(R.id.ll);
-        ll2 = null;
+        ll2 = findViewById(R.id.ll2);
         TextView tv = findViewById(R.id.tv);
         inflater = LayoutInflater.from(TestingActivity.this);
         a = true;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        ll2.setX(-width);
 
 
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
@@ -47,16 +53,24 @@ public class TestingActivity extends AppCompatActivity {
             public boolean handleMessage(@NonNull Message msg) {
 
                 ll.setX(ll.getX() + 10);
+                ll2.setX(ll2.getX() + 10);
 
                 tv.setText("" + ++i);
 
-                if (i == 76) {
-                    if (a) {
-                        ll2 = createLL();
-                    } else {
-
+                if (i == 107) {
+                    thread.stopThread();
+                    if (1 > 0) {
+                        return true;
                     }
+                    if (a) {
+                        ll.setX(-width);
+                    } else {
+                        ll2.setX(-width);
+                    }
+                    i = 0;
+                    a = !a;
                 }
+
 
                 return true;
             }
@@ -67,7 +81,7 @@ public class TestingActivity extends AppCompatActivity {
 
     }
 
-    private LinearLayout createLL() {
-        return (LinearLayout) inflater.inflate(R.layout.custom_title, llRoot);
+    private void resetLL(LinearLayout ll) {
+        ll.setX(-200);
     }
 }

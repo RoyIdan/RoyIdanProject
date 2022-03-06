@@ -26,7 +26,7 @@ public class TestingThread extends Thread {
             handler.sendMessage(new Message());
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
