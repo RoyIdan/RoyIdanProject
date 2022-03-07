@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
+import com.example.royidanproject.Services.MusicService;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PRODUCTS_FOLDER_NAME = "royIdanProject_Products";
     public static final String SP_NAME = "USER_INFO";
     public static final String ADMIN_PHONE = "0509254011";
-    public static boolean FIRST_LAUNCH = true;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private AppDatabase db;
@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
+
+        Intent intent = new Intent(MainActivity.this, MusicService.class);
+        intent.putExtra("isRunning", true);
+        startService(intent);
 
 
 //        addSampleProducts();
