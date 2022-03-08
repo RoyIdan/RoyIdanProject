@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.royidanproject">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <application
         android:name=".Application.RoyIdanProject"
         android:allowBackup="true"
@@ -16,11 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RoyIdanProject">
-        <service
-            android:name=".Services.MusicService"
-            android:enabled="true"
-            android:exported="true"></service>
-
+        <activity
+            android:name=".ManufacturerActivity"
+            android:exported="false" />
         <activity
             android:name=".TestingActivity"
             android:exported="true" />
@@ -73,6 +66,21 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <receiver
+            android:name=".BroadcastReceivers.BatteryReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".Services.MusicService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

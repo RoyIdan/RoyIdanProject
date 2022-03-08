@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.GalleryActivity;
 import com.example.royidanproject.ManagerActivity;
+import com.example.royidanproject.ManufacturerActivity;
 import com.example.royidanproject.R;
 
 import java.util.LinkedList;
@@ -113,16 +114,15 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
             }
         });
 
-        view.findViewById(R.id.btnViewProducts).setOnClickListener(new View.OnClickListener() {
+        btnViewProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "toasty", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(context, GalleryActivity.class);
+                Intent intent = new Intent(context, ManufacturerActivity.class);
                 intent.putExtra("manufacturerId", manufacturer.getManufacturerId());
                 context.startActivity(intent);
                 ((AppCompatActivity) context).finish();
 
-                // TODO - change it to manufacturer activity
             }
         });
 

@@ -26,6 +26,12 @@ public interface WatchesDao extends IProductDao {
     @Update
     void update(Watch watch);
 
+    @Query("SELECT * FROM tblWatches WHERE manufacturerId = :manufacturerId")
+    List<Watch> getByManufacturerId(long manufacturerId);
+
+    @Query("SELECT * FROM tblWatches WHERE manufacturerId = :manufacturerId AND productStock > 0")
+    List<Watch> getByManufacturerId_whereInStock(long manufacturerId);
+
     @RawQuery
     List<Watch> getByQuery(androidx.sqlite.db.SupportSQLiteQuery query);
 

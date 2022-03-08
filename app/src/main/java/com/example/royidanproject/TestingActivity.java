@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 
 import com.example.royidanproject.Threads.TestingThread;
+import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.HorizontalMoving;
 
 import java.util.Date;
@@ -44,19 +45,9 @@ public class TestingActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
 
         float layoutWidth_dp = 200f;
-        HorizontalMoving horizontalMoving = new HorizontalMoving((int)dpToPx(layoutWidth_dp), ll, ll2);
+        HorizontalMoving horizontalMoving = new HorizontalMoving((int) CommonMethods.dpToPx(getResources(),
+                layoutWidth_dp), ll, ll2);
 
-    }
-
-    private float dpToPx(float dp) {
-        Resources r = getResources();
-        float px = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dp,
-                r.getDisplayMetrics()
-        );
-
-        return px;
     }
 
 }

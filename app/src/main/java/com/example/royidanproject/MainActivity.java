@@ -2,8 +2,13 @@ package com.example.royidanproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,10 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.royidanproject.Application.RoyIdanProject;
+import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.Services.MusicService;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.SEND_SMS;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +42,37 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private AppDatabase db;
+
+    private BatteryReceiver batteryReceiver;
+    private IntentFilter intentFilter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        batteryReceiver = new BatteryReceiver(findViewById(R.id.tvTitle));
+        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(batteryReceiver);
+    }
+
+    private void getPermission(Activity activity) {
+        ActivityCompat.requestPermissions(activity, new String[]{
+                SEND_SMS
+        }, 1);
+    }
+
+    private boolean checkPermission(Context context) {
+        int sms = ContextCompat.checkSelfPermission(context, SEND_SMS);
+
+        return sms == PERMISSION_GRANTED;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, MusicService.class);
         intent.putExtra("isRunning", true);
         startService(intent);
+
+        if (!checkPermission(MainActivity.this)) {
+            getPermission(MainActivity.this);
+        }
 
 
 //        addSampleProducts();

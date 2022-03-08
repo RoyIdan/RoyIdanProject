@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManufacturerActivity"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:layoutDirection="ltr"
+    android:focusableInTouchMode="true" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:text="דף יצרן: Apple" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="חזרה לדף הראשי"
+        android:textSize="20sp"
+        android:id="@+id/btnMainActivity" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="6dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/llCategories">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="קטגוריות:"
+                android:gravity="center"
+                android:layout_marginBottom="5dp" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="סמארטפונים"
+                android:checked="true" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="שעונים חכמים"
+                android:checked="true" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="אביזרים"
+                android:checked="true" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="טווח מחירים (₪):"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"/>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layoutDirection="rtl">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:text="מ:" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:id="@+id/etFrom"
+                    android:inputType="numberDecimal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-10dp"
+                android:layoutDirection="rtl">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:text="עד:" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/etTo"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:text="מיין לפי:"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"/>
+
+            <RadioGroup
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/rgSortBy"
+                android:checkedButton="@id/rbProductName">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="שם מוצר"
+                    android:id="@+id/rbProductName" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="מחיר עולה" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="מחיר יורד" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:text="filter"
+            android:id="@+id/btnFilter" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:text="OR" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:id="@+id/etFilter"/>
+    </LinearLayout>
+
+
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvProducts"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl" />
+
+</LinearLayout>

@@ -28,6 +28,12 @@ public interface AccessoriesDao extends IProductDao {
     @Query("UPDATE tblAccessories SET productStock = :stock WHERE productId = :id")
     void updateStockById(long id, int stock);
 
+    @Query("SELECT * FROM tblAccessories WHERE manufacturerId = :manufacturerId")
+    List<Accessory> getByManufacturerId(long manufacturerId);
+
+    @Query("SELECT * FROM tblAccessories WHERE manufacturerId = :manufacturerId AND productStock > 0")
+    List<Accessory> getByManufacturerId_whereInStock(long manufacturerId);
+
     @Insert
     long insert(Accessory accessory);
 
