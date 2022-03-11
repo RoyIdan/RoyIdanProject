@@ -100,6 +100,7 @@ public class RoyIdanProject extends Application {
         iphone11.setManufacturerId(1); // Apple
         iphone11.setProductPrice(2000);
         iphone11.setProductName("iPhone 11");
+        iphone11.setProductDateAdded(new Date(1646488087000L)); // 5 March 2022 15:48:07
 
         Smartphone galaxyS10 = new Smartphone();
         galaxyS10.setProductPhoto("galaxyS10.jpg");
@@ -111,6 +112,7 @@ public class RoyIdanProject extends Application {
         galaxyS10.setManufacturerId(2); // Samsung
         galaxyS10.setProductPrice(1500);
         galaxyS10.setProductName("Galaxy S10");
+        galaxyS10.setProductDateAdded(new Date(1646574487000L)); // 6 March 2022 15:48:07
 
         Watch appleWatch = new Watch();
         appleWatch.setProductPhoto("AppleWatch44mm.jpg");
@@ -120,6 +122,7 @@ public class RoyIdanProject extends Application {
         appleWatch.setProductName("44mm Apple Watch SE GPS");
         appleWatch.setWatchSize(44);
         appleWatch.setWatchColor(שחור);
+        appleWatch.setProductDateAdded(new Date(1646660887000L)); // 7 March 2022 15:48:07
 
         db.smartphonesDao().insert(iphone11);
         db.smartphonesDao().insert(galaxyS10);

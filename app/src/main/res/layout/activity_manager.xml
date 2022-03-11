@@ -123,7 +123,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/iphone11"
+                    android:src="@drawable/question_mark_pfp"
                     android:id="@+id/ivPhoto"
                     android:scaleType="centerCrop"/>
 

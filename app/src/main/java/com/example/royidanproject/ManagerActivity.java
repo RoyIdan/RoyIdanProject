@@ -735,10 +735,11 @@ public class ManagerActivity extends AppCompatActivity {
                 break;
         }
 
-        toast("Saved!");
+        String productName = etName.getText().toString().trim();
+        toast("המוצר " + productName + " נוסף בהצלחה!");
 
         bmProduct = null;
-        ivPhoto.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.iphone11, null));
+        ivPhoto.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.question_mark_pfp, null));
 
     }
 
@@ -823,7 +824,7 @@ public class ManagerActivity extends AppCompatActivity {
 
         String photo = ProductImages.savePhoto(bmProduct, ManagerActivity.this);
         if (photo == null) {
-            toast("Failed to save the photo");
+            toast("אירעה שגיעה בניסיון לשמור את התמונה");
             return;
         }
 

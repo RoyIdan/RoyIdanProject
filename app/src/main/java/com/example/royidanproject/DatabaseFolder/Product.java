@@ -3,6 +3,7 @@ package com.example.royidanproject.DatabaseFolder;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -20,6 +21,8 @@ public class Product implements Serializable {
     private String productDescription;
     private long manufacturerId;
     private String productPhoto;
+    @androidx.room.TypeConverters(TypeConverters.class)
+    private Date productDateAdded;
 
     public long getProductId() {
         return productId;
@@ -77,5 +80,11 @@ public class Product implements Serializable {
         this.productPhoto = productPhoto;
     }
 
+    public Date getProductDateAdded() {
+        return productDateAdded;
+    }
 
+    public void setProductDateAdded(Date productDateAdded) {
+        this.productDateAdded = productDateAdded;
+    }
 }

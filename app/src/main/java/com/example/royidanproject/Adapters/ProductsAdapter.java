@@ -145,7 +145,6 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - Add the item to the cart
                 long userId = sp.getLong("id", 0);
                 int quantity = Integer.parseInt(tvCount.getText().toString());
                 addToCart(userId, product, quantity);

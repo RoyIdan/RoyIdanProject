@@ -55,7 +55,6 @@ public class GalleryActivity extends AppCompatActivity {
         lvProducts = findViewById(R.id.lvProducts);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +86,7 @@ public class GalleryActivity extends AppCompatActivity {
         }
 
         // sort by product name
-        productList.sort(new Comparator<Product>() {
+        Collections.sort(productList, new Comparator<Product>() {
             @Override
             public int compare(Product product, Product t1) {
                 return product.getProductName().compareTo(t1.getProductName());
@@ -258,26 +257,10 @@ public class GalleryActivity extends AppCompatActivity {
                 adapter.getFilter().filter(etFilter.getText().toString().trim());
             }
         });
-
-        Intent intent = getIntent();
-
-        if (intent != null && intent.getExtras() != null &&
-                intent.getExtras().containsKey("manufacturerId")) {
-            long manufacturerId = intent.getLongExtra("manufacturerId", 0);
-            productList.removeIf(new Predicate<Product>() {
-                @Override
-                public boolean test(Product product) {
-                    return product.getManufacturerId() != manufacturerId;
-                }
-            });
-            adapter.updateProductsList(productList);
-        }
-
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void orderByName(List<Product> list) {
-        list.sort(new Comparator<Product>() {
+        Collections.sort(list, new Comparator<Product>() {
             @Override
             public int compare(Product product, Product t1) {
                 return product.getProductName().compareTo(t1.getProductName());
@@ -285,7 +268,6 @@ public class GalleryActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void orderListBy(List<Product> list, int orderBy) {
         // product name, manufacturer name, price asc, price desc
 
@@ -295,7 +277,7 @@ public class GalleryActivity extends AppCompatActivity {
             List<Manufacturer> manufacturers = db.manufacturersDao().getAll();
             orderByName(list);
 
-            list.sort(new Comparator<Product>() {
+            Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
                     Manufacturer m1 = null, m2 = null;
@@ -319,7 +301,7 @@ public class GalleryActivity extends AppCompatActivity {
             });
         }
         else if (orderBy == 2) {
-            list.sort(new Comparator<Product>() {
+            Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
                     return (int) product.getProductPrice() - (int) t1.getProductPrice();
@@ -327,7 +309,7 @@ public class GalleryActivity extends AppCompatActivity {
             });
         }
         else if (orderBy == 3) {
-            list.sort(new Comparator<Product>() {
+            Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
                     return (int) t1.getProductPrice() - (int) product.getProductPrice();

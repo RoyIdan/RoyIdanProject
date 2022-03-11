@@ -53,8 +53,6 @@ public class StartupActivity extends AppCompatActivity {
                 0xFF00FF00, 0xFFD35400, 0xFF2471A3, 0xFF2E86C1, 0xFF17202A, 0xFF5D6D7E, 0xFF17A589
         };
 
-        //TODO - more cubes
-
         //float defaultX = viewCircle.getX();
 
 

@@ -53,17 +53,16 @@ public class ManufacturerActivity extends AppCompatActivity {
         etFrom = findViewById(R.id.etFrom);
         etTo = findViewById(R.id.etTo);
         etFilter = findViewById(R.id.etFilter);
+        btnMainActivity = findViewById(R.id.btnMainActivity);
         btnFilter = findViewById(R.id.btnFilter);
         lvProducts = findViewById(R.id.lvProducts);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery);
+        setContentView(R.layout.activity_manufacturer);
 
-        btnMainActivity = findViewById(R.id.btnMainActivity);
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +101,7 @@ public class ManufacturerActivity extends AppCompatActivity {
         }
 
         // sort by product name
-        productList.sort(new Comparator<Product>() {
+        Collections.sort(productList, new Comparator<Product>() {
             @Override
             public int compare(Product product, Product t1) {
                 return product.getProductName().compareTo(t1.getProductName());
@@ -133,7 +132,7 @@ public class ManufacturerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean[] boxes = new boolean[3];
-                LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
+                LinearLayout llCategories = findViewById(R.id.llCategories);
                 int count = llCategories.getChildCount();
                 for (int i = 1; i < count; i++) {
                     View view = llCategories.getChildAt(i);
@@ -152,11 +151,11 @@ public class ManufacturerActivity extends AppCompatActivity {
                 try {
                     Double.parseDouble(from);
                     from_valid = true;
-                } catch (NumberFormatException e) { }
+                } catch (NumberFormatException ignored) { }
                 try {
                     Double.parseDouble(to);
                     to_valid = true;
-                } catch (NumberFormatException e) { }
+                } catch (NumberFormatException ignored) { }
 
                 if (!from.isEmpty() && from_valid && !to.isEmpty() && to_valid) {
 
@@ -202,10 +201,10 @@ public class ManufacturerActivity extends AppCompatActivity {
                     else {
                         String baseSPQuery;
                         if (sp.getBoolean("admin", false)) {
-                            baseSPQuery = "SELECT * FROM tblSmartphones WHERE manufacturerId = "+ manufacturerId + " AND";
+                            baseSPQuery = "SELECT * FROM tblSmartphones WHERE manufacturerId = " + manufacturerId + " AND ";
                         } else {
                             baseSPQuery = "SELECT * FROM tblSmartphones WHERE productStock > 0 AND manufacturerId " +
-                                    "= "+ manufacturerId + " AND";
+                                    "= "+ manufacturerId + " AND ";
                         }
                         String finalSPQuery = baseSPQuery + query;
                         SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalSPQuery);
@@ -228,12 +227,13 @@ public class ManufacturerActivity extends AppCompatActivity {
                     else {
                         String baseWatchesQuery;
                         if (sp.getBoolean("admin", false)) {
-                            baseWatchesQuery = "SELECT * FROM tblWatches WHERE manufacturerId = "+ manufacturerId + " AND";
+                            baseWatchesQuery = "SELECT * FROM tblWatches WHERE manufacturerId = " + manufacturerId + " AND ";
                         } else {
                             baseWatchesQuery = "SELECT * FROM tblWatches WHERE productStock > 0 AND manufacturerId " +
-                                    "= "+ manufacturerId + " AND";
-                        String finalWatchesQuery = baseWatchesQuery + query;
-                        SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalWatchesQuery);
+                                    "= "+ manufacturerId + " AND ";
+                        }
+                        String finalSPQuery = baseWatchesQuery + query;
+                        SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalSPQuery);
                         watchesList = db.watchesDao().getByQuery(ssq);
                     }
 
@@ -244,17 +244,18 @@ public class ManufacturerActivity extends AppCompatActivity {
                     List<Accessory> accessoriesList;
                     if (query.isEmpty()) {
                         if (sp.getBoolean("admin", false)) {
-                            accessoriesList = db.accessoriesDao().getAll();
+                            accessoriesList = db.accessoriesDao().getByManufacturerId(manufacturerId);
                         } else {
-                            accessoriesList = db.accessoriesDao().getAll_whereInStock();
+                            accessoriesList = db.accessoriesDao().getByManufacturerId_whereInStock(manufacturerId);
                         }
                     }
                     else {
                         String baseAccessoriesQuery;
                         if (sp.getBoolean("admin", false)) {
-                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE ";
+                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE manufacturerId = " + manufacturerId + " AND ";
                         } else {
-                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE productStock > 0 AND ";
+                            baseAccessoriesQuery = "SELECT * FROM tblAccessories WHERE productStock > 0 AND manufacturerId " +
+                                    "= "+ manufacturerId + " AND ";
                         }
                         String finalAccessoriesQuery = baseAccessoriesQuery + query;
                         SimpleSQLiteQuery ssq = new SimpleSQLiteQuery(finalAccessoriesQuery);
@@ -278,10 +279,8 @@ public class ManufacturerActivity extends AppCompatActivity {
     }
 
 
-    // TODO - try to replace methods with minimum api 24
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void orderByName(List<Product> list) {
-        list.sort(new Comparator<Product>() {
+        Collections.sort(list, new Comparator<Product>() {
             @Override
             public int compare(Product product, Product t1) {
                 return product.getProductName().compareTo(t1.getProductName());
@@ -289,7 +288,6 @@ public class ManufacturerActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void orderListBy(List<Product> list, int orderBy) {
         // product name, manufacturer name, price asc, price desc
 
@@ -297,7 +295,7 @@ public class ManufacturerActivity extends AppCompatActivity {
 
         }
         else if (orderBy == 1) {
-            list.sort(new Comparator<Product>() {
+            Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
                     return (int) product.getProductPrice() - (int) t1.getProductPrice();
@@ -305,7 +303,7 @@ public class ManufacturerActivity extends AppCompatActivity {
             });
         }
         else if (orderBy == 2) {
-            list.sort(new Comparator<Product>() {
+            Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
                     return (int) t1.getProductPrice() - (int) product.getProductPrice();
