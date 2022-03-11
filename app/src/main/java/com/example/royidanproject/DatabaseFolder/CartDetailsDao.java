@@ -22,6 +22,9 @@ public interface CartDetailsDao {
     @Query("SELECT * FROM tblCartDetails WHERE userId = :userId LIMIT 1")
     CartDetails hasAny(long userId);
 
+    @Query("SELECT COUNT() FROM tblCartDetails WHERE userId = :userId")
+    int countByUserId(long userId);
+
     @Insert
     long addCartItem(CartDetails cartDetails);
 

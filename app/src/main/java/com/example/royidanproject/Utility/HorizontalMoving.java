@@ -1,9 +1,11 @@
 package com.example.royidanproject.Utility;
 
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,16 @@ public class HorizontalMoving {
     EngineThread thread;
 
     int cond;
+
+    public static float dpToPx(Resources r, float dp) {
+        float px = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                r.getDisplayMetrics()
+        );
+
+        return px;
+    }
 
     public HorizontalMoving(int width, LinearLayout ll1, LinearLayout ll2) {
         this.ll1 = ll1;

@@ -11,4 +11,8 @@
             <enum name="VISA" value="3"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="BatteryView">
+        <attr name="bv_percent" format="integer" />
+        <attr name="bv_charging" format="boolean" />
+    </declare-styleable>
 </resources>
