@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -24,6 +25,7 @@ import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.Services.MusicService;
+import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, app.firstActivity));
             }
         }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        new ToolbarManager(MainActivity.this, toolbar);
 
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();

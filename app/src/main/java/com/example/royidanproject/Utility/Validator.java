@@ -89,7 +89,7 @@ public class Validator {
         if (address.length() < 4 || address.length() > 15) {
             return "הכתובת צריכה להיות בין 4 ל15 תווים";
         }
-        if (!allCharactersOrSpace(address)) {
+        if (!allCharactersOrSpaceOrNumber(address)) {
             return "הכתובת יכולה להכיל רק אותיות בעברית ורווחים";
         }
         return "";
@@ -138,6 +138,16 @@ public class Validator {
     public static boolean allCharactersOrSpace(String input) {
         for (char c : input.toCharArray()) {
             if ((c < 'א' || c > 'ת' ) && c != ' ' ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean allCharactersOrSpaceOrNumber(String input) {
+        for (char c : input.toCharArray()) {
+            if ((c < 'א' || c > 'ת' ) && c != ' ' && (c < '0' || c > '9')) {
                 return false;
             }
         }

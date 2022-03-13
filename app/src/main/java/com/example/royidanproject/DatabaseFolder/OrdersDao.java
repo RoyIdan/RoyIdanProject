@@ -30,6 +30,14 @@ public interface OrdersDao {
     @Query("SELECT * FROM tblOrders WHERE customerId = :customerId LIMIT 1")
     Order hasAny(long customerId);
 
+    @Query("SELECT CASE WHEN EXISTS (" +
+            "SELECT *" +
+            "FROM [tblOrders]" +
+            ")" +
+            "THEN CAST(1 AS BIT)" +
+            "ELSE CAST(0 AS BIT) END")
+    boolean hasAny();
+
     @Query("SELECT * FROM tblOrders WHERE creditCardId = :cardId LIMIT 1")
     Order hasAnyCard(long cardId);
 
