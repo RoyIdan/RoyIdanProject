@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:background="@color/black"
@@ -15,39 +15,38 @@
 
 
         <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left"
+            android:id="@+id/llPhotoHolder">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="0dp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_gravity="left"
-                android:id="@+id/llPhotoHolder">
+                app:cardCornerRadius="33dp"
+                app:cardBackgroundColor="@color/white">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_marginTop="0dp"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
                     app:cardCornerRadius="33dp"
-                    app:cardBackgroundColor="@color/white">
+                    android:layout_gravity="center">
 
-                    <androidx.cardview.widget.CardView
+                    <ImageView
                         android:layout_width="66dp"
                         android:layout_height="66dp"
-                        app:cardCornerRadius="33dp"
-                        android:layout_gravity="center">
+                        android:src="@drawable/default_user"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center"
 
-                        <ImageView
-                            android:layout_width="66dp"
-                            android:layout_height="66dp"
-                            android:src="@drawable/default_user"
-                            android:scaleType="centerCrop"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="-3dp"
-
-                            android:id="@+id/ivPhoto"/>
-
-                    </androidx.cardview.widget.CardView>
+                        android:id="@+id/ivPhoto"/>
 
                 </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
         <Space
             android:layout_width="20dp"
@@ -85,7 +84,7 @@
                             android:src="@drawable/shopping_cart"
                             android:scaleType="centerCrop"
                             android:layout_gravity="center"
-                            android:layout_marginTop="-3dp"
+                            android:layout_marginLeft="-5dp"
 
                             android:id="@+id/ivCart"/>
 
@@ -107,6 +106,46 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left"
+            android:id="@+id/llHomeHolder">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="0dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:cardCornerRadius="33dp"
+                app:cardBackgroundColor="@color/white">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    app:cardCornerRadius="33dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:src="@drawable/home"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center"
+
+                        android:id="@+id/ivHome"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

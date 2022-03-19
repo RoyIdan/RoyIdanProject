@@ -25,6 +25,9 @@ import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.Services.MusicService;
+import com.example.royidanproject.Utility.CommonMethods;
+import com.example.royidanproject.Utility.HorizontalMoving;
+import com.example.royidanproject.Utility.PermissionManager;
 import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BatteryReceiver batteryReceiver;
     private IntentFilter intentFilter;
+    private PermissionManager permissionManager;
 
     @Override
     protected void onResume() {
@@ -64,16 +68,10 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(batteryReceiver);
     }
 
-    private void getPermission(Activity activity) {
-        ActivityCompat.requestPermissions(activity, new String[]{
-                SEND_SMS
-        }, 1);
-    }
-
-    private boolean checkPermission(Context context) {
-        int sms = ContextCompat.checkSelfPermission(context, SEND_SMS);
-
-        return sms == PERMISSION_GRANTED;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -92,17 +90,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         new ToolbarManager(MainActivity.this, toolbar);
 
+        permissionManager = new PermissionManager(MainActivity.this);
+
+        View v1 = findViewById(R.id.tvAppName), v2 = findViewById(R.id.tvAppName2);
+        HorizontalMoving hm = HorizontalMoving.createHorizontalMoving(MainActivity.this, v1, v2)[0];
+
+
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(MainActivity.this);
-
-        Intent intent = new Intent(MainActivity.this, MusicService.class);
-        intent.putExtra("isRunning", true);
-        startService(intent);
-
-        if (!checkPermission(MainActivity.this)) {
-            getPermission(MainActivity.this);
-        }
 
 
 //        addSampleProducts();
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (sp.contains("id")) {
             ((LinearLayout)findViewById(R.id.llGuestButtons)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.ivUser)).setImageURI(UserImages.getImage(sp.getString("image", ""), MainActivity.this));
+            //((ImageView)findViewById(R.id.ivUser)).setImageURI(UserImages.getImage(sp.getString("image", ""), MainActivity.this));
 
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
@@ -123,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(MainActivity.this, ManagerActivity.class));
+                        hm.toString();
+                        // startActivity(new Intent(MainActivity.this, ManagerActivity.class));
                     }
                 });
             }

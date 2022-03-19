@@ -1,11 +1,16 @@
 package com.example.royidanproject.Utility;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowMetrics;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -14,12 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HorizontalMoving {
 
-    private LinearLayout ll1, ll2;
+    private View view1, view2;
     private boolean a;
 
-    EngineThread thread;
+    private EngineThread thread;
 
-    int cond;
+    private int delay;
+    private int jump;
+
+    private int cond;
 
     public static float dpToPx(Resources r, float dp) {
         float px = TypedValue.applyDimension(
@@ -31,30 +39,56 @@ public class HorizontalMoving {
         return px;
     }
 
-    public HorizontalMoving(int width, LinearLayout ll1, LinearLayout ll2) {
-        this.ll1 = ll1;
-        this.ll2 = ll2;
-        this.ll1.setX(0);
-        this.ll2.setX(-width);
+    private static int getMaxWidth(AppCompatActivity activity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        return width;
+    }
+    
+    public static HorizontalMoving[] createHorizontalMoving(int width, View view1, View view2) {
+        final HorizontalMoving[] hm = {null};
+
+        view1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view1.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                hm[0] = new HorizontalMoving(width, view1, view2);
+            }
+        });
+        return hm;
+    }
+
+    public static HorizontalMoving[] createHorizontalMoving(AppCompatActivity activity, View view1, View view2) {
+        return createHorizontalMoving(getMaxWidth(activity), view1, view2);
+    }
+
+    public HorizontalMoving(int width, View view1, View view2) {
+        this.view1 = view1;
+        this.view2 = view2;
+        this.view1.setX(0);
+        this.view2.setX(-width);
         a = true;
 
-        cond = width / 10;
+        delay = 10;
+        jump = 5;
+
+        cond = width / jump;
 
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             int i = 0;
             @Override
             public boolean handleMessage(@NonNull Message msg) {
 
-                ll1.setX(ll1.getX() + 10);
-                ll2.setX(ll2.getX() + 10);
-
+                view1.setX(view1.getX() + jump);
+                view2.setX(view2.getX() + jump);
                 if (i == cond) {
                     //thread.stopThread();
 
                     if (a) {
-                        ll1.setX(-width);
+                        view1.setX(-width);
                     } else {
-                        ll2.setX(-width);
+                        view2.setX(-width);
                     }
                     i = 0;
                     a = !a;
@@ -97,7 +131,7 @@ public class HorizontalMoving {
                 handler.sendMessage(new Message());
 
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

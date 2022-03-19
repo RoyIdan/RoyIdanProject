@@ -34,7 +34,9 @@ public class ToolbarManager {
     private SharedPreferences.Editor editor;
     private AppDatabase db;
 
-    private ImageView ivPhoto;
+    private ImageView ivPhoto, ivHome;
+
+    private TextView tvCartItems;
 
     private boolean isGuest;
 
@@ -47,14 +49,20 @@ public class ToolbarManager {
         db = AppDatabase.getInstance(mActivity);
 
         ivPhoto = toolbar.findViewById(R.id.ivPhoto);
+        ivHome = toolbar.findViewById(R.id.ivHome);
 
-        isGuest = sp.getLong("id", 0) == 0;
+        tvCartItems = toolbar.findViewById(R.id.tvCartItems);
 
-        TextView tvCartItems = toolbar.findViewById(R.id.tvCartItems);
+        long userId = sp.getLong("id", 0);
+        isGuest = userId == 0;
+
+        ivHome.setOnClickListener(l -> startActivity(MainActivity.class));
+
         if (!isGuest) {
-            long userId = sp.getLong("id", 0);
             Users user = db.usersDao().getUserById(userId);
+
             ivPhoto.setImageURI(UserImages.getImage(user.getUserPhoto(), mActivity));
+
             int itemsCount = db.cartDetailsDao().countByUserId(userId);
             tvCartItems.setText(String.valueOf(itemsCount));
             toolbar.findViewById(R.id.ivCart).setOnClickListener(new View.OnClickListener() {

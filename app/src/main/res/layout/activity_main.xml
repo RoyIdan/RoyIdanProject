@@ -10,24 +10,41 @@
 
     <include layout="@layout/custom_toolbar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="50sp"
+            android:text="רועי סלולר"
+            android:id="@+id/tvAppName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="-50dp"
+            android:textSize="50sp"
+            android:text="רועי סלולר"
+            android:id="@+id/tvAppName2" />
+
+    </LinearLayout>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:text="שלום אורח"
         android:id="@+id/tvTitle"
         />
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/img_sample"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:id="@+id/ivUser" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -36,7 +53,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        android:id="@+id/llUserButtons">
+        android:id="@+id/llUserButtons"
+        android:visibility="gone">
 
         <Button
             android:layout_width="wrap_content"
@@ -87,7 +105,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        android:id="@+id/llGuestButtons">
+        android:id="@+id/llGuestButtons"
+        android:visibility="gone">
 
         <Button
             android:layout_width="wrap_content"

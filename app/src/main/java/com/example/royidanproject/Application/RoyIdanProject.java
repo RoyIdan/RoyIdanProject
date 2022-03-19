@@ -3,6 +3,8 @@ package com.example.royidanproject.Application;
 import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 
 import android.app.Application;
+import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,7 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
+import com.example.royidanproject.Services.MusicService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,8 +26,16 @@ public class RoyIdanProject extends Application {
     public Class<? extends AppCompatActivity> firstActivity;
 
     @Override
+    public void onTerminate() {
+        Toast.makeText(RoyIdanProject.this, "תודה שביקרתם\nמקווים לראות אתכם שוב!", Toast.LENGTH_SHORT).show();
+        super.onTerminate();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+
+        Toast.makeText(this, "שלום שלום", Toast.LENGTH_SHORT).show();
 
         isFirstRun = true;
         firstActivity = MainActivity.class;
@@ -36,6 +47,10 @@ public class RoyIdanProject extends Application {
                 addSampleProducts();
             }
         }
+
+        Intent intent = new Intent(RoyIdanProject.this, MusicService.class);
+        intent.putExtra("isRunning", true);
+        startService(intent);
 
 //        startActivity(new Intent(getApplicationContext(), MainActivity.class).
 //                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

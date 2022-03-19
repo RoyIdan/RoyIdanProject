@@ -9,6 +9,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     private TextView tv;
 
+    public BatteryReceiver() {}
+
     public BatteryReceiver(TextView tv) {
         this.tv = tv;
     }

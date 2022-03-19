@@ -1,14 +1,11 @@
 package com.example.royidanproject.DatabaseFolder;
 
-import android.content.Context;
-
-import java.io.Serializable;
-import java.util.Date;
-
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.Query;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity(tableName = "tblProducts", foreignKeys =
     @ForeignKey(entity=Manufacturer.class, parentColumns = "manufacturerId", childColumns = "manufacturerId"))
