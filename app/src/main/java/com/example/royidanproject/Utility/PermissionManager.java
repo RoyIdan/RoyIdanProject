@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.royidanproject.R;
 
-public final class PermissionManager implements ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener {
+public class PermissionManager implements ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener {
     private static final int LAYOUT_ID = R.layout.custom_request_permissions;
 
     private static final int SMS = 1;

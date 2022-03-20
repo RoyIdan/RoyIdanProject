@@ -21,6 +21,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.UserImages;
+import com.example.royidanproject.Views.WifiView;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
@@ -44,6 +45,8 @@ public class TestingActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(this);
         sp = getSharedPreferences(SP_NAME, 0);
+
+        ((WifiView) findViewById(R.id.wifi)).startAnim();
 
 
         llRoot = findViewById(R.id.llRoot);

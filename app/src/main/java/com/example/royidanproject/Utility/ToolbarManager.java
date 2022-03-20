@@ -20,6 +20,7 @@ import com.example.royidanproject.OrderHistoryActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.UsersActivity;
+import com.example.royidanproject.Views.WifiView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +39,8 @@ public class ToolbarManager {
 
     private TextView tvCartItems;
 
+    private WifiView wifiView;
+
     private boolean isGuest;
 
     public ToolbarManager(AppCompatActivity activity, Toolbar toolbar) {
@@ -52,6 +55,8 @@ public class ToolbarManager {
         ivHome = toolbar.findViewById(R.id.ivHome);
 
         tvCartItems = toolbar.findViewById(R.id.tvCartItems);
+
+        wifiView = toolbar.findViewById(R.id.wifi);
 
         long userId = sp.getLong("id", 0);
         isGuest = userId == 0;
@@ -81,6 +86,8 @@ public class ToolbarManager {
         }
         mActivity.setSupportActionBar(toolbar);
         ivPhoto.setOnClickListener(this::showPopup);
+
+        wifiView.startAnim();
     }
 
     private void showPopup(View v) {

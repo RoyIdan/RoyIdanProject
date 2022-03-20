@@ -147,6 +147,17 @@
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:background="@color/black" />
+
+        <com.example.royidanproject.Views.WifiView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:wifiColor="@color/white"
+            android:id="@+id/wifi"/>
+
     </LinearLayout>
 
 </androidx.appcompat.widget.Toolbar>

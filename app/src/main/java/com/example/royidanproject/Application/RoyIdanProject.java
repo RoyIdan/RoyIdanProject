@@ -48,13 +48,17 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        Intent intent = new Intent(RoyIdanProject.this, MusicService.class);
-        intent.putExtra("isRunning", true);
-        startService(intent);
+        startService();
 
 //        startActivity(new Intent(getApplicationContext(), MainActivity.class).
 //                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
+    }
+
+    private void startService() {
+        Intent intent = new Intent(RoyIdanProject.this, MusicService.class);
+        intent.putExtra("isRunning", true);
+        startService(intent);
     }
 
     private void addSampleManager() {

@@ -18,7 +18,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public void onCreate() {
         super.onCreate();
 
-        player = MediaPlayer.create(getApplicationContext(), R.raw.music_elevator);
+        player = MediaPlayer.create(getApplicationContext(), R.raw.music_spring_in_my_step);
         player.setVolume(100f, 100f);
 
     }
