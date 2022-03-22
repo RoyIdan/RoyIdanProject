@@ -1,7 +1,9 @@
 package com.example.royidanproject.Utility;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
+import com.example.royidanproject.BroadcastReceivers.WifiStatusReceiver;
 import com.example.royidanproject.CartActivity;
 import com.example.royidanproject.CreditCardsActivity;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
@@ -40,6 +44,9 @@ public class ToolbarManager {
     private TextView tvCartItems;
 
     private WifiView wifiView;
+    private ImageView ivWifiOff;
+    private WifiStatusReceiver wifiStatusReceiver;
+    private IntentFilter intentFilter;
 
     private boolean isGuest;
 
@@ -57,6 +64,7 @@ public class ToolbarManager {
         tvCartItems = toolbar.findViewById(R.id.tvCartItems);
 
         wifiView = toolbar.findViewById(R.id.wifi);
+        ivWifiOff = toolbar.findViewById(R.id.ivWifiOff);
 
         long userId = sp.getLong("id", 0);
         isGuest = userId == 0;
@@ -86,8 +94,16 @@ public class ToolbarManager {
         }
         mActivity.setSupportActionBar(toolbar);
         ivPhoto.setOnClickListener(this::showPopup);
+    }
 
-        wifiView.startAnim();
+    public void onResume() {
+        wifiStatusReceiver = new WifiStatusReceiver(wifiView, ivWifiOff);
+        intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mActivity.registerReceiver(wifiStatusReceiver, intentFilter);
+    }
+
+    public void onDestroy() {
+        mActivity.unregisterReceiver(wifiStatusReceiver);
     }
 
     private void showPopup(View v) {

@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.royidanproject">
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:name=".Application.RoyIdanProject"
         android:allowBackup="true"
@@ -19,6 +14,7 @@
         <activity
             android:name=".ManufacturerActivity"
             android:exported="false" />
+
         <activity
             android:name=".TestingActivity"
             android:exported="true" />
@@ -67,10 +63,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <receiver
+            android:name=".BroadcastReceivers.WifiStatusReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
         <receiver
             android:name=".BroadcastReceivers.BatteryReceiver"
@@ -82,5 +82,10 @@
             android:enabled="true"
             android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
 </manifest>

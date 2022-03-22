@@ -148,15 +148,27 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="0dp"
             android:background="@color/black" />
 
         <com.example.royidanproject.Views.WifiView
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_gravity="right"
             app:wifiColor="@color/white"
-            android:id="@+id/wifi"/>
+            android:rotation="45"
+            android:id="@+id/wifi"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_gravity="top"
+            android:rotation="45"
+            android:id="@+id/ivWifiOff"
+            android:src="@drawable/ic_baseline_wifi_off_24" />
 
     </LinearLayout>
 

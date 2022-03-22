@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
+import com.example.royidanproject.BroadcastReceivers.WifiStatusReceiver;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.Services.MusicService;
 import com.example.royidanproject.Utility.CommonMethods;
@@ -50,22 +52,35 @@ public class MainActivity extends AppCompatActivity {
 
     private BatteryReceiver batteryReceiver;
     private IntentFilter intentFilter;
+
+    private WifiStatusReceiver wifiStatusReceiver;
+    private IntentFilter intentFilter2;
+
     private PermissionManager permissionManager;
+    private ToolbarManager toolbarManager;
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        batteryReceiver = new BatteryReceiver(findViewById(R.id.tvTitle));
-        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(batteryReceiver, intentFilter);
+//        batteryReceiver = new BatteryReceiver(findViewById(R.id.tvTitle));
+//        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+//        registerReceiver(batteryReceiver, intentFilter);
+
+        wifiStatusReceiver = new WifiStatusReceiver(findViewById(R.id.tvTitle));
+        intentFilter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wifiStatusReceiver, intentFilter2);
+
+        //toolbarManager.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        unregisterReceiver(batteryReceiver);
+        //unregisterReceiver(batteryReceiver);
+        unregisterReceiver(wifiStatusReceiver);
+        //toolbarManager.onDestroy();
     }
 
     @Override
@@ -88,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        new ToolbarManager(MainActivity.this, toolbar);
+        toolbarManager = new ToolbarManager(MainActivity.this, toolbar);
 
         permissionManager = new PermissionManager(MainActivity.this);
 

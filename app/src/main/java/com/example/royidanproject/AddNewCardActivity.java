@@ -254,7 +254,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
         int currYear = Calendar.getInstance().get(Calendar.YEAR);
         LinkedList<String> ll = new LinkedList();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             ll.add(String.valueOf(currYear + i));
         }
 
