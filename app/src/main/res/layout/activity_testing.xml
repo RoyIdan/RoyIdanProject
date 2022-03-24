@@ -12,11 +12,10 @@
 
     <include layout="@layout/custom_toolbar" />
 
-    <com.example.royidanproject.Views.WifiView
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        custom:wifiColor="@color/black"
-        android:id="@+id/wifi"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvSongs" />
 
     <ImageView
         android:layout_width="wrap_content"

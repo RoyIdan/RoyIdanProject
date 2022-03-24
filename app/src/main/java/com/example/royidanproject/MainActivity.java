@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
 //        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 //        registerReceiver(batteryReceiver, intentFilter);
 
-        wifiStatusReceiver = new WifiStatusReceiver(findViewById(R.id.tvTitle));
-        intentFilter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(wifiStatusReceiver, intentFilter2);
+        WifiStatusReceiver wsr = new WifiStatusReceiver(findViewById(R.id.tvTitle));
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wsr, filter);
 
         //toolbarManager.onResume();
     }
@@ -134,8 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        hm.toString();
-                        // startActivity(new Intent(MainActivity.this, ManagerActivity.class));
+                         startActivity(new Intent(MainActivity.this, ManagerActivity.class));
                     }
                 });
             }

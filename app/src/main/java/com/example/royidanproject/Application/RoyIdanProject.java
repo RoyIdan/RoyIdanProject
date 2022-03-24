@@ -48,7 +48,7 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        startService();
+        //startService();
 
 //        startActivity(new Intent(getApplicationContext(), MainActivity.class).
 //                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

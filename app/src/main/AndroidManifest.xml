@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RoyIdanProject">
+        <service
+            android:name=".Services.MusicService2"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".ManufacturerActivity"
             android:exported="false" />

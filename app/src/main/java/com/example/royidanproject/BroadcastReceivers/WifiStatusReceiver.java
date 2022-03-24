@@ -30,11 +30,11 @@ public class WifiStatusReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NetworkInfo info = (NetworkInfo) intent.getExtras()
+        NetworkInfo info = intent.getExtras()
                 .getParcelable("networkInfo");
 
         tv.setText(info.getState().toString());
-        Log.i("Battery", info.toString());
+        Log.i("WifiReceiver", info.toString());
 
 //        if (state == NetworkInfo.State.CONNECTED) {
 //            wifiOff.setVisibility(View.GONE);
