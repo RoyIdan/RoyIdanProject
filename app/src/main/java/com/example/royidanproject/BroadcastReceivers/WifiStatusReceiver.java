@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,26 +25,21 @@ public class WifiStatusReceiver extends BroadcastReceiver {
         this.wifiOff = wifiOff;
     }
 
-    public WifiStatusReceiver(TextView tv) {
-        this.tv = tv;
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NetworkInfo info = intent.getExtras()
-                .getParcelable("networkInfo");
 
-        tv.setText(info.getState().toString());
-        Log.i("WifiReceiver", info.toString());
+        boolean isConnected = intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false);
 
-//        if (state == NetworkInfo.State.CONNECTED) {
-//            wifiOff.setVisibility(View.GONE);
-//            wifiOn.setVisibility(View.VISIBLE);
-//            wifiOn.startAnim();
-//        } else {
-//            wifiOn.setVisibility(View.GONE);
-//            wifiOn.stopAnim();
-//            wifiOff.setVisibility(View.VISIBLE);
-//        }
+        if (isConnected) {
+            wifiOff.setVisibility(View.GONE);
+            wifiOn.setVisibility(View.VISIBLE);
+            wifiOn.startAnim();
+        } else {
+            wifiOn.setVisibility(View.GONE);
+            wifiOn.stopAnim();
+            wifiOff.setVisibility(View.VISIBLE);
+        }
     }
+
 }

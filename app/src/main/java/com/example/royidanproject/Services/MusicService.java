@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.R;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener {
@@ -18,8 +19,9 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public void onCreate() {
         super.onCreate();
 
-        player = MediaPlayer.create(getApplicationContext(), R.raw.music_spring_in_my_step);
+        player = MediaPlayer.create(getApplicationContext(), RoyIdanProject.getInstance().getSongId());
         player.setVolume(100f, 100f);
+        player.setLooping(true);
 
     }
 
@@ -28,8 +30,10 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
         if (intent.getBooleanExtra("isRunning", false)) {
             player.start();
+            RoyIdanProject.getInstance().isMusicServiceRunning = true;
         } else {
             stopSelf();
+            RoyIdanProject.getInstance().isMusicServiceRunning = false;
         }
 
         return super.onStartCommand(intent, flags, startId);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
 import com.example.royidanproject.BroadcastReceivers.WifiStatusReceiver;
 import com.example.royidanproject.CartActivity;
@@ -23,6 +25,7 @@ import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.OrderHistoryActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.RegisterActivity;
+import com.example.royidanproject.Services.MusicService;
 import com.example.royidanproject.UsersActivity;
 import com.example.royidanproject.Views.WifiView;
 
@@ -48,11 +51,16 @@ public class ToolbarManager {
     private WifiStatusReceiver wifiStatusReceiver;
     private IntentFilter intentFilter;
 
+    private ImageView ivMusicOn, ivMusicOff;
+
+
     private boolean isGuest;
 
     public ToolbarManager(AppCompatActivity activity, Toolbar toolbar) {
         mActivity = activity;
         this.toolbar = toolbar;
+
+        mActivity.setSupportActionBar(toolbar);
 
         sp = mActivity.getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
@@ -65,6 +73,9 @@ public class ToolbarManager {
 
         wifiView = toolbar.findViewById(R.id.wifi);
         ivWifiOff = toolbar.findViewById(R.id.ivWifiOff);
+
+        ivMusicOn = toolbar.findViewById(R.id.ivMusicOn);
+        ivMusicOff = toolbar.findViewById(R.id.ivMusicOff);
 
         long userId = sp.getLong("id", 0);
         isGuest = userId == 0;
@@ -92,18 +103,41 @@ public class ToolbarManager {
         } else {
             toolbar.findViewById(R.id.rlCartAndCountHolder).setVisibility(View.GONE);
         }
-        mActivity.setSupportActionBar(toolbar);
         ivPhoto.setOnClickListener(this::showPopup);
+
+        if (RoyIdanProject.getInstance().isMusicServiceRunning) {
+            ivMusicOn.setVisibility(View.VISIBLE);
+        } else {
+            ivMusicOff.setVisibility(View.VISIBLE);
+        }
+        ivMusicOn.setOnClickListener(v -> changeMusicState(false));
+        ivMusicOff.setOnClickListener(v -> changeMusicState(true));
     }
 
     public void onResume() {
         wifiStatusReceiver = new WifiStatusReceiver(wifiView, ivWifiOff);
-        intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter = new IntentFilter(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
         mActivity.registerReceiver(wifiStatusReceiver, intentFilter);
     }
 
     public void onDestroy() {
         mActivity.unregisterReceiver(wifiStatusReceiver);
+    }
+
+    private void changeMusicState(boolean newState) {
+        RoyIdanProject.getInstance().isMusicServiceRunning = newState;
+        if (newState) {
+            ivMusicOff.setVisibility(View.GONE);
+            ivMusicOn.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(mActivity, MusicService.class);
+            intent.putExtra("isRunning", true);
+            mActivity.startService(intent);
+        } else {
+            ivMusicOn.setVisibility(View.GONE);
+            ivMusicOff.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(mActivity, MusicService.class);
+            mActivity.stopService(intent);
+        }
     }
 
     private void showPopup(View v) {

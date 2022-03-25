@@ -1,9 +1,13 @@
 package com.example.royidanproject.Application;
 
 import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
+import static com.example.royidanproject.MainActivity.SP_NAME;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +19,7 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
+import com.example.royidanproject.R;
 import com.example.royidanproject.Services.MusicService;
 
 import java.util.Calendar;
@@ -24,10 +29,16 @@ public class RoyIdanProject extends Application {
     private AppDatabase db;
     public boolean isFirstRun;
     public Class<? extends AppCompatActivity> firstActivity;
+    public boolean isMusicServiceRunning;
+    public Song currentSong;
+
+    private static RoyIdanProject instance;
+    public static RoyIdanProject getInstance() {
+        return instance;
+    }
 
     @Override
     public void onTerminate() {
-        Toast.makeText(RoyIdanProject.this, "תודה שביקרתם\nמקווים לראות אתכם שוב!", Toast.LENGTH_SHORT).show();
         super.onTerminate();
     }
 
@@ -35,10 +46,15 @@ public class RoyIdanProject extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Toast.makeText(this, "שלום שלום", Toast.LENGTH_SHORT).show();
+        instance = this;
+
+        //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
 
         isFirstRun = true;
         firstActivity = MainActivity.class;
+
+        isMusicServiceRunning = false;
+        currentSong = Song.elevator;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
@@ -48,7 +64,7 @@ public class RoyIdanProject extends Application {
             }
         }
 
-        //startService();
+        startService();
 
 //        startActivity(new Intent(getApplicationContext(), MainActivity.class).
 //                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -59,6 +75,21 @@ public class RoyIdanProject extends Application {
         Intent intent = new Intent(RoyIdanProject.this, MusicService.class);
         intent.putExtra("isRunning", true);
         startService(intent);
+        isMusicServiceRunning = true;
+    }
+
+    public void restartMusicService() {
+        Intent intent = new Intent(RoyIdanProject.this, MusicService.class);
+        stopService(intent);
+
+        startService();
+    }
+
+
+    public boolean isConnectedViaWifi() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return mWifi.isConnected();
     }
 
     private void addSampleManager() {
@@ -146,5 +177,20 @@ public class RoyIdanProject extends Application {
         db.smartphonesDao().insert(iphone11);
         db.smartphonesDao().insert(galaxyS10);
         db.watchesDao().insert(appleWatch);
+    }
+
+    public enum Song {
+        elevator, spring_in_my_step
+    }
+
+    public int getSongId() {
+        switch (currentSong) {
+            case elevator:
+                return R.raw.music_elevator;
+            case spring_in_my_step:
+                return R.raw.music_spring_in_my_step;
+            default:
+                return 0;
+        }
     }
 }

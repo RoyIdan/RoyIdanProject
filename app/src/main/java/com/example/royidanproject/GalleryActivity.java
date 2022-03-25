@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.app.DownloadManager;
@@ -27,6 +28,7 @@ import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Watch;
+import com.example.royidanproject.Utility.ToolbarManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
@@ -47,12 +49,26 @@ public class GalleryActivity extends AppCompatActivity {
     AppDatabase db;
     SharedPreferences sp;
 
+    private ToolbarManager toolbarManager;
+
     private void setViewPointers() {
         etFrom = findViewById(R.id.etFrom);
         etTo = findViewById(R.id.etTo);
         etFilter = findViewById(R.id.etFilter);
         btnFilter = findViewById(R.id.btnFilter);
         lvProducts = findViewById(R.id.lvProducts);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        toolbarManager.onDestroy();
     }
 
     @Override
@@ -73,6 +89,9 @@ public class GalleryActivity extends AppCompatActivity {
         sp = getSharedPreferences(SP_NAME, 0);
 
         etFrom.clearFocus();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(GalleryActivity.this, toolbar);
 
         List<Product> productList = new LinkedList<>();
         if (sp.getBoolean("admin", false)) {

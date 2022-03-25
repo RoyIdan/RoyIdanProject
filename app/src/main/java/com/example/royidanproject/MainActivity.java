@@ -3,22 +3,19 @@ package com.example.royidanproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,19 +23,13 @@ import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.BroadcastReceivers.BatteryReceiver;
 import com.example.royidanproject.BroadcastReceivers.WifiStatusReceiver;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
-import com.example.royidanproject.Services.MusicService;
-import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.HorizontalMoving;
 import com.example.royidanproject.Utility.PermissionManager;
 import com.example.royidanproject.Utility.ToolbarManager;
-import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.SEND_SMS;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PRODUCTS_FOLDER_NAME = "royIdanProject_Products";
     public static final String SP_NAME = "USER_INFO";
     public static final String ADMIN_PHONE = "0509254011";
+    public static final String SMS_PHONE = "0509254011";
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private AppDatabase db;
@@ -63,24 +55,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        batteryReceiver = new BatteryReceiver(findViewById(R.id.tvTitle));
-//        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-//        registerReceiver(batteryReceiver, intentFilter);
+        batteryReceiver = new BatteryReceiver(findViewById(R.id.tvTitle));
+        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryReceiver, intentFilter);
 
-        WifiStatusReceiver wsr = new WifiStatusReceiver(findViewById(R.id.tvTitle));
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(wsr, filter);
-
-        //toolbarManager.onResume();
+        toolbarManager.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        //unregisterReceiver(batteryReceiver);
-        unregisterReceiver(wifiStatusReceiver);
-        //toolbarManager.onDestroy();
+        unregisterReceiver(batteryReceiver);
+
+        toolbarManager.onDestroy();
     }
 
     @Override
@@ -134,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         startActivity(new Intent(MainActivity.this, ManagerActivity.class));
+                         //startActivity(new Intent(MainActivity.this, ManagerActivity.class));
+                        RoyIdanProject app = RoyIdanProject.getInstance();
+                        ((Button) v).setText(String.valueOf(app.isMusicServiceRunning));
                     }
                 });
             }
@@ -210,6 +200,30 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "היסטורית ההזמנות שלך ריקה", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        List<RoyIdanProject.Song> songs = Arrays.asList(RoyIdanProject.Song.values());
+        ArrayAdapter<RoyIdanProject.Song> songsAdapter = new ArrayAdapter<RoyIdanProject.Song>(MainActivity.this,
+                R.layout.support_simple_spinner_dropdown_item, songs);
+        Spinner spiSongs = findViewById(R.id.spiSongs);
+        spiSongs.setAdapter(songsAdapter);
+        spiSongs.setSelection(RoyIdanProject.getInstance().currentSong.ordinal());
+        spiSongs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                RoyIdanProject.Song song = RoyIdanProject.Song.values()[position];
+                RoyIdanProject.getInstance().currentSong = song;
+                RoyIdanProject.getInstance().restartMusicService();
+
+                toolbar.findViewById(R.id.ivMusicOff).setVisibility(View.GONE);
+                toolbar.findViewById(R.id.ivMusicOn).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
