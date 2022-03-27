@@ -214,11 +214,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 RoyIdanProject.Song song = RoyIdanProject.Song.values()[position];
-                RoyIdanProject.getInstance().currentSong = song;
-                RoyIdanProject.getInstance().restartMusicService();
-
-                toolbar.findViewById(R.id.ivMusicOff).setVisibility(View.GONE);
-                toolbar.findViewById(R.id.ivMusicOn).setVisibility(View.VISIBLE);
+                RoyIdanProject app = RoyIdanProject.getInstance();
+                app.currentSong = song;
+                if (app.isMusicServiceRunning) {
+                    app.restartMusicService();
+                    toolbar.findViewById(R.id.ivMusicOff).setVisibility(View.GONE);
+                    toolbar.findViewById(R.id.ivMusicOn).setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
