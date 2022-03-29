@@ -81,6 +81,7 @@ public class ToolbarManager {
         isGuest = userId == 0;
 
         ivHome.setOnClickListener(l -> startActivity(MainActivity.class));
+        mActivity.finish();
 
         if (!isGuest) {
             Users user = db.usersDao().getUserById(userId);

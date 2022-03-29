@@ -45,6 +45,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OrderActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -52,6 +53,7 @@ public class OrderActivity extends AppCompatActivity {
         if (intent == null || !intent.getExtras().containsKey("order")) {
             Toast.makeText(OrderActivity.this, "ההזמנה לא נמצאה", Toast.LENGTH_LONG).show();
             startActivity(new Intent(OrderActivity.this, MainActivity.class));
+            finish();
         }
 
         Order order = (Order) intent.getSerializableExtra("order");
@@ -69,6 +71,7 @@ public class OrderActivity extends AppCompatActivity {
                 intent1.putExtra("order", order);
                 intent1.putExtra("fromOrderActivity", true);
                 startActivity(intent1);
+                finish();
             }
         });
 

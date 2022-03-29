@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             app.isFirstRun = false;
             if (app.firstActivity != MainActivity.class) {
                 startActivity(new Intent(MainActivity.this, app.firstActivity));
+                finish();
             }
         }
 
@@ -117,14 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
             if (sp.getBoolean("admin", false)) {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום [המנהל] " + sp.getString("name", "_nameNotFound"));
-                ((Button)findViewById(R.id.btnUsersActivity)).setText("מסך משתמשים");
                 ((Button)findViewById(R.id.btnManagerActivity)).setVisibility(View.VISIBLE);
                 ((Button)findViewById(R.id.btnManagerActivity)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         //startActivity(new Intent(MainActivity.this, ManagerActivity.class));
-                        RoyIdanProject app = RoyIdanProject.getInstance();
-                        ((Button) v).setText(String.valueOf(app.isMusicServiceRunning));
+                         startActivity(new Intent(MainActivity.this, ManagerActivity.class));
                     }
                 });
             }
@@ -132,15 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.tvTitle)).setText("שלום " + sp.getString("name", "_nameNotFound"));
             }
 
-        }
-        else {
-            ((LinearLayout)findViewById(R.id.llUserButtons)).setVisibility(View.GONE);
-            findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Dialogs.createLoginDialog(MainActivity.this);
-                }
-            });
         }
 
         findViewById(R.id.btnAboutUs).setOnClickListener(new View.OnClickListener() {
@@ -154,55 +143,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, GalleryActivity.class));
+                finish();
             }
         });
-
-        findViewById(R.id.btnUsersActivity).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UsersActivity.class));
-            }
-        });
-        findViewById(R.id.btnLogOut).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editor.clear().commit();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-            }
-        });
-        findViewById(R.id.btnRegisterActivity).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-            }
-        });
-        findViewById(R.id.btnCart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (db.cartDetailsDao().hasAny(sp.getLong("id", 0)) != null) {
-                    startActivity(new Intent(MainActivity.this, CartActivity.class));
-                } else {
-                    Toast.makeText(MainActivity.this, "הסל הזמני שלך ריק", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        findViewById(R.id.btnCreditCards).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CreditCardsActivity.class));
-            }
-        });
-        findViewById(R.id.btnOrderHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (db.ordersDao().hasAny(sp.getLong("id", 0)) != null || sp.getBoolean("admin", false)) {
-                    startActivity(new Intent(MainActivity.this, OrderHistoryActivity.class));
-                } else {
-                    Toast.makeText(MainActivity.this, "היסטורית ההזמנות שלך ריקה", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
 
         List<RoyIdanProject.Song> songs = Arrays.asList(RoyIdanProject.Song.values());
         ArrayAdapter<RoyIdanProject.Song> songsAdapter = new ArrayAdapter<RoyIdanProject.Song>(MainActivity.this,
@@ -232,61 +175,4 @@ public class MainActivity extends AppCompatActivity {
         setTitle("רועי סלולר");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem miLogin = menu.findItem(R.id.menu_login);
-        MenuItem miLogout = menu.findItem(R.id.menu_logout);
-        MenuItem miRegister = menu.findItem(R.id.menu_register);
-
-        if (sp.contains("name")) {
-            miLogout.setVisible(true);
-            miLogin.setVisible(false);
-            miRegister.setVisible(false);
-        } else {
-            miLogout.setVisible(false);
-            miLogin.setVisible(true);
-            miRegister.setVisible(true);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_register:
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-                break;
-            case R.id.menu_login:
-                Dialogs.createLoginDialog(MainActivity.this);
-                break;
-            case R.id.menu_logout:
-                editor.clear();
-                editor.commit();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-                break;
-            default:
-                int a = 1/0;
-        }
-
-        return true;
-    }
-
-    private void updateSample() {
-        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
-        i.putExtra("id", 2L);
-        i.putExtra("email","s3234@nhs.co.il");
-        i.putExtra("phone","0569254011");
-        i.putExtra("name","Roy");
-        i.putExtra("surname","Idan");
-        i.putExtra("gender","male");
-        i.putExtra("birthdate","10/08/2004");
-        i.putExtra("address","zzz");
-        i.putExtra("city","Ashdod");
-        i.putExtra("password","123");
-        i.putExtra("photo", "211107-13:25:10.jpg");
-
-        startActivity(i);
-    }
 }

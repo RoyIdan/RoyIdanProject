@@ -37,6 +37,7 @@ import com.example.royidanproject.Utility.UserImages;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
@@ -260,6 +261,7 @@ public class ProductsAdapter extends BaseAdapter implements Filterable {
                         intent.putExtra("productToUpdate", product);
                         intent.putExtra("isProductPurchased", checkIfPurchased(product, finalTableId));
                         context.startActivity(intent);
+                        context.finish();
                     }
                 });
 

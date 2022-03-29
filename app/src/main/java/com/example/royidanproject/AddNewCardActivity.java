@@ -136,6 +136,7 @@ public class AddNewCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AddNewCardActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -143,6 +144,7 @@ public class AddNewCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
+                finish();
             }
         });
 
@@ -178,6 +180,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
                 db.creditCardDao().insert(cc);
                 startActivity(new Intent(AddNewCardActivity.this, CreditCardsActivity.class));
+                finish();
             }
         });
 

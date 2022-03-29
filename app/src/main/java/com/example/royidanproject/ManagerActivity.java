@@ -205,6 +205,7 @@ public class ManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagerActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -967,7 +968,6 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     private void resetCategoriesFields(int i) {
-        //TODO - reset both fields and set the categories as GONE\
 
         // i values: 1 - smartphone, 2 - watch, 3 - accessory, 4 - findSelected
 

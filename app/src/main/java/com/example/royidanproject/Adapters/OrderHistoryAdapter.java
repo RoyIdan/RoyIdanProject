@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
@@ -103,6 +105,7 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
                 Intent intent = new Intent(context, OrderActivity.class);
                 intent.putExtra("order", order);
                 context.startActivity(intent);
+                ((AppCompatActivity) context).finish();
             }
         });
 

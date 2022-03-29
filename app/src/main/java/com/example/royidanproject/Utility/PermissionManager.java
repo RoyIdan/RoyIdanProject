@@ -1,5 +1,6 @@
 package com.example.royidanproject.Utility;
 
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.SEND_SMS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -29,9 +30,10 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
     private static final int CAMERA = 2;
     private static final int READ = 3;
     private static final int WRITE = 4;
+    private static final int CONTACTS = 5;
 
     private static final String[] PERMISSION_NAMES = new String[]{SEND_SMS,
-            Manifest.permission.CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, READ_CONTACTS};
 
     private AppCompatActivity activity;
     private Dialog dialog;
@@ -41,7 +43,8 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
     private LinearLayout llPrmSmsDenied, llPrmSmsGranted,
             llPrmCameraDenied, llPrmCameraGranted,
             llPrmReadDenied, llPrmReadGranted,
-            llPrmWriteDenied, llPrmWriteGranted;
+            llPrmWriteDenied, llPrmWriteGranted,
+            llPrmContactsDenied, llPrmContactsGranted;
 
     private Button btnCheck, btnClose;
 
@@ -70,6 +73,9 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
         llPrmWriteDenied = dialog.findViewById(R.id.llPrmWriteDenied);
         llPrmWriteGranted = dialog.findViewById(R.id.llPrmWriteGranted);
 
+        llPrmContactsDenied = dialog.findViewById(R.id.llPrmContactsDenied);
+        llPrmContactsGranted = dialog.findViewById(R.id.llPrmContactsGranted);
+
         btnCheck = dialog.findViewById(R.id.btnCheck);
         btnClose = dialog.findViewById(R.id.btnClose);
     }
@@ -79,6 +85,7 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
         dialog.findViewById(R.id.btnPrmCamera).setOnClickListener(this);
         dialog.findViewById(R.id.btnPrmRead).setOnClickListener(this);
         dialog.findViewById(R.id.btnPrmWrite).setOnClickListener(this);
+        dialog.findViewById(R.id.btnPrmContacts).setOnClickListener(this);
         dialog.findViewById(R.id.btnClose)
                 .setOnClickListener(v -> dialog.dismiss());
         btnCheck.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +101,7 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
     public PermissionManager(AppCompatActivity activity) {
         this.activity = activity;
 
-        grantedPermissions = new boolean[]{false, false, false, false};
+        grantedPermissions = new boolean[]{false, false, false, false, false};
 
         fixArray();
 
@@ -124,6 +131,7 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
         grantedPermissions[1] = checkPermission(CAMERA);
         grantedPermissions[2] = checkPermission(READ);
         grantedPermissions[3] = checkPermission(WRITE);
+        grantedPermissions[4] = checkPermission(CONTACTS);
     }
 
     private void fixLayout() {
@@ -131,6 +139,7 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
         changeLayout(CAMERA, grantedPermissions[1]);
         changeLayout(READ, grantedPermissions[2]);
         changeLayout(WRITE, grantedPermissions[3]);
+        changeLayout(CONTACTS, grantedPermissions[4]);
         btnClose.setEnabled(allGranted());
     }
 
@@ -138,7 +147,8 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
         return grantedPermissions[0] &&
                 grantedPermissions[1] &&
                 grantedPermissions[2] &&
-                grantedPermissions[3];
+                grantedPermissions[3] &&
+                grantedPermissions[4];
     }
 
     private void changeLayout(int requestCode, boolean isGranted) {
@@ -160,6 +170,10 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
                     llPrmWriteDenied.setVisibility(View.GONE);
                     llPrmWriteGranted.setVisibility(View.VISIBLE);
                     break;
+                case CONTACTS:
+                    llPrmContactsDenied.setVisibility(View.GONE);
+                    llPrmContactsGranted.setVisibility(View.VISIBLE);
+                    break;
             }
         } else {
             switch (requestCode) {
@@ -178,6 +192,10 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
                 case WRITE:
                     llPrmWriteGranted.setVisibility(View.GONE);
                     llPrmWriteDenied.setVisibility(View.VISIBLE);
+                    break;
+                case CONTACTS:
+                    llPrmContactsGranted.setVisibility(View.GONE);
+                    llPrmContactsDenied.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -218,6 +236,8 @@ public class PermissionManager implements ActivityCompat.OnRequestPermissionsRes
             getPermission(READ);
         } else if (v.getId() == R.id.btnPrmWrite) {
             getPermission(WRITE);
+        } else if (v.getId() == R.id.btnPrmContacts) {
+            getPermission(CONTACTS);
         }
     }
 

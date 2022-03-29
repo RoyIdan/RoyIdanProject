@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:text="חסרות לנו הרשאות..."
         android:textSize="30sp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="על מנת שתוכל/י להינות מכל מה שיש לאפליקציה להציע עליך לאשר כמה הרשאות:"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:gravity="center"
         android:layout_marginTop="25dp"
         android:layout_marginHorizontal="20dp"
@@ -248,6 +248,64 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:id="@+id/llPrmWriteGranted"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="אושרה"
+                    android:textSize="25sp"
+                    android:textColor="#4CAF50" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="הרשאה לקריאה של אנשי קשר:"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/llPrmContactsDenied"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="לא אושרה"
+                    android:textSize="25sp"
+                    android:textColor="#F44336" />
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="לחץ/י לאישור"
+                    android:id="@+id/btnPrmContacts" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/llPrmContactsGranted"
                 android:visibility="gone" >
 
                 <TextView

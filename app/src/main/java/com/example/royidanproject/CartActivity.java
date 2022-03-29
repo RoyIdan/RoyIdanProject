@@ -89,6 +89,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CartActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -97,6 +98,7 @@ public class CartActivity extends AppCompatActivity {
         long userId = sp.getLong("id", 0);
         if (userId == 0) {
             startActivity(new Intent(CartActivity.this, MainActivity.class));
+            finish();
         }
         detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
         adapter = new CartAdapter(CartActivity.this, detailsList);
@@ -122,50 +124,6 @@ public class CartActivity extends AppCompatActivity {
 
     public void onAdapterFinish(double totalPrice) {
         tvTotalPrice.setText('₪' + fmt(totalPrice));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem miLogin = menu.findItem(R.id.menu_login);
-        MenuItem miLogout = menu.findItem(R.id.menu_logout);
-        MenuItem miRegister = menu.findItem(R.id.menu_register);
-
-        if (sp.contains("name")) {
-            miLogout.setVisible(true);
-            miLogin.setVisible(false);
-            miRegister.setVisible(false);
-        } else {
-            miLogout.setVisible(false);
-            miLogin.setVisible(true);
-            miRegister.setVisible(true);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_register:
-                startActivity(new Intent(CartActivity.this, RegisterActivity.class));
-                toast("reg");
-                break;
-            case R.id.menu_login:
-                createLoginDialog(CartActivity.this);
-                toast("in");
-                break;
-            case R.id.menu_logout:
-                editor.clear();
-                editor.commit();
-                startActivity(new Intent(CartActivity.this, MainActivity.class));
-                toast("out");
-                break;
-            default:
-                int a = 1/0;
-        }
-
-        return true;
     }
 
     private void toast(String message) {

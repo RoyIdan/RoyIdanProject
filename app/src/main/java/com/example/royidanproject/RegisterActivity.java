@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -191,6 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                     toast("נרשמת בהצלחה!");
 
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
                 }
             });
         }
@@ -450,6 +452,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 toast("המנוי עודכן בהצלחה");
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                finish();
             }
 
             private boolean checkEmailAndPhone(String email, String phone) {

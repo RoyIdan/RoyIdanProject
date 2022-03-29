@@ -67,6 +67,7 @@ public class ManufacturerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManufacturerActivity.this, MainActivity.class));
+                finish();
             }
         });
 

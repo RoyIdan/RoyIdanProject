@@ -97,6 +97,7 @@ public class Dialogs {
                     editor.commit();
 
                     context.startActivity(new Intent(context, MainActivity.class));
+                    ((AppCompatActivity) context).finish();
                     dialog.dismiss();
                 }
             }

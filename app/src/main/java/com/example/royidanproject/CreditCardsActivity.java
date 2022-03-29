@@ -51,6 +51,7 @@ public class CreditCardsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(CreditCardsActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -58,6 +59,7 @@ public class CreditCardsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(CreditCardsActivity.this, AddNewCardActivity.class));
+                finish();
             }
         });
     }
