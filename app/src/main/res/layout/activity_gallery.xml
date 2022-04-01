@@ -162,7 +162,7 @@
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="23dp"
-                    android:text="שם יצרן" />
+                    android:text="דירוג" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
-            android:text="filter"
+            android:text="סנן"
             android:id="@+id/btnFilter" />
 
         <TextView

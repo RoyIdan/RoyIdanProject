@@ -3,6 +3,7 @@ package com.example.royidanproject.DatabaseFolder;
 import java.io.Serializable;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -111,5 +112,11 @@ public class Users implements Serializable {
 
     public void setUserGender(String userGender) {
         this.userGender = userGender;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return userName + " " + userSurname;
     }
 }

@@ -23,6 +23,9 @@ public interface UsersDao {
     @Query("SELECT * FROM tblUsers WHERE userId = :userId")
     Users getUserById(long userId);
 
+    @Query("SELECT * FROM tblUsers WHERE userEmail = :userEmail")
+    Users getUserByEmail(String userEmail);
+
     @Query("SELECT * FROM tblUser" +
             "s WHERE userEmail = :userEmail AND userPassword = :userPassword")
     Users getUserByLogin(String userEmail, String userPassword);

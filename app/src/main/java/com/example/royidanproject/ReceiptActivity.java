@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.example.royidanproject.Adapters.ReceiptAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Order;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,21 @@ public class ReceiptActivity extends AppCompatActivity {
     Button btnReturn;
     ReceiptAdapter adapter;
     AppDatabase db;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +51,9 @@ public class ReceiptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receipt);
 
         db = AppDatabase.getInstance(ReceiptActivity.this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(ReceiptActivity.this, toolbar);
 
         tvReceiptNumber = findViewById(R.id.tvReceiptNumber);
         tvReceiptDate = findViewById(R.id.tvReceiptDate);

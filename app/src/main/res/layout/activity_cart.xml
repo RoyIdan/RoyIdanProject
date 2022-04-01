@@ -8,6 +8,8 @@
     tools:context=".CartActivity"
     android:layoutDirection="ltr">
 
+    <include layout="@layout/custom_toolbar" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

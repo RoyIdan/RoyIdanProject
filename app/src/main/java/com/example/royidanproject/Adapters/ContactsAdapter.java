@@ -1,6 +1,8 @@
 package com.example.royidanproject.Adapters;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,31 +13,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.royidanproject.Custom.Contact;
+import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
 
-public class ContactsAdapter extends BaseAdapter {
+public class ContactsAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private ArrayList<Contact> arrayList;
+    private List<Contact> contactsList;
+    private List<Contact> filteredList;
+    private LayoutInflater inflater;
+    private ContactsAdapter.ContactsFilter mFilter;
 
     public ContactsAdapter(Context context, ArrayList<Contact> arrayList) {
         this.context = context;
-        this.arrayList = arrayList;
+        this.contactsList = arrayList;
+        this.filteredList = arrayList;
+        mFilter = new ContactsFilter();
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
 
-        return arrayList.size();
+        return filteredList.size();
     }
 
     @Override
     public Contact getItem(int position) {
 
-        return arrayList.get(position);
+        return filteredList.get(position);
     }
 
     @Override
@@ -47,9 +58,7 @@ public class ContactsAdapter extends BaseAdapter {
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Contact model = arrayList.get(position);
+        Contact model = filteredList.get(position);
         ImageView contactImage;
         TextView contactName, contactNumber, contactEmail, contactOtherDetails;
         convertView = inflater.inflate(R.layout.custom_contact, null);
@@ -90,5 +99,46 @@ public class ContactsAdapter extends BaseAdapter {
             contactImage.setImageBitmap(image);
         }
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ContactsFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String str = constraint.toString().trim();
+
+            FilterResults results = new FilterResults();
+
+            final List<Contact> list = contactsList;
+            int count = list.size();
+
+            String filterableString;
+
+            final List<Contact> newList = new LinkedList<>();
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i).getContactName();
+                if (filterableString.toLowerCase().contains(str)) {
+                    newList.add(list.get(i));
+                }
+            }
+
+            results.values = newList;
+            results.count = count;
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredList = (List<Contact>) results.values;
+            notifyDataSetChanged();
+        }
     }
 }

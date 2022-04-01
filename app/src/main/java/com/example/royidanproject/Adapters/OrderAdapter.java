@@ -38,6 +38,7 @@ import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
 import com.example.royidanproject.Utility.UserImages;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -135,7 +136,7 @@ public class OrderAdapter extends BaseAdapter {
         Rating rating = db.ratingsDao().getByParams(userId, details.getProductId(), details.getTableId());
         if (rating != null) {
             btnRate.setText("הצג ביקורת");
-            btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
+            btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
             btnRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -202,6 +203,7 @@ public class OrderAdapter extends BaseAdapter {
                 rating1.setProductId(product.getProductId());
                 rating1.setTableId(details.getTableId());
                 rating1.setRating(rating);
+                rating1.setDateSubmitted(new Date());
                 if (!review.isEmpty()) {
                     rating1.setReview(review);
                 }
@@ -211,7 +213,7 @@ public class OrderAdapter extends BaseAdapter {
                 dialog.dismiss();
                 tvCurrentRating.setText("דירוג נוכחי: " + rating);
                 btnRate.setText("הצג ביקורת");
-                btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
+                btnRate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
                 btnRate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

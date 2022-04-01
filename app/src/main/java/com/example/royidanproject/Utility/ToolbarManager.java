@@ -80,8 +80,12 @@ public class ToolbarManager {
         long userId = sp.getLong("id", 0);
         isGuest = userId == 0;
 
-        ivHome.setOnClickListener(l -> startActivity(MainActivity.class));
-        mActivity.finish();
+        ivHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(MainActivity.class);
+            }
+        });
 
         if (!isGuest) {
             Users user = db.usersDao().getUserById(userId);
@@ -94,8 +98,7 @@ public class ToolbarManager {
                 @Override
                 public void onClick(View v) {
                     if (itemsCount > 0) {
-                        mActivity.startActivity(new Intent(mActivity, CartActivity.class));
-                        mActivity.finish();
+                        startActivity(CartActivity.class);
                     } else {
                         toast("הסל הזמני שלך ריק");
                     }
@@ -117,7 +120,7 @@ public class ToolbarManager {
 
     public void onResume() {
         wifiStatusReceiver = new WifiStatusReceiver(wifiView, ivWifiOff);
-        intentFilter = new IntentFilter(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
+        intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         mActivity.registerReceiver(wifiStatusReceiver, intentFilter);
     }
 

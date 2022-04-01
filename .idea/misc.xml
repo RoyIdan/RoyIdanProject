@@ -64,14 +64,17 @@
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout-v26/custom_credit_card.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_add_new_card.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_cart.xml" value="0.3115942028985507" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_contacts.xml" value="0.24864130434782608" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_credit_cards.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_gallery.xml" value="0.33" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_manager.xml" value="0.33" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_manufacturer.xml" value="0.2" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_order.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_order_history.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_receipt.xml" value="0.16271442986881937" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_settings.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_startup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_testing.xml" value="0.31215469613259667" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/activity_thread.xml" value="0.3359375" />
@@ -81,17 +84,22 @@
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_credit_card.xml" value="0.33" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_credit_card_detailed.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_delete_prompt.xml" value="0.3359375" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_forgot_password.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_get_description.xml" value="0.3359375" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_login.xml" value="0.16271442986881937" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_login.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manager_controls_for_product.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_manufacturer.xml" value="0.10393541876892028" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_month_year_picker_dialog.xml" value="0.16271442986881937" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_no_internet.xml" value="0.1734375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_history_item.xml" value="0.3359375" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_item.xml" value="0.16271442986881937" />
-        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product.xml" value="0.33" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_order_item.xml" value="0.22" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product.xml" value="0.25" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product_detailed.xml" value="0.1984375" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_product_reviews.xml" value="0.18020833333333333" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_purchase_completed.xml" value="0.33" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_rate_product_dialog.xml" value="0.16271442986881937" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_receipt_item.xml" value="0.16271442986881937" />
+        <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_review.xml" value="0.22" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_submit_purchase.xml" value="0.3359375" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_toolbar.xml" value="0.30117753623188404" />
         <entry key="..\:/Users/sapir/AndroidStudioProjects/RoyIdanProject/app/src/main/res/layout/custom_users.xml" value="0.2" />

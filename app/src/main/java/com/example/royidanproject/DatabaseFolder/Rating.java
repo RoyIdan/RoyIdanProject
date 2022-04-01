@@ -4,14 +4,17 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "tblRatings", primaryKeys = {"userId","productId","tableId"}, foreignKeys =
         @ForeignKey(entity = Users.class, parentColumns = "userId", childColumns = "userId"))
 public class Rating {
-    long userId;
-    long productId;
-    long tableId;
-    int rating;
-    String review;
+    private long userId;
+    private long productId;
+    private long tableId;
+    private int rating;
+    private String review;
+    private Date dateSubmitted;
 
     public long getUserId() {
         return userId;
@@ -51,5 +54,13 @@ public class Rating {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public Date getDateSubmitted() {
+        return dateSubmitted;
+    }
+
+    public void setDateSubmitted(Date dateSubmitted) {
+        this.dateSubmitted = dateSubmitted;
     }
 }

@@ -22,8 +22,8 @@ public class Validator {
 
     public static String validateName(String name) {
         //name
-        if (name.length() < 2 || name.length() > 10) {
-            return "השם הפרטי חייב להיות בין 2 ל10 תווים.";
+        if (name.length() < 2 || name.length() > 8) {
+            return "השם הפרטי חייב להיות בין 2 ל8 תווים.";
         }
 
         if (!allCharacters(name)) {
@@ -35,8 +35,8 @@ public class Validator {
 
     public static String validateSurname(String surname) {
         //surname
-        if (surname.length() < 2 || surname.length() > 16) {
-            return "שם המשפחה צריך להיות בין 2 ל16 תווים.";
+        if (surname.length() < 2 || surname.length() > 8) {
+            return "שם המשפחה צריך להיות בין 2 ל8 תווים.";
         }
 
         if (!allCharactersOrSpace(surname)) {

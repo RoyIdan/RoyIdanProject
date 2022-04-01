@@ -309,6 +309,15 @@
             android:inputType="textMultiLine"
             android:layout_marginLeft="20dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="צפה בביקורות"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnReviews" />
+
     </LinearLayout>
 
 </LinearLayout>

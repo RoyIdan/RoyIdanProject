@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import com.example.royidanproject.Adapters.CreditCardsAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.util.List;
 
@@ -26,6 +28,21 @@ public class CreditCardsActivity extends AppCompatActivity {
 
     AppDatabase db;
     SharedPreferences sp;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +51,9 @@ public class CreditCardsActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(CreditCardsActivity.this);
         sp = getSharedPreferences(SP_NAME, 0);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(CreditCardsActivity.this, toolbar);
 
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnAddNewCard = findViewById(R.id.btnAddNewCard);

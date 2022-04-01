@@ -3,6 +3,12 @@
     package="com.example.royidanproject">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:name=".Application.RoyIdanProject"
         android:allowBackup="true"
@@ -12,15 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RoyIdanProject">
-        <service
-            android:name=".Services.MusicService2"
-            android:enabled="true"
-            android:exported="true"></service>
-
+        <activity
+            android:name=".ContactsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ManufacturerActivity"
             android:exported="false" />
-
         <activity
             android:name=".TestingActivity"
             android:exported="true" />
@@ -69,6 +75,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -76,8 +83,7 @@
         <receiver
             android:name=".BroadcastReceivers.WifiStatusReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
-
+            android:exported="true" />
         <receiver
             android:name=".BroadcastReceivers.BatteryReceiver"
             android:enabled="true"
@@ -88,11 +94,5 @@
             android:enabled="true"
             android:exported="true" />
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
 </manifest>

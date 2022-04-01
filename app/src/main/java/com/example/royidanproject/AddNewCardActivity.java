@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.app.AlertDialog;
@@ -35,6 +36,7 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
+import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Views.CreditCardView;
 
 public class AddNewCardActivity extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
     SharedPreferences sp;
     AppDatabase db;
+    private ToolbarManager toolbarManager;
 
     private void setViewPointers() {
 //        tvCardNumber = findViewById(R.id.tvCardNumber);
@@ -65,6 +68,20 @@ public class AddNewCardActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_card);
@@ -73,6 +90,9 @@ public class AddNewCardActivity extends AppCompatActivity {
         db = AppDatabase.getInstance(AddNewCardActivity.this);
 
         setViewPointers();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(AddNewCardActivity.this, toolbar);
 
         String userName = sp.getString("name", "ERROR");
 

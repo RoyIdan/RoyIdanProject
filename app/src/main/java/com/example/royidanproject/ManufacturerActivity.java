@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.app.DownloadManager;
@@ -27,6 +28,7 @@ import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Watch;
+import com.example.royidanproject.Utility.ToolbarManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
@@ -48,6 +50,21 @@ public class ManufacturerActivity extends AppCompatActivity {
     private SharedPreferences sp;
 
     private long manufacturerId;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     private void setViewPointers() {
         etFrom = findViewById(R.id.etFrom);
@@ -62,14 +79,6 @@ public class ManufacturerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manufacturer);
-
-        btnMainActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ManufacturerActivity.this, MainActivity.class));
-                finish();
-            }
-        });
 
         Intent intent = getIntent();
         if (intent == null || intent.getExtras() == null || !intent.getExtras().containsKey("manufacturerId")) {
@@ -87,6 +96,9 @@ public class ManufacturerActivity extends AppCompatActivity {
         setViewPointers();
         db = AppDatabase.getInstance(ManufacturerActivity.this);
         sp = getSharedPreferences(SP_NAME, 0);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(ManufacturerActivity.this, toolbar);
 
         etFrom.clearFocus();
 

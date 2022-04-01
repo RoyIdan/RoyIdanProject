@@ -13,6 +13,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.GalleryActivity;
 import com.example.royidanproject.ManagerActivity;
@@ -35,12 +36,15 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
     private LayoutInflater inflater;
     private ManufacturerFilter mFilter;
 
+    AppDatabase db;
+
     public ManufacturerAdapter(Context context, List<Manufacturer> manufacturerList) {
         this.context = context;
         this.manufacturerList = manufacturerList;
         this.filteredList = manufacturerList;
         this.inflater = LayoutInflater.from(context);
         this.mFilter = new ManufacturerFilter();
+        db = AppDatabase.getInstance(context);
     }
 
     public void updateList(List<Manufacturer> manufacturerList, @Nullable String filter) {
@@ -104,10 +108,19 @@ public class ManufacturerAdapter extends BaseAdapter implements Filterable {
                 dialog.findViewById(R.id.btnYes).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (db.smartphonesDao().hasManufacturer(manufacturer.getManufacturerId())
+                        || db.watchesDao().hasManufacturer(manufacturer.getManufacturerId())
+                        || db.accessoriesDao().hasManufacturer(manufacturer.getManufacturerId())) {
+                            Toast.makeText(context, "לא ניתן למחוק את היצרן כי כבר נוספו לו מוצרים",
+                                    Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            return;
+                        }
                         manufacturerList.remove(manufacturer);
                         filteredList.remove(manufacturer);
                         notifyDataSetInvalidated();
                         ((ManagerActivity) context).updateManufacturerList(manufacturerList);
+                        db.manufacturersDao().delete(manufacturer);
                         dialog.dismiss();
                     }
                 });

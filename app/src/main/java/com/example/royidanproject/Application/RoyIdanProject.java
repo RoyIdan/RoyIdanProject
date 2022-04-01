@@ -6,6 +6,8 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
@@ -54,7 +56,6 @@ public class RoyIdanProject extends Application {
         firstActivity = MainActivity.class;
 
         isMusicServiceRunning = false;
-        currentSong = Song.elevator;
 
         db = AppDatabase.getInstance(getApplicationContext());
         if (true) { // use fake products
@@ -62,6 +63,14 @@ public class RoyIdanProject extends Application {
                 addSampleManager(); // s32334@nhs.co.il : 123
                 addSampleProducts();
             }
+        }
+
+        SharedPreferences settingsSp = getSharedPreferences("SP_SETTINGS", 0);
+        int currMusicId = settingsSp.getInt("musicId", 0);
+        if (currMusicId <= 0) {
+            currentSong = Song.elevator;
+        } else {
+            currentSong = Song.values()[currMusicId];
         }
 
         startService();
@@ -118,7 +127,7 @@ public class RoyIdanProject extends Application {
 
         CreditCard cc = new CreditCard();
         cc.setCardBalance(100000D);
-        cc.setCardCompany(CreditCard.CardCompany.VISA);
+        cc.setCardCompany(CreditCard.CardCompany.לאומי);
         cc.setCardNumber("1234567890123456");
         cc.setCardExpireDate(cardDate);
         cc.setCvv("123");
@@ -180,7 +189,7 @@ public class RoyIdanProject extends Application {
     }
 
     public enum Song {
-        elevator, spring_in_my_step
+        elevator, spring_in_my_step, retail_store
     }
 
     public int getSongId() {
@@ -189,6 +198,8 @@ public class RoyIdanProject extends Application {
                 return R.raw.music_elevator;
             case spring_in_my_step:
                 return R.raw.music_spring_in_my_step;
+            case retail_store:
+                return R.raw.music_retail_store;
             default:
                 return 0;
         }

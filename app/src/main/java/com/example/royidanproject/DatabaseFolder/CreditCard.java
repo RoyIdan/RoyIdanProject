@@ -20,7 +20,7 @@ public class CreditCard implements Serializable {
     private CardCompany cardCompany;
 
     public enum CardCompany {
-        AMERICAN_EXPRESS, ISRACARD, MASTERCARD, VISA
+        אמריקן, ישראכרט, מאסטרכארד, לאומי
     }
 
     public long getCardId() {

@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -34,6 +35,7 @@ import android.widget.Toast;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.CitiesIsrael;
+import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.UserImages;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.Validator;
@@ -66,6 +68,21 @@ public class RegisterActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private AppDatabase db;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     private void setViewPointers() {
         etName = findViewById(R.id.etName);
@@ -98,6 +115,9 @@ public class RegisterActivity extends AppCompatActivity {
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
         db = AppDatabase.getInstance(RegisterActivity.this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(RegisterActivity.this, toolbar);
 
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override

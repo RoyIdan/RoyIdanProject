@@ -26,6 +26,7 @@ import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Rating;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.ToolbarManager;
@@ -294,29 +295,19 @@ public class GalleryActivity extends AppCompatActivity {
         if (orderBy == 0) {
 
         } else if (orderBy == 1) {
-            List<Manufacturer> manufacturers = db.manufacturersDao().getAll();
             orderByName(list);
 
             Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
-                    Manufacturer m1 = null, m2 = null;
-                    for (Manufacturer m : manufacturers) {
-                        if (m.getManufacturerId() == product.getManufacturerId()) {
-                            m1 = m;
-                            if (m2 != null) {
-                                break;
-                            }
-                        }
-                        if (m.getManufacturerId() == t1.getManufacturerId()) {
-                            m2 = m;
-                            if (m1 != null) {
-                                break;
-                            }
-                        }
-                    }
+                    int table1 = product instanceof Smartphone ? 1 :
+                            (product instanceof Watch ? 2 : 3);
+                    int table2 = t1 instanceof Smartphone ? 1 :
+                            (t1 instanceof Watch ? 2 : 3);
+                    float r1 = db.ratingsDao().getAverageByProduct(product.getProductId(), table1);
+                    float r2 = db.ratingsDao().getAverageByProduct(t1.getProductId(), table2);
 
-                    return m1.getManufacturerName().compareTo(m2.getManufacturerName());
+                    return (int) ((r2 - r1) * 100);
                 }
             });
         }
@@ -324,7 +315,7 @@ public class GalleryActivity extends AppCompatActivity {
             Collections.sort(list, new Comparator<Product>() {
                 @Override
                 public int compare(Product product, Product t1) {
-                    return (int) product.getProductPrice() - (int) t1.getProductPrice();
+                    return (int) (product.getProductPrice() -  t1.getProductPrice());
                 }
             });
         }

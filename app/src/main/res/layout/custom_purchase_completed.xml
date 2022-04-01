@@ -6,64 +6,214 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="320dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layoutDirection="rtl">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll1"
+        android:visibility="visible">
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="התשלום מתבצע..."
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="25sp" />
+            android:orientation="horizontal"
+            android:layoutDirection="rtl">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="התשלום מתבצע..."
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layoutDirection="rtl"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:text="מתחבר לשירות..." />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <ProgressBar
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:indeterminate="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll2"
+        android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layoutDirection="rtl"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:orientation="horizontal" >
+            android:layout_width="320dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="נדרש אימות נוסף."
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:text="על מנת לאמת את זהותך חברת האשראי שלך שלחה לך קוד אימות חד פעמי לביצוע הרכישה." />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="אנא הזן את הקוד שקיבלת בSMS:" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:hint="קוד של 6 ספרות"
+                    android:digits="0123456789"
+                    android:maxLength="6"
+                    android:id="@+id/etCode" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="אשר"
+                    android:id="@+id/btnSubmit" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll3"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="התשלום בוצע בהצלחה!"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_gravity="center"
-                android:text="מתחבר לשירות..." />
-
+                android:text="הזמנה מספר XXX בוצעה בהצלחה והמוצרים יגיעו אליך לבית בתוך 7 ימי עסקים."
+                android:id="@+id/tvOrderConfirmed" />
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/loadingPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" >
-
-            <ProgressBar
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:indeterminate="true" />
-        </RelativeLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="לצפייה בפרטי הזמנה"
+                android:textSize="18sp" />
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="לחץ כאן"
+                android:textSize="22sp"
+                android:id="@+id/btnOrderDetails" />
+
+        </LinearLayout>
+
     </LinearLayout>
-
-
 
 </LinearLayout>

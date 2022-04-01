@@ -6,24 +6,21 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.telephony.SmsManager;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.royidanproject.Adapters.CreditCardsAdapter;
+import com.example.royidanproject.Adapters.ReviewsAdapter;
 import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
@@ -32,15 +29,15 @@ import com.example.royidanproject.DatabaseFolder.Manufacturer;
 import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.OrderDetails;
 import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.DatabaseFolder.Rating;
 import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.OrderActivity;
 import com.example.royidanproject.R;
-import com.example.royidanproject.ReceiptActivity;
-import com.example.royidanproject.Views.CreditCardView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,13 +46,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.SEND_SMS;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static androidx.core.content.PermissionChecker.PERMISSION_DENIED;
-import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 import static com.example.royidanproject.MainActivity.ADMIN_PHONE;
+import static com.example.royidanproject.MainActivity.SMS_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class Dialogs {
@@ -85,7 +79,7 @@ public class Dialogs {
 
                 Users user = db.usersDao().getUserByLogin(email, password);
                 if (user == null) {
-                    ((TextView)dialog.findViewById(R.id.tvError)).setText("Name or password are incorrect.");
+                    ((TextView)dialog.findViewById(R.id.tvError)).setText("האימייל או הסיסמה שגויים.");
                 }
                 else {
                     SharedPreferences.Editor editor = context.getSharedPreferences(SP_NAME, 0).edit();
@@ -100,6 +94,75 @@ public class Dialogs {
                     ((AppCompatActivity) context).finish();
                     dialog.dismiss();
                 }
+            }
+        });
+
+        dialog.findViewById(R.id.tvForgotPassword).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppDatabase db = AppDatabase.getInstance(context);
+                EditText etEmail = dialog.findViewById(R.id.etEmail);
+                String email = etEmail.getText().toString().trim();
+                Users user = db.usersDao().getUserByEmail(email);
+                if (user == null) {
+                    ((TextView)dialog.findViewById(R.id.tvError)).setText("האימייל לא קיים במערכת.");
+                    return;
+                }
+
+                View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_forgot_password, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog forgotPassswordDialog = alert.create();
+                forgotPassswordDialog.setCanceledOnTouchOutside(false);
+                forgotPassswordDialog.show();
+
+                //String phone = user.getUserPhone();
+                String phone = SMS_PHONE;
+
+                TextView tvSubtitle = forgotPassswordDialog.findViewById(R.id.tvSubtitle);
+                tvSubtitle.setText("הסיסמה תישלח אל " + phone + ".");
+                forgotPassswordDialog.findViewById(R.id.btnYes).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendSMS();
+                        forgotPassswordDialog.dismiss();
+                    }
+
+                    private void sendSMS() {
+                        SmsManager smsManager = SmsManager.getDefault();
+                        StringBuilder builder = new StringBuilder();
+
+                        if (ContextCompat.checkSelfPermission(((AppCompatActivity)context), SEND_SMS) == PERMISSION_DENIED) {
+                            ActivityCompat.requestPermissions(((AppCompatActivity)context), new String[]{
+                                    SEND_SMS
+                            }, 1);
+                            sendSMS();
+                        }
+
+                        builder.append("שלום ");
+                        builder.append(user.getUserName());
+                        builder.append(" ");
+                        builder.append(user.getUserSurname());
+                        builder.append(", הסיסמה שלך היא: ");
+                        builder.append("\n");
+                        builder.append(user.getUserPassword());
+                        builder.append("\n");
+                        builder.append("בברכה, רועי סלולר.");
+
+                        String msg = builder.toString();
+
+                        ArrayList<String> parts = smsManager.divideMessage(msg);
+
+                        smsManager.sendMultipartTextMessage(SMS_PHONE, null, parts, null, null);
+                    }
+                });
+
+                forgotPassswordDialog.findViewById(R.id.btnNo).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        forgotPassswordDialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -181,7 +244,7 @@ public class Dialogs {
         return dialog;
     }
 
-    public static Dialog createProductDialog(Context context, Product product) {
+    public static void createProductDialog(Context context, Product product) {
         View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_product_detailed, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setView(promptDialog);
@@ -197,9 +260,39 @@ public class Dialogs {
             }
         });
 
+        dialog.findViewById(R.id.btnReviews).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_product_reviews, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(promptDialog);
+                final AlertDialog reviewsDialog = alert.create();
+                reviewsDialog.setCanceledOnTouchOutside(false);
+                reviewsDialog.show();
+
+                ((TextView) reviewsDialog.findViewById(R.id.tvProductName)).setText(product.getProductName());
+
+                reviewsDialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        reviewsDialog.dismiss();
+                    }
+                });
+
+                int table = product instanceof Smartphone ? 1 :
+                        (product instanceof Watch ? 2 : 3);
+                List<Rating> ratingList = AppDatabase.getInstance(context).
+                        ratingsDao().getAllByProduct(product.getProductId(), table);
+                ReviewsAdapter adapter = new ReviewsAdapter(context, ratingList);
+
+                ListView lvReviews = reviewsDialog.findViewById(R.id.lvReviews);
+                lvReviews.setAdapter(adapter);
+
+            }
+        });
+
         createProductDialog_setData(context, dialog, product);
 
-        return dialog;
     }
     private static void createProductDialog_setData(Context context, Dialog dialog, Product product) {
         TextView tvTitle = dialog.findViewById(R.id.tvTitle);
@@ -379,7 +472,7 @@ public class Dialogs {
 
         String msg = builder.toString();
 
-        smsManager.sendTextMessage("0509254011", null, msg, null, null);
+        smsManager.sendTextMessage(SMS_PHONE, null, msg, null, null);
     }
 
     private static void createSubmitPurchaseDialog_setData(Context context, Dialog dialog, double totalPrice) {

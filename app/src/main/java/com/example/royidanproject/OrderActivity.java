@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.OrderDetails;
 import com.example.royidanproject.Utility.CommonMethods;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,21 @@ public class OrderActivity extends AppCompatActivity {
     Button btnReceipt, btnMainActivity;
     ListView lvDetails;
     AppDatabase db;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +50,9 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         db = AppDatabase.getInstance(OrderActivity.this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(OrderActivity.this, toolbar);
 
         tvOrderNumber = findViewById(R.id.tvOrderNumber);
         tvOrderDate = findViewById(R.id.tvOrderDate);

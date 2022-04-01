@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.example.royidanproject.Adapters.UsersAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Users;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -43,6 +45,21 @@ public class UsersActivity extends AppCompatActivity {
     AppDatabase db;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +68,9 @@ public class UsersActivity extends AppCompatActivity {
 
         sp = getSharedPreferences(SP_NAME, 0);
         editor = sp.edit();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(UsersActivity.this, toolbar);
 
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnMainActivity.setOnClickListener(new View.OnClickListener() {

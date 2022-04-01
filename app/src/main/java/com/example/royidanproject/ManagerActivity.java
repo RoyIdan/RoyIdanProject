@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -41,6 +42,7 @@ import com.example.royidanproject.DatabaseFolder.Smartphone;
 import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -69,6 +71,21 @@ public class ManagerActivity extends AppCompatActivity {
     private String description;
     private int previousId = 0;
     private AppDatabase db;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     private void assignPointers() {
         btnProducts = findViewById(R.id.btnProducts);
@@ -193,6 +210,9 @@ public class ManagerActivity extends AppCompatActivity {
         db = AppDatabase.getInstance(ManagerActivity.this);
 
         assignPointers();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(ManagerActivity.this, toolbar);
 
         createSpinnerData();
 

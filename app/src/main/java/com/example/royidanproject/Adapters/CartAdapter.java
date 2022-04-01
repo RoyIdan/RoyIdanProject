@@ -37,6 +37,7 @@ import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.UsersActivity;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
+import com.example.royidanproject.Utility.TransactionManager;
 
 import java.io.File;
 import java.io.Serializable;
@@ -227,7 +228,8 @@ public class CartAdapter extends BaseAdapter {
             public void onClick(View view) {
                 List<CartDetails> list = new LinkedList<>();
                 list.add(details);
-                Dialogs.createSubmitPurchaseDialog(context, list);
+                //Dialogs.createSubmitPurchaseDialog(context, list);
+                new TransactionManager(context, list);
             }
         });
 

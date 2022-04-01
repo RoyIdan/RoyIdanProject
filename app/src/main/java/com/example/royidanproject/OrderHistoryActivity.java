@@ -1,6 +1,7 @@
 package com.example.royidanproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,15 +20,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.royidanproject.Adapters.OrderHistoryAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.OrderDetails;
+import com.example.royidanproject.DatabaseFolder.Users;
+import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,12 +46,28 @@ public class OrderHistoryActivity extends AppCompatActivity {
     RadioGroup rgOrderHistory;
     RadioButton rbManagerOnly, rbEveryone;
     EditText etFromDate, etUntilDate, etFilter;
+    Spinner spiCustomer;
     ListView lvOrderHistory;
     AppDatabase db;
     SharedPreferences sp;
 
     List<Order> orders;
     OrderHistoryAdapter adapter;
+    private ToolbarManager toolbarManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toolbarManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        toolbarManager.onDestroy();
+    }
 
     private void setViewPointers() {
         btnMainActivity = findViewById(R.id.btnMainActivity);
@@ -54,6 +77,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         etFromDate = findViewById(R.id.etFromDate);
         etUntilDate = findViewById(R.id.etUntilDate);
         etFilter = findViewById(R.id.etFilter);
+        spiCustomer = findViewById(R.id.spiCustomer);
         lvOrderHistory = findViewById(R.id.lvOrderHistory);
     }
 
@@ -65,16 +89,31 @@ public class OrderHistoryActivity extends AppCompatActivity {
         db = AppDatabase.getInstance(OrderHistoryActivity.this);
         sp = getSharedPreferences(SP_NAME, 0);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(OrderHistoryActivity.this, toolbar);
+
         orders = new LinkedList<>();
 
         setViewPointers();
 
         if (sp.getBoolean("admin", false)) {
             orders = db.ordersDao().getAll();
+
+            List<Users> users = new ArrayList<>();
+            Users fake = new Users();
+            fake.setUserName("הצג את");
+            fake.setUserSurname("כולם");
+            users.add(fake);
+            users.addAll(db.usersDao().getAll_sorted());
+            ArrayAdapter<Users> adapter = new ArrayAdapter<Users>(
+                    OrderHistoryActivity.this, R.layout.support_simple_spinner_dropdown_item, users);
+            spiCustomer.setAdapter(adapter);
+            spiCustomer.setSelection(0);
         } else {
             long userId = sp.getLong("id", 0);
             orders = db.ordersDao().getByCustomerId(userId);
             rgOrderHistory.setVisibility(View.GONE);
+            spiCustomer.setVisibility(View.GONE);
         }
 
         adapter = new OrderHistoryAdapter(OrderHistoryActivity.this, orders);
@@ -87,8 +126,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 if (checkedId == rbManagerOnly.getId()) {
                     long userId = sp.getLong("id", 0);
                     orders = db.ordersDao().getByCustomerId(userId);
+                    spiCustomer.setVisibility(View.GONE);
                 } else {
                     orders = db.ordersDao().getAll();
+                    spiCustomer.setVisibility(View.VISIBLE);
                 }
                 adapter.updateList(orders);
                 adapter.getFilter().filter(etFilter.getText().toString().trim());
@@ -139,6 +180,27 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
             }
         });
+
+        spiCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    orders = db.ordersDao().getAll();
+                } else {
+                    Users user = (Users) parent.getSelectedItem();
+                    orders = db.ordersDao().getByCustomerId(user.getUserId());
+                }
+                adapter.updateList(orders);
+                adapter.getFilter().filter(etFilter.getText().toString().trim());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     private void buildDateDialog(int view) {

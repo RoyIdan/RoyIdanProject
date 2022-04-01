@@ -88,6 +88,7 @@ public class TestingActivity extends AppCompatActivity {
         ((ListView) findViewById(R.id.contact_listview)).setAdapter(adapter);
     }
 
+    @SuppressLint("Range")
     private ArrayList<Contact> readContacts() {
         ArrayList<Contact> contactList = new ArrayList<Contact>();
 

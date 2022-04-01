@@ -27,6 +27,15 @@ public interface SmartphonesDao extends IProductDao {
     @Query("UPDATE tblSmartphones SET productStock = :stock WHERE productId = :id")
     void updateStockById(long id, int stock);
 
+    @Query("SELECT CASE WHEN EXISTS (" +
+            "SELECT *" +
+            "FROM [tblSmartphones]" +
+            "WHERE manufacturerId = :manufacturerId" +
+            ")" +
+            "THEN CAST(1 AS BIT)" +
+            "ELSE CAST(0 AS BIT) END")
+    boolean hasManufacturer(long manufacturerId);
+
     @Query("SELECT * FROM tblSmartphones WHERE manufacturerId = :manufacturerId")
     List<Smartphone> getByManufacturerId(long manufacturerId);
 

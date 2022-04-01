@@ -2,6 +2,7 @@ package com.example.royidanproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,8 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.Dialogs;
+import com.example.royidanproject.Utility.ToolbarManager;
+import com.example.royidanproject.Utility.TransactionManager;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -50,23 +53,20 @@ public class CartActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
 
     TextView tvTotalPrice;
+    private ToolbarManager toolbarManager;
 
-    public void addToTotalPrice(double amount) {
-        String current = tvTotalPrice.getText().toString().trim();
-        double currentVal = Double.parseDouble(current.trim().substring(1));
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        double newVal = currentVal + amount;
-
-        tvTotalPrice.setText('₪' + fmt(newVal));
+        toolbarManager.onResume();
     }
 
-    public void removeFromTotalPrice(double amount) {
-        String current = tvTotalPrice.getText().toString().trim();
-        double currentVal = Double.parseDouble(current.trim().substring(1));
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        double newVal = currentVal - amount;
-
-        tvTotalPrice.setText('₪' + fmt(newVal));
+        toolbarManager.onDestroy();
     }
 
     public void setTotalPrice(double totalPrice) {
@@ -83,6 +83,9 @@ public class CartActivity extends AppCompatActivity {
         editor = sp.edit();
 
         db = AppDatabase.getInstance(CartActivity.this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarManager = new ToolbarManager(CartActivity.this, toolbar);
 
         btnMainActivity = findViewById(R.id.btnMainActivity);
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +120,8 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
-                Dialogs.createSubmitPurchaseDialog(CartActivity.this, detailsList);
+                //Dialogs.createSubmitPurchaseDialog(CartActivity.this, detailsList);
+                new TransactionManager(CartActivity.this, detailsList);
             }
         });
     }

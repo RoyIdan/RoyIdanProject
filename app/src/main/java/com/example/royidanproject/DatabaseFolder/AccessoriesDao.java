@@ -18,6 +18,15 @@ public interface AccessoriesDao extends IProductDao {
     @Query("SELECT * FROM tblAccessories WHERE productStock > 0")
     List<Accessory> getAll_whereInStock();
 
+    @Query("SELECT CASE WHEN EXISTS (" +
+            "SELECT *" +
+            "FROM [tblaccessories]" +
+            "WHERE manufacturerId = :manufacturerId" +
+            ")" +
+            "THEN CAST(1 AS BIT)" +
+            "ELSE CAST(0 AS BIT) END")
+    boolean hasManufacturer(long manufacturerId);
+
 
     @Query("SELECT * FROM tblAccessories ORDER BY productName")
     List<Accessory> getAll_orderByName();

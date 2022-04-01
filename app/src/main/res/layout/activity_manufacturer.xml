@@ -10,6 +10,8 @@
     android:layoutDirection="ltr"
     android:focusableInTouchMode="true" >
 
+    <include layout="@layout/custom_toolbar" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +19,6 @@
         android:layout_gravity="center"
         android:textSize="20dp"
         android:text="דף יצרן: Apple" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="חזרה לדף הראשי"
-        android:textSize="20sp"
-        android:id="@+id/btnMainActivity" />
 
 
     <LinearLayout
@@ -186,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
-            android:text="filter"
+            android:text="סנן"
             android:id="@+id/btnFilter" />
 
         <TextView

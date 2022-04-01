@@ -203,16 +203,16 @@ public class CreditCardView extends LinearLayout {
         CardCompany cc;
         switch(ordinal) {
             case 0:
-                cc = CardCompany.AMERICAN_EXPRESS;
+                cc = CardCompany.אמריקן;
                 break;
             case 1:
-                cc = CardCompany.ISRACARD;
+                cc = CardCompany.ישראכרט;
                 break;
             case 2:
-                cc = CardCompany.MASTERCARD;
+                cc = CardCompany.מאסטרכארד;
                 break;
             default:
-                cc = CardCompany.VISA;
+                cc = CardCompany.לאומי;
                 break;
         }
 
@@ -222,16 +222,16 @@ public class CreditCardView extends LinearLayout {
     public void setCardCompany(CardCompany cardCompany) {
         int resId;
         switch (cardCompany) {
-            case VISA:
-                resId = R.drawable.visa;
+            case לאומי:
+                resId = R.drawable.leumi;
                 break;
-            case ISRACARD:
+            case ישראכרט:
                 resId = R.drawable.isracard;
                 break;
-            case MASTERCARD:
+            case מאסטרכארד:
                 resId = R.drawable.mastercard;
                 break;
-            case AMERICAN_EXPRESS:
+            case אמריקן:
                 resId = R.drawable.american;
                 break;
             default:

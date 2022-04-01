@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textSize="50sp"
+            android:textSize="43sp"
             android:text="רועי סלולר"
             android:maxLines="1"
             android:id="@+id/tvAppName" />
@@ -28,8 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="-50dp"
-            android:textSize="50sp"
+            android:textSize="43sp"
             android:text="רועי סלולר"
             android:maxLines="1"
             android:id="@+id/tvAppName2" />
@@ -47,20 +46,6 @@
         android:text="שלום אורח"
         android:id="@+id/tvTitle"
         />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="שנה שיר:"
-        android:layout_gravity="center"
-        android:textSize="20sp" />
-
-    <Spinner
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:id="@+id/spiSongs" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -158,6 +143,23 @@
         android:text="דף מוצרים"
         android:layout_gravity="center"
         android:id="@+id/btnGalleryActivity" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="אנשי קשר"
+        android:layout_gravity="center"
+        android:id="@+id/btnContactsActivity" />
+
+    <Button
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="הגדרות"
+        android:id="@+id/btnSettingsActivity"/>
 
     <Button
         android:layout_marginTop="5dp"

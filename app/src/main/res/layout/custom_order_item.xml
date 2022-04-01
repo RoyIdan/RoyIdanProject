@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="דירוג נוכחי: אין"
-            android:autoSizeTextType="uniform"
+            android:textSize="17sp"
             android:id="@+id/tvCurrentRating"/>
 
     </LinearLayout>
