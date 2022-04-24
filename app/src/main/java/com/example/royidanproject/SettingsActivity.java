@@ -19,6 +19,7 @@ import com.example.royidanproject.Application.RoyIdanProject;
 import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -92,6 +93,8 @@ public class SettingsActivity extends AppCompatActivity {
                 SMS_PHONE = s.toString().trim();
             }
         });
+
+        Currency shekel = new Currency()
 
     }
 }

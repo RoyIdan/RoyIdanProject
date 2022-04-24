@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -54,6 +55,17 @@ public class TransactionManager {
     private double totalPrice;
     private CreditCard card;
 
+    private TextView tvError;
+
+    private Dialog processDialog;
+
+    private static class ErrorCode {
+        private static int NO_CARD_SELECTED = 1;
+        private static int CARD_EXPIRED = 2;
+        private static int INSUFFICIENT_FUNDS = 3;
+    }
+
+
     public TransactionManager(Context context, List<CartDetails> detailsList) {
         this.context = context;
 
@@ -71,6 +83,7 @@ public class TransactionManager {
 
         Button btnBuy = dialog.findViewById(R.id.btnBuy);
         Spinner spiCreditCard = dialog.findViewById(R.id.spiCreditCard);
+        tvError = dialog.findViewById(R.id.tvError);
 
         dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,28 +105,22 @@ public class TransactionManager {
             @Override
             public void onClick(View view) {
 
-//                tvError.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
                 ArrayAdapter<CreditCard> adapter = (ArrayAdapter<CreditCard>) spiCreditCard.getAdapter();
                 card = (CreditCard) spiCreditCard.getSelectedItem();
-//                if (adapter.isEmpty()) {
-//                    tvError.setVisibility(View.VISIBLE);
-//                    tvError.setText("אין לך כרטיסי אשראי");
-//                    return;
-//                }
-//                if (card.getCardExpireDate().before(new Date())) {
-//                    tvError.setVisibility(View.VISIBLE);
-//                    tvError.setText("הכרטיס פג תוקף");
-//                    return;
-//                }
-//                if (card.getCardBalance() < finalTotalPrice) {
-//                    tvError.setVisibility(View.VISIBLE);
-//                    tvError.setText("אין מספיק כסף בכרטיס");
-//                    return;
-//                }
+                if (adapter.isEmpty()) {
+                    setError(ErrorCode.NO_CARD_SELECTED);
+                    return;
+                }
+                if (card.getCardExpireDate().before(new Date())) {
+                    setError(ErrorCode.CARD_EXPIRED);
+                    return;
+                }
+
                 View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_purchase_completed, null);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                 alert.setView(promptDialog);
-                Dialog processDialog = alert.create();
+                processDialog = alert.create();
                 processDialog.setCanceledOnTouchOutside(false);
                 processDialog.show();
 
@@ -134,6 +141,23 @@ public class TransactionManager {
 
             }
         });
+    }
+
+    private void setError(int errorCode) {
+
+        tvError.setVisibility(View.VISIBLE);
+
+        switch (errorCode) {
+            case 1:
+                tvError.setText("אין לך כרטיסי אשראי");
+                break;
+            case 2:
+                tvError.setText("הכרטיס פג תוקף");
+                break;
+            case 3:
+                tvError.setText("אין מספיק כסף בכרטיס");
+                break;
+        }
     }
 
     private void proceedToLL2(Dialog processDialog) {
@@ -168,6 +192,11 @@ public class TransactionManager {
                         @Override
                         public boolean handleMessage(@NonNull Message msg) {
                             ll1.setVisibility(View.GONE);
+                            if (card.getCardBalance() < totalPrice) {
+                                processDialog.dismiss();
+                                setError(ErrorCode.INSUFFICIENT_FUNDS);
+                                return true;
+                            }
                             ll3.setVisibility(View.VISIBLE);
                             proceedToLL3(processDialog);
                             return true;

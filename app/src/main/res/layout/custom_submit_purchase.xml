@@ -111,8 +111,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textDirection="rtl"
+            android:lines="1"
+            android:textColor="#ff0000"
             android:visibility="gone"
-            android:id="@+id/tvError" />
+            android:textSize="20sp"
+            android:id="@+id/tvError"/>
 
 
         <Button

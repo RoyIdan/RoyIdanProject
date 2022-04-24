@@ -148,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="אנשי קשר"
+        android:text="הזמן חברים"
         android:layout_gravity="center"
         android:id="@+id/btnContactsActivity" />
 
