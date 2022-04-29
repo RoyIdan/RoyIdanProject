@@ -32,6 +32,7 @@ import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.TransactionManager;
+import com.example.royidanproject.Utility.CommonMethods.*;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
+import static com.example.royidanproject.Utility.CommonMethods.fmt;
 import static com.example.royidanproject.Utility.Dialogs.createLoginDialog;
 
 public class CartActivity extends AppCompatActivity {
@@ -132,13 +134,5 @@ public class CartActivity extends AppCompatActivity {
 
     private void toast(String message) {
         Toast.makeText(CartActivity.this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return new DecimalFormat("#.##").format(d);
     }
 }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.royidanproject.Custom.Currency;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Manufacturer;
@@ -23,6 +24,7 @@ import com.example.royidanproject.DatabaseFolder.Watch;
 import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.Services.MusicService;
+import com.example.royidanproject.Utility.CurrencyManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +76,8 @@ public class RoyIdanProject extends Application {
         }
 
         startService();
+
+        CurrencyManager.setCurrentCurrency(Currency.getCurrency(settingsSp.getInt("currencyId", 0)));
 
 //        startActivity(new Intent(getApplicationContext(), MainActivity.class).
 //                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

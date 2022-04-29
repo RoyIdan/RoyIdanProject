@@ -67,8 +67,113 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="22/12/22 22:22:22"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:id="@+id/tvReceiptDate"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שם הלקוח:"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="רועי עידן"
+            android:textSize="25sp"
+            android:id="@+id/tvReceiptCustomer"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="טלפון לקוח:"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textDirection="ltr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0505050505"
+            android:textSize="23sp"
+            android:id="@+id/tvReceiptPhone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="כתובת למשלוח:"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="האורן 73"
+            android:textSize="25sp"
+            android:id="@+id/tvReceiptAddress"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="עיר:"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="תל אביב"
+            android:textSize="25sp"
+            android:id="@+id/tvReceiptCity"/>
 
     </LinearLayout>
 
@@ -96,6 +201,33 @@
             android:text="xxxx-xxxx-xxxx-1234"
             android:textSize="25sp"
             android:id="@+id/tvReceiptCreditCard"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חברת אשראי:"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textDirection="ltr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="מאסטרכרד"
+            android:textSize="25sp"
+            android:id="@+id/tvReceiptCreditCardCompany"/>
 
     </LinearLayout>
 

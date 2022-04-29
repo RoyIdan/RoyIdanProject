@@ -16,10 +16,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.royidanproject.Application.RoyIdanProject;
+import com.example.royidanproject.Custom.Currency;
+import com.example.royidanproject.Utility.CurrencyManager;
 import com.example.royidanproject.Utility.ToolbarManager;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -48,7 +54,9 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbarManager = new ToolbarManager(SettingsActivity.this, toolbar);
 
-        SharedPreferences.Editor editor = getSharedPreferences("SP_SETTINGS", 0).edit();
+        SharedPreferences sp = getSharedPreferences("SP_SETTINGS", 0);
+
+        SharedPreferences.Editor editor = sp.edit();
         List<RoyIdanProject.Song> songs = Arrays.asList(RoyIdanProject.Song.values());
         ArrayAdapter<RoyIdanProject.Song> songsAdapter = new ArrayAdapter<RoyIdanProject.Song>(SettingsActivity.this,
                 R.layout.support_simple_spinner_dropdown_item, songs);
@@ -94,7 +102,30 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        Currency shekel = new Currency()
+        Currency currency = new Currency();
+
+        List<Currency> currencies = Currency.getCurrencies();
+        ArrayAdapter<Currency> currencyAdapter = new ArrayAdapter<Currency>(SettingsActivity.this,
+                R.layout.support_simple_spinner_dropdown_item, currencies);
+        Spinner spiCurrency = findViewById(R.id.spiCurrency);
+        spiCurrency.setAdapter(currencyAdapter);
+        spiCurrency.setSelection(sp.getInt("currencyId", 0), false);
+        spiCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CurrencyManager.setCurrentCurrency(currencies.get(position));
+                editor.putInt("currencyId", position);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        // https://www.codespeedy.com/create-real-time-currency-converter-app-in-android-studio/
 
     }
 }

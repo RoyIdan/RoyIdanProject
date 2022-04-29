@@ -31,11 +31,11 @@
 
     <TextView
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:paddingHorizontal="20dp"
+        android:layout_marginTop="25dp"
         android:layout_gravity="center"
-        android:layout_marginTop="-70dp"
         android:gravity="center"
         android:text="ברוכים הבאים לאפליקציה ששיגעה את המדינה!\n
 רוצים להתחדש במכשיר סלולרי	 חדש מבלי לצאת מהבית?\n
@@ -51,5 +51,23 @@
 אז מה נשאר לכם? \n
 להיכנס לגלריית המוצרים, לבחור את המוצר החדש שלכם, ותוך 7 ימי עסקים זה אצלכם!
 " />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:text="למידע נוסף ניתן לשלוח לנו הודעה באימייל:"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="s32334@nhs.co.il"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="3dp"
+        android:textColor="#0000ff"
+        android:id="@+id/tvSendEmail" />
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import com.example.royidanproject.Adapters.ReceiptAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.Order;
+import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.Utility.ToolbarManager;
 
 import java.text.DecimalFormat;
@@ -24,7 +25,8 @@ import static com.example.royidanproject.Utility.CommonMethods.fmt;
 
 public class ReceiptActivity extends AppCompatActivity {
 
-    TextView tvReceiptNumber, tvReceiptDate, tvReceiptCreditCard, tvReceiptBeforeVat, tvReceiptVat, tvReceiptTotalPrice;
+    TextView tvReceiptNumber, tvReceiptDate, tvReceiptCustomer, tvReceiptPhone, tvReceiptAddress, tvReceiptCity,
+            tvReceiptCreditCard, tvReceiptCreditCardCompany, tvReceiptBeforeVat, tvReceiptVat, tvReceiptTotalPrice;
     ListView lvDetails;
     Button btnReturn;
     ReceiptAdapter adapter;
@@ -57,7 +59,12 @@ public class ReceiptActivity extends AppCompatActivity {
 
         tvReceiptNumber = findViewById(R.id.tvReceiptNumber);
         tvReceiptDate = findViewById(R.id.tvReceiptDate);
+        tvReceiptCustomer = findViewById(R.id.tvReceiptCustomer);
+        tvReceiptPhone = findViewById(R.id.tvReceiptPhone);
+        tvReceiptAddress = findViewById(R.id.tvReceiptAddress);
+        tvReceiptCity = findViewById(R.id.tvReceiptCity);
         tvReceiptCreditCard = findViewById(R.id.tvReceiptCreditCard);
+        tvReceiptCreditCardCompany = findViewById(R.id.tvReceiptCreditCardCompany);
         tvReceiptBeforeVat = findViewById(R.id.tvReceiptBeforeVat);
         tvReceiptVat = findViewById(R.id.tvReceiptVat);
         tvReceiptTotalPrice = findViewById(R.id.tvReceiptTotalPrice);
@@ -75,13 +82,20 @@ public class ReceiptActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+        Users user = db.usersDao().getUserById(order.getCustomerId());
+
         long creditCardId = order.getCreditCardId();
         CreditCard creditCard = db.creditCardDao().getById(creditCardId);
         String lastFourDigits = creditCard.getCardNumber().substring(12);
 
         tvReceiptNumber.setText(String.valueOf(order.getOrderId()));
         tvReceiptDate.setText(sdf.format(order.getOrderDatePurchased()));
+        tvReceiptCustomer.setText(user.getUserName() + " " + user.getUserSurname());
+        tvReceiptPhone.setText(user.getUserPhone());
+        tvReceiptAddress.setText(user.getUserAddress());
+        tvReceiptCity.setText(user.getUserCity());
         tvReceiptCreditCard.setText("xxxx-xxxx-xxxx-" + lastFourDigits);
+        tvReceiptCreditCardCompany.setText(creditCard.getCardCompany().toString());
 
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override

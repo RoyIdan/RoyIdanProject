@@ -1,22 +1,15 @@
 package com.example.royidanproject.Utility;
 
+import android.app.Application;
+
+import com.example.royidanproject.Application.RoyIdanProject;
+import com.example.royidanproject.Custom.Currency;
+
 import java.text.DecimalFormat;
 
+import androidx.annotation.NonNull;
+
 public class CurrencyManager {
-
-    private class Currency {
-        //private String name;
-        private char symbol;
-        private double exchangeRate; // shekel to it's value exchange rate.
-
-        private double getExchangeRate() {
-            return exchangeRate;
-        }
-
-        public char getSymbol() {
-            return symbol;
-        }
-    }
 
     private static Currency currentCurrency;
 
@@ -29,6 +22,10 @@ public class CurrencyManager {
     }
 
     public static String formatPrice(double priceInShekel) {
+        if (currentCurrency == null) {
+            currentCurrency = new Currency("שקל חדש", '₪', 1);
+        }
+
         double priceInCurr = priceInShekel * currentCurrency.getExchangeRate();
         char symbol = currentCurrency.getSymbol();
 
@@ -38,4 +35,6 @@ public class CurrencyManager {
             return symbol + new DecimalFormat("#.##").format(priceInCurr);
 
     }
+
+
 }

@@ -29,6 +29,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
+import static com.example.royidanproject.Utility.CommonMethods.fmt;
 
 public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
     private Context context;
@@ -111,14 +112,6 @@ public class OrderHistoryAdapter extends BaseAdapter implements Filterable {
 
 
         return view;
-    }
-
-    private static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return "₪" + new DecimalFormat("#.##").format(d);
     }
 
     @Override

@@ -31,6 +31,8 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import static com.example.royidanproject.Utility.CommonMethods.fmt;
+
 public class CreditCardsAdapter extends BaseAdapter {
 
     private Context context;
@@ -141,7 +143,7 @@ public class CreditCardsAdapter extends BaseAdapter {
                 ccv.setCardExpireDate(card.getCardExpireDate());
                 ccv.setSpHolder();
                 ccv.setCardCompany(company);
-                tvCardBalance.setText('₪' + fmt(card.getCardBalance()));
+                tvCardBalance.setText(fmt(card.getCardBalance()));
 
                 btnAddBalance.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -154,7 +156,7 @@ public class CreditCardsAdapter extends BaseAdapter {
                         card.setCardBalance(newBalance);
                         db.creditCardDao().updateBalanceById(card.getCardId(), newBalance);
 
-                        tvCardBalance.setText('₪' + fmt(newBalance));
+                        tvCardBalance.setText(fmt(newBalance));
                     }
                 });
 
@@ -383,11 +385,5 @@ public class CreditCardsAdapter extends BaseAdapter {
         return ccv;
     }
 
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return new DecimalFormat("#.##").format(d);
-    }
+
 }

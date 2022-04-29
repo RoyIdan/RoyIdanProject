@@ -123,6 +123,7 @@
                 android:inputType="numberDecimal"
                 android:digits="1234567890."
                 android:textSize="20sp"
+                android:hint="בשקלים (₪)"
                 android:id="@+id/etAddBalance"/>
 
             <Button

@@ -53,6 +53,7 @@ import java.util.zip.Inflater;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
 import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
+import static com.example.royidanproject.Utility.CommonMethods.fmt;
 
 import androidx.annotation.RequiresApi;
 
@@ -161,12 +162,5 @@ public class ReceiptAdapter extends BaseAdapter {
         return view;
     }
 
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return new DecimalFormat("#.##").format(d);
-    }
 
 }

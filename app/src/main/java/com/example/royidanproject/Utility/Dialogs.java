@@ -217,6 +217,52 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
+
+        dialog.findViewById(R.id.tvSendEmail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createSendEmailDialog(context);
+            }
+        });
+    }
+
+    private static void createSendEmailDialog(Context context) {
+        View promptDialog = LayoutInflater.from(context).inflate(R.layout.custom_send_email, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(promptDialog);
+        final AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        dialog.findViewById(R.id.btnClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        long userId = context.getSharedPreferences(SP_NAME, 0).getLong("id", 0);
+        String userEmail = "";
+        if (userId != 0) {
+            userEmail = AppDatabase.getInstance(context).usersDao().getUserById(userId).getUserEmail();
+        }
+        ((EditText) dialog.findViewById(R.id.etSenderEmail)).setText(userEmail);
+
+        dialog.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = ((EditText)dialog.findViewById(R.id.etMessage)).getText().toString().trim();
+                String from = ((EditText) dialog.findViewById(R.id.etSenderEmail)).getText().toString().trim();
+
+                String[] emails = new String[] {"s32334@nhs.co.il"};
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_EMAIL, emails);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "מכתב צור קשר דרך רועי סלולר");
+                intent.putExtra(Intent.EXTRA_TEXT, message);
+                context.startActivity(Intent.createChooser(intent, from));
+            }
+        });
     }
 
     public static Dialog createGetDescriptionDialog(Context context) {
