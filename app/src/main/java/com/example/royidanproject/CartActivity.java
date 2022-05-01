@@ -1,48 +1,28 @@
 package com.example.royidanproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.royidanproject.Adapters.CartAdapter;
-import com.example.royidanproject.Adapters.UsersAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
-import com.example.royidanproject.DatabaseFolder.Users;
-import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ToolbarManager;
-import com.example.royidanproject.Utility.TransactionManager;
-import com.example.royidanproject.Utility.CommonMethods.*;
+import com.example.royidanproject.Utility.PurchaseManager;
 
-import java.io.File;
-import java.text.DecimalFormat;
-import java.util.LinkedList;
 import java.util.List;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
-import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 import static com.example.royidanproject.Utility.CommonMethods.fmt;
-import static com.example.royidanproject.Utility.Dialogs.createLoginDialog;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -123,7 +103,7 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 detailsList = db.cartDetailsDao().getCartDetailsByUserId(userId);
                 //Dialogs.createSubmitPurchaseDialog(CartActivity.this, detailsList);
-                new TransactionManager(CartActivity.this, detailsList);
+                new PurchaseManager(CartActivity.this, detailsList);
             }
         });
     }

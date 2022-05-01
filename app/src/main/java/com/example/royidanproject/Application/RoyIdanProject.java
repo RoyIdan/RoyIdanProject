@@ -3,13 +3,21 @@ package com.example.royidanproject.Application;
 import static com.example.royidanproject.DatabaseFolder.Watch.WatchColor.שחור;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +36,8 @@ import com.example.royidanproject.Utility.CurrencyManager;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Properties;
 
 public class RoyIdanProject extends Application {
     private AppDatabase db;
@@ -46,13 +56,15 @@ public class RoyIdanProject extends Application {
         super.onTerminate();
     }
 
+    private void toast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         instance = this;
-
-        //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
 
         isFirstRun = true;
         firstActivity = MainActivity.class;

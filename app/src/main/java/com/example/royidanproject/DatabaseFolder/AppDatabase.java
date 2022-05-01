@@ -15,7 +15,8 @@ import androidx.room.RoomDatabase;
         Order.class,
         OrderDetails.class,
         CartDetails.class,
-        CreditCard.class}
+        CreditCard.class,
+        Transaction.class}
         , version = 1)
 @androidx.room.TypeConverters({TypeConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -30,6 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract OrdersDao ordersDao();
     public abstract OrderDetailsDao orderDetailsDao();
     public abstract CreditCardDao creditCardDao();
+    public abstract TransactionsDao transactionsDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

@@ -19,6 +19,12 @@ public interface CreditCardDao {
     @Query("UPDATE tblCreditCards SET cardBalance = :cardBalance WHERE cardId = :cardId")
     void updateBalanceById(long cardId, double cardBalance);
 
+    @Query("SELECT cardBalance FROM tblCreditCards WHERE cardId = :cardId")
+    double getCardBalance(long cardId);
+
+    @Query("UPDATE tblCreditCards SET cardBalance = cardBalance + :balanceToAdd WHERE cardId = :cardId")
+    void addBalanceById(long cardId, double balanceToAdd);
+
     @Update
     void update(CreditCard creditCard);
 

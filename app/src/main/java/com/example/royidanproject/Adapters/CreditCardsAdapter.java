@@ -22,6 +22,7 @@ import com.example.royidanproject.DatabaseFolder.CreditCard;
 import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
+import com.example.royidanproject.Utility.TransactionManager;
 import com.example.royidanproject.Views.CreditCardView;
 
 import java.text.DecimalFormat;
@@ -154,7 +155,10 @@ public class CreditCardsAdapter extends BaseAdapter {
                         double bonusBalance = Double.parseDouble(etAddBalance.getText().toString().trim());
                         double newBalance = card.getCardBalance() + bonusBalance;
                         card.setCardBalance(newBalance);
-                        db.creditCardDao().updateBalanceById(card.getCardId(), newBalance);
+//                        db.creditCardDao().updateBalanceById(card.getCardId(), newBalance);
+
+                        TransactionManager.makeTransaction(context, TransactionManager.TransactionType.Deposit, userId,
+                                card.getCardId(), bonusBalance, "הפקדה של (₪" + bonusBalance + ")");
 
                         tvCardBalance.setText(fmt(newBalance));
                     }

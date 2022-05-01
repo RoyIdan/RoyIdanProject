@@ -1,62 +1,29 @@
 package com.example.royidanproject.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.os.UserHandle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.royidanproject.CartActivity;
-import com.example.royidanproject.DatabaseFolder.Accessory;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
 import com.example.royidanproject.DatabaseFolder.IProductDao;
-import com.example.royidanproject.DatabaseFolder.Order;
 import com.example.royidanproject.DatabaseFolder.Product;
-import com.example.royidanproject.DatabaseFolder.Smartphone;
-import com.example.royidanproject.DatabaseFolder.Users;
-import com.example.royidanproject.DatabaseFolder.Watch;
-import com.example.royidanproject.MainActivity;
 import com.example.royidanproject.R;
-import com.example.royidanproject.RegisterActivity;
-import com.example.royidanproject.UsersActivity;
-import com.example.royidanproject.Utility.Dialogs;
 import com.example.royidanproject.Utility.ProductImages;
-import com.example.royidanproject.Utility.TransactionManager;
+import com.example.royidanproject.Utility.PurchaseManager;
 
-import java.io.File;
-import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
-import java.util.zip.Inflater;
 
 import static com.example.royidanproject.MainActivity.SP_NAME;
-import static com.example.royidanproject.MainActivity.USERS_FOLDER_NAME;
 import static com.example.royidanproject.Utility.CommonMethods.fmt;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 public class CartAdapter extends BaseAdapter {
 
@@ -230,7 +197,7 @@ public class CartAdapter extends BaseAdapter {
                 List<CartDetails> list = new LinkedList<>();
                 list.add(details);
                 //Dialogs.createSubmitPurchaseDialog(context, list);
-                new TransactionManager(context, list);
+                new PurchaseManager(context, list);
             }
         });
 
