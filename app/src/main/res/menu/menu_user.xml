@@ -26,6 +26,12 @@
         android:orderInCategory="10"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_transactions_history"
+        android:title="היסטוריית העברות"
+        android:orderInCategory="10"
+        app:showAsAction="never" />
+
 
 
 

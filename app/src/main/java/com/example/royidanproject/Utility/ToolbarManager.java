@@ -26,6 +26,7 @@ import com.example.royidanproject.OrderHistoryActivity;
 import com.example.royidanproject.R;
 import com.example.royidanproject.RegisterActivity;
 import com.example.royidanproject.Services.MusicService;
+import com.example.royidanproject.TransactionsHistoryActivity;
 import com.example.royidanproject.UsersActivity;
 import com.example.royidanproject.Views.WifiView;
 
@@ -199,6 +200,9 @@ public class ToolbarManager {
                     return true;
                 case R.id.menu_cards:
                     startActivity(CreditCardsActivity.class);
+                    return true;
+                case R.id.menu_transactions_history:
+                    startActivity(TransactionsHistoryActivity.class);
                     return true;
                 default:
                     return false;

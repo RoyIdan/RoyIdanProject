@@ -63,6 +63,9 @@ public class TestingActivity extends AppCompatActivity {
         db = AppDatabase.getInstance(this);
         sp = getSharedPreferences(SP_NAME, 0);
 
+        startActivity(new Intent(this, TransactionsHistoryActivity.class));
+        finish();
+
         ((WifiView) findViewById(R.id.wifi)).startAnim();
 
 

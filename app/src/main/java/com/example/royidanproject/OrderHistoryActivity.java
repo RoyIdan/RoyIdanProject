@@ -43,8 +43,8 @@ import static com.example.royidanproject.MainActivity.SP_NAME;
 
 public class OrderHistoryActivity extends AppCompatActivity {
     Button btnMainActivity;
-    RadioGroup rgOrderHistory;
-    RadioButton rbManagerOnly, rbEveryone;
+//    RadioGroup rgOrderHistory;
+//    RadioButton rbManagerOnly, rbEveryone;
     EditText etFromDate, etUntilDate, etFilter;
     Spinner spiCustomer;
     ListView lvOrderHistory;
@@ -71,9 +71,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private void setViewPointers() {
         btnMainActivity = findViewById(R.id.btnMainActivity);
-        rgOrderHistory = findViewById(R.id.rgOrderHistory);
-        rbManagerOnly = findViewById(R.id.rbManagerOnly);
-        rbEveryone = findViewById(R.id.rbEveryone);
+        //rgOrderHistory = findViewById(R.id.rgOrderHistory);
+//        rbManagerOnly = findViewById(R.id.rbManagerOnly);
+//        rbEveryone = findViewById(R.id.rbEveryone);
         etFromDate = findViewById(R.id.etFromDate);
         etUntilDate = findViewById(R.id.etUntilDate);
         etFilter = findViewById(R.id.etFilter);
@@ -112,7 +112,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         } else {
             long userId = sp.getLong("id", 0);
             orders = db.ordersDao().getByCustomerId(userId);
-            rgOrderHistory.setVisibility(View.GONE);
+            //rgOrderHistory.setVisibility(View.GONE);
             spiCustomer.setVisibility(View.GONE);
         }
 
@@ -120,22 +120,22 @@ public class OrderHistoryActivity extends AppCompatActivity {
         lvOrderHistory.setAdapter(adapter);
 
 
-        rgOrderHistory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == rbManagerOnly.getId()) {
-                    long userId = sp.getLong("id", 0);
-                    orders = db.ordersDao().getByCustomerId(userId);
-                    spiCustomer.setVisibility(View.GONE);
-                } else {
-                    orders = db.ordersDao().getAll();
-                    spiCustomer.setVisibility(View.VISIBLE);
-                }
-                adapter.updateList(orders);
-                adapter.getFilter().filter(etFilter.getText().toString().trim());
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        rgOrderHistory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                if (checkedId == rbManagerOnly.getId()) {
+//                    long userId = sp.getLong("id", 0);
+//                    orders = db.ordersDao().getByCustomerId(userId);
+//                    spiCustomer.setVisibility(View.GONE);
+//                } else {
+//                    orders = db.ordersDao().getAll();
+//                    spiCustomer.setVisibility(View.VISIBLE);
+//                }
+//                adapter.updateList(orders);
+//                adapter.getFilter().filter(etFilter.getText().toString().trim());
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
         btnMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,7 +289,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 filterAdapterByDate();
             } else {
                 etUntilDate.setText("");
-                adapter.updateList(db.ordersDao().getAll());
+                if (spiCustomer.getSelectedItemPosition() == 0) {
+                    orders = db.ordersDao().getAll();
+                } else {
+                    Users user = (Users) spiCustomer.getSelectedItem();
+                    orders = db.ordersDao().getByCustomerId(user.getUserId());
+                }
                 adapter.getFilter().filter(etFilter.getText().toString().trim());
             }
         }
@@ -317,8 +322,14 @@ public class OrderHistoryActivity extends AppCompatActivity {
         until.setMinutes(59);
         until.setSeconds(59);
 
-        if (sp.getBoolean("admin", false) && rbEveryone.isChecked()) {
-            orders = db.ordersDao().getByDateRange(from, until);
+        if (sp.getBoolean("admin", false)) {
+            if (spiCustomer.getSelectedItemPosition() == 0) {
+                orders = db.ordersDao().getByDateRange(from, until);
+            }
+            else {
+                long userId = ((Users) spiCustomer.getSelectedItem()).getUserId();
+                orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, userId);
+            }
         } else {
             orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, sp.getLong("userId", 0));
         }

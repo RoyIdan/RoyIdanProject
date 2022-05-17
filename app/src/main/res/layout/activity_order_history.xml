@@ -28,30 +28,6 @@
         android:textSize="15sp"
         android:id="@+id/btnMainActivity" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:checkedButton="@id/rbEveryone"
-        android:id="@+id/rgOrderHistory">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="שלך בלבד"
-            android:layout_marginRight="30dp"
-            android:id="@+id/rbManagerOnly"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="של כולם"
-            android:id="@+id/rbEveryone"/>
-
-    </RadioGroup>
-
     <Spinner
         android:layout_width="250dp"
         android:layout_height="wrap_content"

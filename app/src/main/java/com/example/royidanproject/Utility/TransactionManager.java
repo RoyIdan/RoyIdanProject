@@ -17,8 +17,10 @@ public class TransactionManager {
     public static void makeTransaction(Context context, TransactionType type, long userId,
                                        long cardId, double amount, String description) {
         AppDatabase db = AppDatabase.getInstance(context);
-        if (db.creditCardDao().getCardBalance(cardId) < amount) {
-            return;
+        if (type == TransactionType.Purchase) {
+            if (db.creditCardDao().getCardBalance(cardId) < amount) {
+                return;
+            }
         }
 
         Transaction t = new Transaction();
