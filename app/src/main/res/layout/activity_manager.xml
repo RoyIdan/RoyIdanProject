@@ -126,7 +126,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/question_mark_pfp"
-                    android:id="@+id/ivPhoto"
+                    android:id="@+id/ivPhoto1"
                     android:scaleType="centerCrop"/>
 
                 <ImageButton

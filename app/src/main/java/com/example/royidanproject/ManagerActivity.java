@@ -60,7 +60,7 @@ public class ManagerActivity extends AppCompatActivity {
             btnAddNewManufacturer, btnEditExistingManufacturers, btnOpenDescriptionDialog, btnAddManufacturerSubmit,
             btnUpdate_mainActivity, btnUpdate;
     private ImageButton ibCamera, ibGallery;
-    private ImageView ivPhoto;
+    private ImageView ivPhoto1;
     private LinearLayout llButtonsLayout, llProducts, llAddNewProduct, llAddNewProductButtons, ll_spiCategory, ll_spiManufacturer, llAddNewProductCommon,
             llAddNewProductSmartphone, llAddNewProductWatch, llFinalButtons, llUpdate_buttons, llManufacturers, llAddNewManufacturer, llEditExistingManufacturers;
     private EditText etName, etPrice, etStock, etWatchSize, etManufacturerName, etSearchManufacturerByName;
@@ -102,7 +102,7 @@ public class ManagerActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdate);
         ibCamera = findViewById(R.id.ibCamera);
         ibGallery = findViewById(R.id.ibGallery);
-        ivPhoto = findViewById(R.id.ivPhoto);
+        ivPhoto1 = findViewById(R.id.ivPhoto1);
         llButtonsLayout = findViewById(R.id.llButtonsLayout);
         llAddNewProduct = findViewById(R.id.llAddNewProduct);
         llAddNewProductButtons = findViewById(R.id.llAddNewProductButtons);
@@ -631,7 +631,7 @@ public class ManagerActivity extends AppCompatActivity {
         } else {
             tableId = 3;
         }
-        ivPhoto.setImageURI(ProductImages.getImage(product.getProductPhoto(), ManagerActivity.this));
+        ivPhoto1.setImageURI(ProductImages.getImage(product.getProductPhoto(), ManagerActivity.this));
         spiCategory.setSelection((int) tableId);
         spiManufacturer.setSelection((int) product.getManufacturerId() - 1);
         etName.setText(product.getProductName());
@@ -695,7 +695,7 @@ public class ManagerActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 bmProduct = (Bitmap) data.getExtras().get("data");
-                ivPhoto.setImageBitmap(bmProduct);
+                ivPhoto1.setImageBitmap(bmProduct);
             }
         }
 
@@ -706,7 +706,7 @@ public class ManagerActivity extends AppCompatActivity {
                     InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     bmProduct = selectedImage;
-                    ivPhoto.setImageBitmap(bmProduct);
+                    ivPhoto1.setImageBitmap(bmProduct);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -760,7 +760,7 @@ public class ManagerActivity extends AppCompatActivity {
         toast("המוצר " + productName + " נוסף בהצלחה!");
 
         bmProduct = null;
-        ivPhoto.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.question_mark_pfp, null));
+        ivPhoto1.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.question_mark_pfp, null));
 
     }
 
@@ -964,7 +964,7 @@ public class ManagerActivity extends AppCompatActivity {
             spiStorageSize.setSelection(0);
             spiRamSize.setSelection(0);
             bmProduct = null;
-            ivPhoto.setImageBitmap(null);
+            ivPhoto1.setImageBitmap(null);
         } else if (i == 2) {
             // Watch
             rgWatchColor.check(R.id.radWatchBlack);
