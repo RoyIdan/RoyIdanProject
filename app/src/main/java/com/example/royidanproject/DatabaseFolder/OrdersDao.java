@@ -21,7 +21,7 @@ public interface OrdersDao {
     @Query("SELECT * FROM tblOrders WHERE orderDatePurchased BETWEEN :from AND :until")
     List<Order> getByDateRange(Date from, Date until);
 
-    @Query("SELECT * FROM tblOrders WHERE orderDatePurchased BETWEEN (:from AND :until) AND customerId = :customerId")
+    @Query("SELECT * FROM tblOrders WHERE orderDatePurchased BETWEEN :from AND :until AND customerId = :customerId")
     List<Order> getByDateRangeAndCustomerId(Date from, Date until, long customerId);
 
     @Query("SELECT * FROM tblorders")

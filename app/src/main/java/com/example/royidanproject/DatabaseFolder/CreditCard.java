@@ -15,7 +15,6 @@ public class CreditCard implements Serializable {
     private String cardNumber;
     private String cvv;
     private Double cardBalance;
-    @androidx.room.TypeConverters(TypeConverters.class)
     private Date cardExpireDate;
     private CardCompany cardCompany;
 

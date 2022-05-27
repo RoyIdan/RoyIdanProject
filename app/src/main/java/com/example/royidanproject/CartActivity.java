@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.royidanproject.Adapters.CartAdapter;
 import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CartDetails;
+import com.example.royidanproject.DatabaseFolder.Product;
+import com.example.royidanproject.Utility.CommonMethods;
 import com.example.royidanproject.Utility.ToolbarManager;
 import com.example.royidanproject.Utility.PurchaseManager;
 
@@ -52,7 +54,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public void setTotalPrice(double totalPrice) {
-        tvTotalPrice.setText("₪" + fmt(totalPrice));
+        tvTotalPrice.setText(fmt(totalPrice));
         Log.i(CartActivity.class.getSimpleName(), "updated price to: " + totalPrice);
     }
 
@@ -106,10 +108,25 @@ public class CartActivity extends AppCompatActivity {
                 new PurchaseManager(CartActivity.this, detailsList);
             }
         });
+
+        double totalPrice = 0;
+        for (int i = 0; i < detailsList.size(); i++) {
+            double p;
+            long pId = detailsList.get(i).getProductId();
+            if (detailsList.get(i).getTableId() == 1) {
+                p = db.smartphonesDao().getSmartphoneById(pId).getProductPrice();
+            } else if (detailsList.get(i).getTableId() == 2) {
+                p = db.watchesDao().getWatchById(pId).getProductPrice();
+            } else {
+                p = db.accessoriesDao().getAccessoryById(pId).getProductPrice();
+            }
+            totalPrice += p * detailsList.get(i).getProductQuantity();
+        }
+        tvTotalPrice.setText(CommonMethods.fmt(totalPrice));
     }
 
     public void onAdapterFinish(double totalPrice) {
-        tvTotalPrice.setText('₪' + fmt(totalPrice));
+        //tvTotalPrice.setText(fmt(totalPrice));
     }
 
     private void toast(String message) {

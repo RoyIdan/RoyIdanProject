@@ -21,6 +21,7 @@ import com.example.royidanproject.DatabaseFolder.AppDatabase;
 import com.example.royidanproject.DatabaseFolder.CreditCard.CardCompany;
 import com.example.royidanproject.DatabaseFolder.Users;
 import com.example.royidanproject.R;
+import com.example.royidanproject.Utility.CommonMethods;
 
 import org.w3c.dom.Text;
 
@@ -35,7 +36,7 @@ public class CreditCardView extends LinearLayout {
     private ImageView ivCardCompany;
     private TypedArray typedArray;
 
-    private long w, h;
+    private int w, h;
 
     SharedPreferences sp;
     AppDatabase db;
@@ -121,6 +122,11 @@ public class CreditCardView extends LinearLayout {
         w = this.getWidth();
         h = this.getHeight();
 
+        LinearLayout llTop = findViewById(R.id.llTop);
+        llTop.getLayoutParams().width = w;
+        llTop.getLayoutParams().height = h;
+        llTop.requestLayout();
+
         setMargins();
     }
 
@@ -140,6 +146,11 @@ public class CreditCardView extends LinearLayout {
         long companyW = ivCardCompany.getWidth();
         float companyMargin = (w - companyW) * 0.84f;
         ivCardCompany.setX(companyMargin);
+
+        ImageView ivVisa = findViewById(R.id.ivVisa);
+        long visaW = ivVisa.getWidth();
+        float visaMargin =  (w - visaW) * 0.3f;
+        ivVisa.setX(visaMargin);
 
     }
 

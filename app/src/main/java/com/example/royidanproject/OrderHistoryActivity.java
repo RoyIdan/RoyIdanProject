@@ -184,6 +184,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         spiCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String strFrom = etFromDate.getText().toString().trim();
+                String strUntil = etUntilDate.getText().toString().trim();
+                if (!strFrom.isEmpty() && !strUntil.isEmpty()) {
+                    filterAdapterByDate();
+                    return;
+                }
+
                 if (position == 0) {
                     orders = db.ordersDao().getAll();
                 } else {
@@ -289,12 +296,17 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 filterAdapterByDate();
             } else {
                 etUntilDate.setText("");
-                if (spiCustomer.getSelectedItemPosition() == 0) {
-                    orders = db.ordersDao().getAll();
+                if (sp.getBoolean("admin", false)) {
+                    if (spiCustomer.getSelectedItemPosition() == 0) {
+                        orders = db.ordersDao().getAll();
+                    } else {
+                        Users user = (Users) spiCustomer.getSelectedItem();
+                        orders = db.ordersDao().getByCustomerId(user.getUserId());
+                    }
                 } else {
-                    Users user = (Users) spiCustomer.getSelectedItem();
-                    orders = db.ordersDao().getByCustomerId(user.getUserId());
+                    orders = db.ordersDao().getByCustomerId(sp.getLong("id", 0));
                 }
+                adapter.updateList(orders);
                 adapter.getFilter().filter(etFilter.getText().toString().trim());
             }
         }
@@ -331,7 +343,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, userId);
             }
         } else {
-            orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, sp.getLong("userId", 0));
+            long userId = sp.getLong("id", 0);
+            orders = db.ordersDao().getByDateRangeAndCustomerId(from, until, userId);
         }
 
         adapter.updateList(orders);

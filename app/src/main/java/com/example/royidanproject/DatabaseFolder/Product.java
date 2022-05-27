@@ -18,7 +18,6 @@ public class Product implements Serializable {
     private String productDescription;
     private long manufacturerId;
     private String productPhoto;
-    @androidx.room.TypeConverters(TypeConverters.class)
     private Date productDateAdded;
 
     public long getProductId() {

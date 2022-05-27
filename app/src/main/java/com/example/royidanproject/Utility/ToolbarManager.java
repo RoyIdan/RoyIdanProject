@@ -47,7 +47,8 @@ public class ToolbarManager {
 
     private TextView tvCartItems;
 
-    private WifiView wifiView;
+    //private WifiView wifiView;
+    private ImageView ivWifi;
     private ImageView ivWifiOff;
     private WifiStatusReceiver wifiStatusReceiver;
     private IntentFilter intentFilter;
@@ -72,7 +73,8 @@ public class ToolbarManager {
 
         tvCartItems = toolbar.findViewById(R.id.tvCartItems);
 
-        wifiView = toolbar.findViewById(R.id.wifi);
+        //wifiView = toolbar.findViewById(R.id.wifi);
+        ivWifi = toolbar.findViewById(R.id.ivWifiOn);
         ivWifiOff = toolbar.findViewById(R.id.ivWifiOff);
 
         ivMusicOn = toolbar.findViewById(R.id.ivMusicOn);
@@ -120,7 +122,7 @@ public class ToolbarManager {
     }
 
     public void onResume() {
-        wifiStatusReceiver = new WifiStatusReceiver(wifiView, ivWifiOff);
+        wifiStatusReceiver = new WifiStatusReceiver(ivWifi, ivWifiOff);
         intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         mActivity.registerReceiver(wifiStatusReceiver, intentFilter);
     }

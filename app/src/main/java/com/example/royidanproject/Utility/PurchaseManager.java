@@ -5,12 +5,10 @@ import static androidx.core.content.PermissionChecker.PERMISSION_DENIED;
 import static com.example.royidanproject.MainActivity.SMS_PHONE;
 import static com.example.royidanproject.MainActivity.SP_NAME;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -324,6 +322,7 @@ public class PurchaseManager {
 
         long userId = context.getSharedPreferences(SP_NAME, 0).getLong("id", 0);
         List<CreditCard> cards = AppDatabase.getInstance(context).creditCardDao().getByUserId(userId);
+
 
         ArrayAdapter<CreditCard> adapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, cards);
         spiCreditCard.setAdapter(adapter);

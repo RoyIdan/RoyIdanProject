@@ -17,13 +17,14 @@ import com.example.royidanproject.Views.WifiView;
 
 public class WifiStatusReceiver extends BroadcastReceiver {
 
-    private WifiView wifiOn;
+    //private WifiView wifiOn;
+    private ImageView wifiOn;
     private ImageView wifiOff;
     Dialog dialog;
 
     public WifiStatusReceiver() {}
 
-    public WifiStatusReceiver(WifiView wifiOn, ImageView wifiOff) {
+    public WifiStatusReceiver(ImageView wifiOn, ImageView wifiOff) {
         this.wifiOn = wifiOn;
         this.wifiOff = wifiOff;
     }
@@ -47,13 +48,13 @@ public class WifiStatusReceiver extends BroadcastReceiver {
         if ((wifi.isAvailable() || mobile.isAvailable()) && isOnline(context)) {
             wifiOff.setVisibility(View.GONE);
             wifiOn.setVisibility(View.VISIBLE);
-            wifiOn.startAnim();
+            //wifiOn.startAnim();
             if (dialog != null) {
                 dialog.dismiss();
             }
         } else {
             wifiOn.setVisibility(View.GONE);
-            wifiOn.stopAnim();
+            //wifiOn.stopAnim();
             wifiOff.setVisibility(View.VISIBLE);
             if (!dialog.isShowing()) {
                 dialog.show();

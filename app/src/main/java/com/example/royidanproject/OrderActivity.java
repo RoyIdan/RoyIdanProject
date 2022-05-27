@@ -101,7 +101,7 @@ public class OrderActivity extends AppCompatActivity {
 
         double totalPrice = 0;
         for (int i = 0; i < detailsList.size(); i++) {
-            totalPrice += detailsList.get(i).getProductOriginalPrice() * detailsList.get(i).getProductOriginalPrice();
+            totalPrice += detailsList.get(i).getProductOriginalPrice() * detailsList.get(i).getProductQuantity();
         }
         tvTotalPrice.setText(CommonMethods.fmt(totalPrice));
 

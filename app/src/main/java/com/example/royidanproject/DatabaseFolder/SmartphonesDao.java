@@ -45,6 +45,9 @@ public interface SmartphonesDao extends IProductDao {
     @Insert
     long insert(Smartphone smartphone);
 
+    @Insert
+    void insert(List<Smartphone> smartphones);
+
     @Delete
     void delete(Smartphone smartphone);
 

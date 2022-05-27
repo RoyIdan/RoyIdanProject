@@ -73,6 +73,11 @@ public class CartAdapter extends BaseAdapter {
         Product product = null;
         IProductDao productDao = null;
 
+
+        if (i == 0) {
+            totalPrice = 0;
+        }
+
         // [Use if tables shares the increment id]
 //        Smartphone sp = db.smartphonesDao().getSmartphoneById(details.getProductId());
 //        if (sp != null) {

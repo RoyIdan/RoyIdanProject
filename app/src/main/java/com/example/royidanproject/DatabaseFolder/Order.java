@@ -13,7 +13,6 @@ public class Order implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long orderId;
     private long customerId; // FK
-    @androidx.room.TypeConverters(TypeConverters.class)
     private Date orderDatePurchased;
     private long creditCardId; // FK
 
